@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../framework/layui/css/layui.css">
+    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="icon" href="/favicon.ico">
+    <title>任职宣布</title>
+</head>
+<body>
+<style>
+    .layui-table-cell{
+        overflow: visible !important;
+    }
+    .layui-table-box {
+        overflow: visible;
+    }
+    .layui-table-body{
+        overflow: visible;
+    }
+    .layui-input, .layui-select, .layui-textarea {
+        height: 28px;
+        line-height: 1.3;
+        line-height: 38px\9;
+        border-width: 1px;
+        border-style: solid;
+        background-color: #fff;
+        border-radius: 2px;
+    }
+    .layui-btn {
+        display: inline-block;
+        height: 28px;
+        line-height: 28px;
+        padding: 0 15px;
+        background-color: #009688;
+        color: #fff;
+        white-space: nowrap;
+        text-align: center;
+        font-size: 14px;
+        border: none;
+        border-radius: 2px;
+        cursor: pointer;
+    }
+
+</style>
+
+
+
+    <div style="text-align: center; padding-top:10px;">
+        <button class="layui-btn ">任职宣布</button>
+    </div>
+
+<div style="padding:10px;">
+    <table class="layui-hide" id="tableId" lay-filter="tableId" ></table>
+</div>
+
+
+
+<div class="layui-form-item" style="text-align: center; padding:10px">
+    <div class="layui-input-block">
+        <button type="button" lay-filter="drew" class="layui-btn"  id="drew">生成任职宣布文件</button>
+        <button type="button" lay-filter="save" class="layui-btn"  id="save">保存</button>
+        <button type="button" lay-filter="doSubmit" class="layui-btn" id="do_submit">提交</button>
+    </div>
+</div>
+
+
+<!-- 选择人员layer end-->
+<script src="../framework/layui/layui.all.js"></script>
+<script src="../js/dictionary.js"></script>
+<script src="../js/http.js"></script>
+<script src="../js/jquery-1.8.0.min.js"></script>
+<script>
+
+    var table = layui.table;
+    var layer = layui.layer;
+    var form = layui.form;
+    var element = layui.element;
+    var $ = layui.jquery;
+    var http = layui.http;
+    var laydate = layui.laydate;
+    var upload =layui.upload;
+    var tableIns;
+    var LAY_TABLE_INDEX;
+    //获取父页面传递的参数
+    var parent_json =parent.req_data;
+    console.log(parent_json);
+    //
+
+
+    //封装访问后天请求参数
+    var announcedInOfficeIds = new Array();
+    var ids = new Array();
+    var param = {};
+    //遍历获取选择行数据的ID；
+    if(parent_json.length == undefined){
+        ids.push(parent_json.userid);
+        announcedInOfficeIds.push(parent_json.announcedInOfficeId);
+    }else{
+        for(var i = 0;i<parent_json.length;i++){
+            ids.push(parent_json[i].userid);
+            announcedInOfficeIds.push(parent_json[i].announcedInOfficeId);
+        }
+    }
+
+
+    param.ids = ids;
+
+    //根据ID先查询该记录是否已经保存在档案表中
+    http.setHeader("Content-Type", "application/json; charset=utf-8");//请求参数格式为json是需要添加请求头
+    http.post("../api/announcedInOffice/queryByIds",JSON.stringify(param),function(data){
+        console.log("data:"+JSON.stringify(data.data));
+        var result =data.data;
+        var tableData =[];
+        for(var i =0;i<result.length;i++){
+            var user = {};
+            user.id =result[i].id;
+            user.candidateName=result[i].candidateName;
+            user.unit =result[i].unit;
+            user.position = result[i].position;
+            user.positionLevel = result[i].positionLevel;
+            user.aspiringUnit = result[i].aspiringUnit;
+            user.aspiringPosition = result[i].aspiringPosition;
+            user.aspiringPositionLevel = result[i].aspiringPositionLevel;
+            user.note = result[i].note;
+            user.announceTime = result[i].announceTime;
+            user.announcePerson = result[i].announcePerson;
+            tableData.push(user);
+        }
+        console.log("tableData:"+JSON.stringify(tableData));
+        tableIns= table.render({
+            elem: "#tableId"
+            ,url: ''
+            //,cellMinWidth:100
+            ,page:true
+            , parseData: function (res) {    //res 即为原始返回的数据
+                //alert(JSON.stringify(res))
+                return {
+                    "code": res.errcode,  //解析接口状态
+                    "msg": res.errmsg,    //解析提示文本
+                    "count": res.data.count,   //解析数据长度
+                    "data": res.data.rows //解析数据列表
+                };
+            }
+            ,done:function(res, curr, count){
+            }
+            ,cols: [[ //标题栏
+                {type:'checkbox' ,tilte:'选择'}
+                , {field: 'id',title:'id',align:'center',hide:true}
+                , {field: 'candidateName', title: '姓名',  align: 'center'} //rowspan即纵向跨越的单元格数
+                , {field: 'unit', title: '原单位',  align: 'center'}
+                , {field: 'position', title: '原职务',  align: 'center'}
+                , {field: 'positionLevel', title: '原职等',  align: 'center'}
+                , {field: 'aspiringUnit', title: '调整单位',align: 'center'}
+                , {field: 'aspiringPosition', title: '调整职务',  align: 'center'}
+                , {field: 'aspiringPositionLevel', title: '调整职等',  align: 'center'}
+                , {field: 'note', title: '备注',align: 'center',templet:'#barDemoPass'}
+                , {field: 'announceTime', title: '宣布时间',event:'announceTimeEvent' ,align: 'center',templet:function(d){
+                        return d.announceTime ==null?'':toDate(d.announceTime);
+                    }}
+                , {field: 'announcePerson',title:'宣布人',align:'center',edit:'text'}
+
+            ]]
+            ,data:tableData
+            ,id: 'tableId'
+            ,done: function(res, curr, count) {
+                console.log(res);
+                // 渲染当前页面的所有的upload组件
+            }
+
+        })
+    })
+
+
+
+    table.on('tool(tableId)',function(obj){
+        if(obj.event === 'announceTimeEvent'){
+            laydate.render({
+                elem:this.firstChild
+                // ,show:true
+                // ,closeStop:this
+                ,done:function(value,date){
+                    console.log(value);
+                    obj.data.announceTime = value;
+                    obj.update(obj.data);
+                    console.log(obj.data);
+                }
+            })
+        }
+    })
+    //生成任职宣布文件
+    $('#drew').click(function() {
+        console.log('生成任职宣布文件');
+    });
+
+    //提交
+    $('#do_submit').click(function(){
+        var checkStatus = table.checkStatus('tableId');
+        var data = checkStatus.data
+        //alert("data:"+JSON.stringify(data));
+        if(data.length == 0){
+            layer.msg('请勾选需要提交的人员', function () {
+            });
+            return;
+        }
+
+        var infos = new Array();
+        var param = {};
+
+        for(var i=0;i<data.length;i++){
+            var user = {};
+            user.candidateName=data[i].candidateName;
+            user.unit =data[i].unit;
+            user.position = data[i].position;
+            user.id =data[i].id;
+            if(announcedInOfficeIds.includes(user.id)==true){
+                layer.msg(user.candidateName+'的记录已提交,不能修改!', function () {
+                });
+                return;
+            }
+            user.unit =data[i].unit;
+            user.position = data[i].position;
+            user.positionLevel = data[i].positionLevel;
+            user.aspiringUnit = data[i].aspiringUnit;
+            user.aspiringPosition = data[i].aspiringPosition;
+            user.aspiringPositionLevel = data[i].aspiringPositionLevel;
+            user.note = data[i].note;
+            user.announceTime = data[i].announceTime;
+            if(user.announceTime == undefined || user.announceTime==''){
+                layer.msg('请为'+user.candidateName+'选择宣布时间', function () {
+                });
+                return;
+            }
+            user.announcePerson = data[i].announcePerson;
+            if(user.announcePerson == undefined || user.announcePerson==''){
+                layer.msg('请为'+user.candidateName+'输入宣布人', function () {
+                });
+                return;
+            }
+            console.log("user"+JSON.stringify(user));
+
+            infos.push(user);
+        }
+        param.infos = infos;
+        console.log("param:"+JSON.stringify(param));
+        layer.confirm("确认提交吗?提交后不得修改", function(index){
+            http.setHeader("Content-Type", "application/json; charset=utf-8");
+            http.post('../api/announcedInOffice/submit', JSON.stringify(param), function (rep) {
+                var errcode = rep.errcode;
+                if (errcode == '0') {
+                    layer.msg("提交成功", {icon: 1});
+                }else{
+                    layer.msg(rep.errmsg);
+                }
+            });
+        })
+        return false;
+
+    });
+
+
+    //保存数据
+    $('#save').click(function(){
+        var checkStatus = table.checkStatus('tableId');
+        var data = checkStatus.data
+        //alert("data:"+JSON.stringify(data));
+        if(data.length == 0){
+            layer.msg('请勾选需要保存的人员', function () {
+            });
+            return;
+        }
+        var infos = new Array();
+        var param = {};
+
+        for(var i=0;i<data.length;i++){
+            var user = {};
+            user.id =data[i].id;
+            user.candidateName=data[i].candidateName;
+            if(announcedInOfficeIds.includes(user.id)==true){
+                layer.msg(user.candidateName+'的记录已提交', function () {
+                });
+                return;
+            }
+            user.unit =data[i].unit;
+            user.position = data[i].position;
+            user.positionLevel = data[i].positionLevel;
+            user.aspiringUnit = data[i].aspiringUnit;
+            user.aspiringPosition = data[i].aspiringPosition;
+            user.aspiringPositionLevel = data[i].aspiringPositionLevel;
+            user.note = data[i].note;
+            user.announceTime = data[i].announceTime;
+            user.announcePerson = data[i].announcePerson;
+
+            console.log("user"+JSON.stringify(user));
+
+            infos.push(user);
+        }
+        param.infos = infos;
+        console.log("param:"+JSON.stringify(param));
+        http.setHeader("Content-Type", "application/json; charset=utf-8");
+        http.post('../api/announcedInOffice/add', JSON.stringify(param), function (rep) {
+            var errcode = rep.errcode;
+            if (errcode == '0') {
+                layer.msg("保存成功", {icon: 1});
+            }else{
+                layer.msg(rep.errmsg);
+            }
+        });
+
+
+    });
+    function toDate(data){
+        var date = new Date(data);
+        var y = date.getFullYear() +'_';
+        var m = (date.getMonth()+1<10?'0'+(date.getMonth()+1):date.getMonth()+1 )+'_';
+        var d = (date.getDate()<10?'0'+date.getDate():date.getDate());
+        return y+m+d;
+    }
+
+</script>
+
+</body>
+</html>

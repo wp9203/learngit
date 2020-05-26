@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nantian.mapper.sys.SysAnnouncedInOfficeMapper">
+  <resultMap id="BaseResultMap" type="com.nantian.entity.sys.SysAnnouncedInOffice">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="CANDIDATE_NAME" jdbcType="VARCHAR" property="candidateName" />
+    <result column="UNIT" jdbcType="VARCHAR" property="unit" />
+    <result column="POSITION" jdbcType="VARCHAR" property="position" />
+    <result column="POSITION_LEVEL" jdbcType="VARCHAR" property="positionLevel" />
+    <result column="ASPIRING_UNIT" jdbcType="VARCHAR" property="aspiringUnit" />
+    <result column="ASPIRING_POSITION" jdbcType="VARCHAR" property="aspiringPosition" />
+    <result column="ASPIRING_POSITION_LEVEL" jdbcType="VARCHAR" property="aspiringPositionLevel" />
+    <result column="NOTE" jdbcType="VARCHAR" property="note" />
+    <result column="ANNOUNCE_TIME" jdbcType="TIMESTAMP" property="announceTime" />
+    <result column="ANNOUNCE_PERSON" jdbcType="VARCHAR" property="announcePerson" />
+    <result column="CREATION_TIME" jdbcType="TIMESTAMP" property="creationTime" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, CANDIDATE_NAME, UNIT, POSITION, POSITION_LEVEL, ASPIRING_UNIT, ASPIRING_POSITION, 
+    ASPIRING_POSITION_LEVEL, NOTE, ANNOUNCE_TIME, ANNOUNCE_PERSON, CREATION_TIME, UPDATE_TIME
+  </sql>
+  <select id="selectByExample" parameterType="com.nantian.entity.sys.SysAnnouncedInOfficeExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from SYS_ANNOUNCED_IN_OFFICE
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_ANNOUNCED_IN_OFFICE
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from SYS_ANNOUNCED_IN_OFFICE
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.nantian.entity.sys.SysAnnouncedInOfficeExample">
+    delete from SYS_ANNOUNCED_IN_OFFICE
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.nantian.entity.sys.SysAnnouncedInOffice">
+    insert into SYS_ANNOUNCED_IN_OFFICE (ID, CANDIDATE_NAME, UNIT, 
+      POSITION, POSITION_LEVEL, ASPIRING_UNIT, 
+      ASPIRING_POSITION, ASPIRING_POSITION_LEVEL, 
+      NOTE, ANNOUNCE_TIME, ANNOUNCE_PERSON, 
+      CREATION_TIME, UPDATE_TIME)
+    values (#{id,jdbcType=DECIMAL}, #{candidateName,jdbcType=VARCHAR}, #{unit,jdbcType=VARCHAR}, 
+      #{position,jdbcType=VARCHAR}, #{positionLevel,jdbcType=VARCHAR}, #{aspiringUnit,jdbcType=VARCHAR}, 
+      #{aspiringPosition,jdbcType=VARCHAR}, #{aspiringPositionLevel,jdbcType=VARCHAR}, 
+      #{note,jdbcType=VARCHAR}, #{announceTime,jdbcType=TIMESTAMP}, #{announcePerson,jdbcType=VARCHAR}, 
+      #{creationTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.nantian.entity.sys.SysAnnouncedInOffice">
+    insert into SYS_ANNOUNCED_IN_OFFICE
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="candidateName != null">
+        CANDIDATE_NAME,
+      </if>
+      <if test="unit != null">
+        UNIT,
+      </if>
+      <if test="position != null">
+        POSITION,
+      </if>
+      <if test="positionLevel != null">
+        POSITION_LEVEL,
+      </if>
+      <if test="aspiringUnit != null">
+        ASPIRING_UNIT,
+      </if>
+      <if test="aspiringPosition != null">
+        ASPIRING_POSITION,
+      </if>
+      <if test="aspiringPositionLevel != null">
+        ASPIRING_POSITION_LEVEL,
+      </if>
+      <if test="note != null">
+        NOTE,
+      </if>
+      <if test="announceTime != null">
+        ANNOUNCE_TIME,
+      </if>
+      <if test="announcePerson != null">
+        ANNOUNCE_PERSON,
+      </if>
+      <if test="creationTime != null">
+        CREATION_TIME,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="candidateName != null">
+        #{candidateName,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null">
+        #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="position != null">
+        #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="positionLevel != null">
+        #{positionLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="aspiringUnit != null">
+        #{aspiringUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="aspiringPosition != null">
+        #{aspiringPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="aspiringPositionLevel != null">
+        #{aspiringPositionLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="note != null">
+        #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="announceTime != null">
+        #{announceTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="announcePerson != null">
+        #{announcePerson,jdbcType=VARCHAR},
+      </if>
+      <if test="creationTime != null">
+        #{creationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.nantian.entity.sys.SysAnnouncedInOfficeExample" resultType="java.lang.Long">
+    select count(*) from SYS_ANNOUNCED_IN_OFFICE
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update SYS_ANNOUNCED_IN_OFFICE
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=DECIMAL},
+      </if>
+      <if test="record.candidateName != null">
+        CANDIDATE_NAME = #{record.candidateName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unit != null">
+        UNIT = #{record.unit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.position != null">
+        POSITION = #{record.position,jdbcType=VARCHAR},
+      </if>
+      <if test="record.positionLevel != null">
+        POSITION_LEVEL = #{record.positionLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.aspiringUnit != null">
+        ASPIRING_UNIT = #{record.aspiringUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.aspiringPosition != null">
+        ASPIRING_POSITION = #{record.aspiringPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="record.aspiringPositionLevel != null">
+        ASPIRING_POSITION_LEVEL = #{record.aspiringPositionLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.note != null">
+        NOTE = #{record.note,jdbcType=VARCHAR},
+      </if>
+      <if test="record.announceTime != null">
+        ANNOUNCE_TIME = #{record.announceTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.announcePerson != null">
+        ANNOUNCE_PERSON = #{record.announcePerson,jdbcType=VARCHAR},
+      </if>
+      <if test="record.creationTime != null">
+        CREATION_TIME = #{record.creationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update SYS_ANNOUNCED_IN_OFFICE
+    set ID = #{record.id,jdbcType=DECIMAL},
+      CANDIDATE_NAME = #{record.candidateName,jdbcType=VARCHAR},
+      UNIT = #{record.unit,jdbcType=VARCHAR},
+      POSITION = #{record.position,jdbcType=VARCHAR},
+      POSITION_LEVEL = #{record.positionLevel,jdbcType=VARCHAR},
+      ASPIRING_UNIT = #{record.aspiringUnit,jdbcType=VARCHAR},
+      ASPIRING_POSITION = #{record.aspiringPosition,jdbcType=VARCHAR},
+      ASPIRING_POSITION_LEVEL = #{record.aspiringPositionLevel,jdbcType=VARCHAR},
+      NOTE = #{record.note,jdbcType=VARCHAR},
+      ANNOUNCE_TIME = #{record.announceTime,jdbcType=TIMESTAMP},
+      ANNOUNCE_PERSON = #{record.announcePerson,jdbcType=VARCHAR},
+      CREATION_TIME = #{record.creationTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.nantian.entity.sys.SysAnnouncedInOffice">
+    update SYS_ANNOUNCED_IN_OFFICE
+    <set>
+      <if test="candidateName != null">
+        CANDIDATE_NAME = #{candidateName,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null">
+        UNIT = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="position != null">
+        POSITION = #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="positionLevel != null">
+        POSITION_LEVEL = #{positionLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="aspiringUnit != null">
+        ASPIRING_UNIT = #{aspiringUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="aspiringPosition != null">
+        ASPIRING_POSITION = #{aspiringPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="aspiringPositionLevel != null">
+        ASPIRING_POSITION_LEVEL = #{aspiringPositionLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="note != null">
+        NOTE = #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="announceTime != null">
+        ANNOUNCE_TIME = #{announceTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="announcePerson != null">
+        ANNOUNCE_PERSON = #{announcePerson,jdbcType=VARCHAR},
+      </if>
+      <if test="creationTime != null">
+        CREATION_TIME = #{creationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.nantian.entity.sys.SysAnnouncedInOffice">
+    update SYS_ANNOUNCED_IN_OFFICE
+    set CANDIDATE_NAME = #{candidateName,jdbcType=VARCHAR},
+      UNIT = #{unit,jdbcType=VARCHAR},
+      POSITION = #{position,jdbcType=VARCHAR},
+      POSITION_LEVEL = #{positionLevel,jdbcType=VARCHAR},
+      ASPIRING_UNIT = #{aspiringUnit,jdbcType=VARCHAR},
+      ASPIRING_POSITION = #{aspiringPosition,jdbcType=VARCHAR},
+      ASPIRING_POSITION_LEVEL = #{aspiringPositionLevel,jdbcType=VARCHAR},
+      NOTE = #{note,jdbcType=VARCHAR},
+      ANNOUNCE_TIME = #{announceTime,jdbcType=TIMESTAMP},
+      ANNOUNCE_PERSON = #{announcePerson,jdbcType=VARCHAR},
+      CREATION_TIME = #{creationTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByUserId" parameterType="com.nantian.entity.sys.SysFlow">
+    update SYS_FLOW
+    SET ANNOUNCED_IN_OFFICE_ID = #{announcedInOfficeId,jdbcType=DECIMAL},
+      ANNOUNCED_IN_OFFICE_RESULT = #{announcedInOfficeResult,jdbcType=VARCHAR},
+      STEP17 = #{step17,jdbcType=VARCHAR}
+    WHERE USERID =  #{userid,jdbcType=DECIMAL}
+  </update>
+</mapper>

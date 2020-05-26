@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../framework/layui/css/layui.css">
+    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="icon" href="/favicon.ico">
+    <title>任用首页(静态)</title>
+</head>
+<body>
+<style>
+    .layui-table-cell{
+        height: auto;
+        line-height: 28px;
+        padding: 0 15px;
+        padding-top: 0px;
+        padding-right: 15px;
+        padding-bottom: 0px;
+        padding-left: 15px;
+        position: relative;
+        box-sizing: border-box;
+    }
+
+</style>
+<!--搜索开始-->
+<div class="layui-card-body">
+    <form class="layui-form" action="" lay-filter="org-form" id="org-form">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">流程状态</label>
+                <div class="layui-input-inline">
+                    <select name="flowStatus" lay-filter="flowStatus" >
+                        <option value="" selected=""></option>
+                        <option value="0">进行中</option>
+                        <option value="1">已完成</option>
+
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">机构</label>
+                <div class="layui-input-inline">
+                    <input type="tel" name="orgNo" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">调整状态</label>
+                <div class="layui-input-inline">
+                    <select name="adjustType" lay-filter="adjustType" >
+                        <option value="" selected=""></option>
+                        <option value="0">提拔</option>
+                        <option value="1">平调</option>
+                        <option value="2">降职</option>
+                        <option value="3">转非</option>
+                        <option value="4">辞职</option>
+                        <option value="5">其他</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">日期</label>
+                <div class="layui-input-inline">
+                    <input type="text" autocomplete="off" class="layui-input" id="date" placeholder="yyyy-MM-dd">
+                </div>
+            </div>
+
+            <div class="layui-inline">
+                <label class="layui-form-label">职等</label>
+                <div class="layui-input-inline">
+                    <select name="positionLevel" lay-filter="positionLevel" >
+                        <option value="" selected=""></option>
+                        <option value="0">五职等</option>
+                        <option value="1">六职等</option>
+                        <option value="2">七职等</option>
+                        <option value="3">八职等</option>
+                        <option value="4">九职等</option>
+                        <option value="5">十职等</option>
+                        <option value="0">十一职等</option>
+                        <option value="1">十二职等</option>
+                        <option value="2">十三职等</option>
+                        <option value="3">十四职等</option>
+                        <option value="4">十五职等</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item" style="text-align:center">
+            <div class="layui-input-block">
+                <!--<div id="addAsset"><span>发起</span></div>-->
+                <button type="button" class="layui-btn" id="launched">发起</button>
+                <!--
+                <button type="button" class="layui-btn layuiadmin-btn-useradmin" data-type="add" id="add">发起</button>-->
+                <button type="submit" class="layui-btn" lay-submit="" lay-filter="query">查询</button>
+<!--                <button type="button" class="layui-btn" id="query">查询</button>-->
+                <!-- <button type="submit" class="layui-btn" lay-submit="" lay-filter="query">查询</button>-->
+                <!--<button type="reset" class="layui-btn layui-btn-primary">清空</button>-->
+                <button class="layui-btn layui-btn-primary" type="reset">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+<!--搜索结束-->
+
+<!---->
+<table id="demo" class="layui-hide" lay-filter="demo"></table>
+
+<!--发起弹出框 开始-->
+<div class="layui-form-item"
+     style="display:none;text-align:center;line-height: 100px;" id="typeLayer">
+
+    <div class="layui-row">
+        <div class="layui-col-md6">
+            <button class="layui-btn " id="recmd" lay-filter="recmd">民主推荐</button>
+        </div>
+        <div class="layui-col-md6">
+            <button class="layui-btn" id="competition" lay-filter="competition">公开竞聘</button>
+        </div>
+    </div>
+</div>
+<!--发起弹出框 结束-->
+
+
+
+<script src="../framework/layui/layui.all.js"></script>
+<script src="../js/dictionary.js"></script>
+<script src="../js/http.js"></script>
+<script src="../js/jquery-1.8.0.min.js"></script>
+<script>
+
+    var table = layui.table;
+    var layer = layui.layer;
+    var form = layui.form;
+    var element = layui.element;
+    var $ = layui.jquery;
+    var http = layui.http;
+    var laydate = layui.laydate;
+    var changed=true;
+    var launchedLayer;
+
+    laydate.render({
+        elem:'#date',
+        range:true
+    })
+    //第一个实例
+    var  tableIns = table.render({
+        elem: '#demo'
+        ,height: 312
+        , url: '../api/flow/query'
+        , method: 'post'
+        , toolbar: true
+        , parseData: function (res) {    //res 即为原始返回的数据
+             //alert(JSON.stringify(res))
+            return {
+                "code": res.errcode,  //解析接口状态
+                "msg": res.errmsg,    //解析提示文本
+                "count": res.data.count,   //解析数据长度
+                "data": res.data.rows //解析数据列表
+            };
+        }
+        ,cols:  [[ //标题栏
+
+            {type:'checkbox' ,tilte:'选择'}
+            ,{type:'numbers', title:'序号',width:60}
+            ,{field: 'id', title: '流程ID', hide:true,width: 80, align:'center'}
+            ,{field: 'userId', title: '用户ID',hide:true, width: 80, align:'center'}
+            ,{field: 'username', title: '姓名', width: 80, align:'center',rowspan: 1} //rowspan即纵向跨越的单元格数
+            ,{field: 'aspiringUnit', title: '拟调整单位', width: 100,align:'center' }
+            ,{field: 'position', title: '职务', width: 100,align:'center', hide:true}
+            ,{field: 'unit', title: '单位', width: 100,align:'center', hide:true}
+            ,{field: 'positionLevel', title: '职等', width: 100,align:'center', hide:true}
+            ,{field: 'aspiringPosition', title: '拟调整职务', width: 100,align:'center', rowspan: 1}
+            ,{field: 'step1', title: '步骤1',hide:true, width: 80, align:'center'}
+
+            ,{field: 'unitReId', title: '单位推荐ID',hide:true, width: 80, align:'center'}
+            ,{field: 'unitReResult', title: '单位推荐<br/><botton class="layui-btn layui-btn-xs" lay-submit lay-filter="setBtn1">批量维护</botton>', width:90,align:'center',event:'unitRe'} //colspan即横跨的单元格数，这种情况下不用设置field和width
+            ,{field: 'step2', title: '步骤2',hide:true, width: 80, align:'center'}
+
+            ,{field: 'firstMotionId', title: '动议ID',hide:true, width: 80, align:'center'}
+            ,{field: 'firstMotionResult', title: '动议<br/><botton class="layui-btn layui-btn-xs" lay-submit lay-filter="setBtn2">批量维护</botton>', align:'center',width:90,colspan: 1,event:'firstMotion'}
+            ,{field: 'step3', title: '步骤3',hide:true, width: 80, align:'center'}
+
+            ,{field: 'reportBeforeImId', title: '实施前报告ID',hide:true, width: 80, align:'center'}
+            ,{field: 'reportBeforeImResult', title: '实施前报告<br/><botton class="layui-btn layui-btn-xs"lay-submit lay-filter="setBtn3">批量维护</botton>', align:'center',width:100,colspan: 1}
+            ,{field: 'step4', title: '步骤4',hide:true, width: 80, align:'center'}
+
+            ,{field: 'democracyInsReId', title: '民主推荐与考察ID',hide:true, width: 80, align:'center'}
+            ,{field: 'democracyInsReResult', title: '民主推荐与考察<br/><botton class="layui-btn layui-btn-xs"lay-submit lay-filter="setBtn4">批量维护</botton>', align:'center',width:130,colspan: 1,event:'democracyInsRe'}
+            ,{field: 'step5', title: '步骤5',hide:true, width: 80, align:'center'}
+
+            ,{field: 'inspectArchivesId', title: '核查档案ID',hide:true, width: 80, align:'center'}
+            ,{field: 'inspectArchivesResult', title: '核查档案<br/><botton class="layui-btn layui-btn-xs" lay-submit lay-filter="setBtn5">批量维护</botton>', align:'center',width:90,colspan: 1,event:'inspectArchives'}
+            ,{field: 'step6', title: '步骤6',hide:true, width: 80, align:'center'}
+
+            ,{field: 'comDisInsReOpId', title: '征求纪委意见ID',hide:true, width: 80, align:'center'}
+            ,{field: 'comDisInsReOpResult', title: '征求纪委意见<br/><botton class="layui-btn layui-btn-xs" lay-submit lay-filter="setBtn6">批量维护</botton>', align:'center',width:120,colspan: 1,event:'comDisInsReOp'}
+            ,{field: 'step7', title: '步骤7',hide:true, width: 80, align:'center'}
+
+            ,{field: 'complianceDepOpId', title: '征求合规部意见ID',hide:true, width: 80, align:'center'}
+            ,{field: 'complianceDepOpResult', title: '征求合规部意见<br/><botton class="layui-btn layui-btn-xs" lay-submit lay-filter="setBtn7">批量维护</botton>', align:'center',width:130,colspan: 1,event:'complianceDepOp'}
+            ,{field: 'step8', title: '步骤8',hide:true, width: 80, align:'center'}
+
+            ,{field: 'secondMotionId', title: '研究决定ID',hide:true, width: 80, align:'center'}
+            ,{field: 'secondMotionResult', title: '研究决定(二次上会)<br/><botton class="layui-btn layui-btn-xs" lay-submit lay-filter="setBtn8">批量维护</botton>', align:'center',width:150,colspan: 1,event:'secondMotion'}
+            ,{field: 'step9', title: '步骤9',hide:true, width: 80, align:'center'}
+
+            ,{field: 'pubBeforeInOfficeId', title: '任前公示ID',hide:true, width: 80, align:'center'}
+            ,{field: 'pubBeforeInOfficeResult', title: '任前公示<br/><botton class="layui-btn layui-btn-xs" lay-submit lay-filter="setBtn9">批量维护</botton>', align:'center',width:90,colspan: 1,event:'pubBeforeInOffice'}
+            ,{field: 'step10', title: '步骤10',hide:true, width: 80, align:'center'}
+
+            ,{field: 'thirdMotionId', title: '研究决定ID',hide:true, width: 80, align:'center'}
+            ,{field: 'thirdMotionResult', title: '研究决定(三次上会)<br/><botton class="layui-btn layui-btn-xs" lay-submit lay-filter="setBtn10">批量维护</botton>', align:'center',width:150,colspan: 1,event:'thirdMotion'}
+            ,{field: 'step11', title: '步骤11',hide:true, width: 80, align:'center'}
+
+            ,{field: 'appBeforeInOfficeId', title: '任前报批ID',hide:true, width: 80, align:'center'}
+            ,{field: 'appBeforeInOfficeResult', title: '任前报批<br/><botton class="layui-btn layui-btn-xs" lay-submit lay-filter="setBtn11">批量维护</botton>', align:'center',width:90,colspan: 1,event:'appBeforeInOffice'}
+            ,{field: 'step12', title: '步骤12',hide:true, width: 80, align:'center'}
+
+            ,{field: 'outgoingInspectionId', title: '离职检查ID',hide:true, width: 80, align:'center'}
+            ,{field: 'outgoingInspectionResult', title: '离职检查<br/><botton class="layui-btn layui-btn-xs" lay-submit lay-filter="setBtn12">批量维护</botton>', align:'center',width:90,colspan: 1,event:'outgoingInspection'}
+            ,{field: 'step13', title: '步骤13',hide:true, width: 80, align:'center'}
+
+            ,{field: 'conInOfficeId', title: '任职谈话ID',hide:true, width: 80, align:'center'}
+            ,{field: 'conInOfficeResult', title: '任职谈话<br/><botton class="layui-btn layui-btn-xs" lay-submit lay-filter="setBtn13">批量维护</botton>', align:'center',width:90,colspan: 1,event:'conInOffice'}
+            ,{field: 'step14', title: '步骤14',hide:true, width: 80, align:'center'}
+
+            ,{field: 'conHonestId', title: '廉洁谈话ID',hide:true, width: 80, align:'center'}
+            ,{field: 'conHonestResult', title: '廉洁谈话<br/><botton class="layui-btn layui-btn-xs" lay-submit lay-filter="setBtn14">批量维护</botton>', align:'center',width:90,colspan: 1,event:'conHonest'}
+            ,{field: 'step15', title: '步骤15',hide:true, width: 80, align:'center'}
+
+            ,{field: 'appBankingSupervisionId', title: '当地银保监核准ID',hide:true, width: 80, align:'center'}
+            ,{field: 'appBankingSupervisionResult', title: '当地银保监核准<br/><botton class="layui-btn layui-btn-xs" lay-submit lay-filter="setBtn15">批量维护</botton>', align:'center',width:130,colspan: 1,event:'appBanking'}
+            ,{field: 'step16', title: '步骤16',hide:true, width: 80, align:'center'}
+
+            ,{field: 'announcedInOfficeId', title: '任职宣布ID',hide:true, width: 80, align:'center'}
+            ,{field: 'announcedInOfficeResult', title: '任职宣布<br/><botton class="layui-btn layui-btn-xs" lay-submit lay-filter="setBtn16">批量维护</botton>', align:'center',width:90,colspan: 1,event:'announcedInOffice'}
+            ,{field: 'step17', title: '步骤17',hide:true, width: 80, align:'center'}
+
+            ,{field: 'postAppointId', title: '发文任免ID',hide:true, width: 80, align:'center'}
+            ,{field: 'postAppointResult', title: '发文任免<br/><botton class="layui-btn layui-btn-xs" lay-submit lay-filter="setBtn17">批量维护</botton>', align:'center',width:90,colspan: 1,event:'postAppoint'}
+            ,{field: 'step18', title: '步骤18',hide:true, width: 80, align:'center'}
+        ]]
+        ,data:[]
+        ,id:'flowId'
+        ,done:function(res,page,count){
+            var that = this.elem.next();
+            res.data.forEach(function(item,index){
+                console.log();
+                if(item.flowStatus == 0){ //进度未完成
+                    if(item.postAppointResult == undefined){
+                        that.find(".layui-table-box tbody tr[data-index='"+ index +"'] td[data-field='postAppointResult']").css("background-color","#FF5722");
+                    }
+                    if(item.unitReResult == undefined){
+                        that.find(".layui-table-box tbody tr[data-index='"+ index +"'] td[data-field='unitReResult']").css("background-color","#FF5722");
+                    }
+                    if(item.announcedInOfficeResult == undefined){
+                        that.find(".layui-table-box tbody tr[data-index='"+ index +"'] td[data-field='announcedInOfficeResult']").css("background-color","#FF5722");
+                    }
+                    if(item.appBankingSupervisionResult == undefined){
+                        that.find(".layui-table-box tbody tr[data-index='"+ index +"'] td[data-field='appBankingSupervisionResult']").css("background-color","#FF5722");
+                    }
+                    if(item.conHonestResult == undefined){
+                        that.find(".layui-table-box tbody tr[data-index='"+ index +"'] td[data-field='conHonestResult']").css("background-color","#FF5722");
+                    }
+                    if(item.conInOfficeResult == undefined){
+                        that.find(".layui-table-box tbody tr[data-index='"+ index +"'] td[data-field='conInOfficeResult']").css("background-color","#FF5722");
+                    }
+                    if(item.outgoingInspectionResult == undefined){
+                        that.find(".layui-table-box tbody tr[data-index='"+ index +"'] td[data-field='outgoingInspectionResult']").css("background-color","#FF5722");
+                    }
+                    if(item.appBeforeInOfficeResult == undefined){
+                        that.find(".layui-table-box tbody tr[data-index='"+ index +"'] td[data-field='appBeforeInOfficeResult']").css("background-color","#FF5722");
+                    }
+                    if(item.thirdMotionResult == undefined){
+                        that.find(".layui-table-box tbody tr[data-index='"+ index +"'] td[data-field='thirdMotionResult']").css("background-color","#FF5722");
+                    }
+                    if(item.pubBeforeInOfficeResult == undefined){
+                        that.find(".layui-table-box tbody tr[data-index='"+ index +"'] td[data-field='pubBeforeInOfficeResult']").css("background-color","#FF5722");
+                    }
+                    if(item.secondMotionResult == undefined){
+                        that.find(".layui-table-box tbody tr[data-index='"+ index +"'] td[data-field='secondMotionResult']").css("background-color","#FF5722");
+                    }
+                    if(item.complianceDepOpResult == undefined){
+                        that.find(".layui-table-box tbody tr[data-index='"+ index +"'] td[data-field='complianceDepOpResult']").css("background-color","#FF5722");
+                    }
+                    if(item.comDisInsReOpResult == undefined){
+                        that.find(".layui-table-box tbody tr[data-index='"+ index +"'] td[data-field='comDisInsReOpResult']").css("background-color","#FF5722");
+                    }
+                    if(item.inspectArchivesResult == undefined){
+                        that.find(".layui-table-box tbody tr[data-index='"+ index +"'] td[data-field='inspectArchivesResult']").css("background-color","#FF5722");
+                    }
+                    if(item.democracyInsReResult == undefined){
+                        that.find(".layui-table-box tbody tr[data-index='"+ index +"'] td[data-field='democracyInsReResult']").css("background-color","#FF5722");
+                    }
+                    if(item.reportBeforeImResult == undefined){
+                        that.find(".layui-table-box tbody tr[data-index='"+ index +"'] td[data-field='reportBeforeImResult']").css("background-color","#FF5722");
+                    }
+                    if(item.firstMotionResult == undefined){
+                        that.find(".layui-table-box tbody tr[data-index='"+ index +"'] td[data-field='firstMotionResult']").css("background-color","#FF5722");
+                    }
+                }
+
+            })
+        }
+
+    });
+    var req_data;
+    //监听 表头按钮点击事件。关
+    form.on('submit(setBtn1)', function(){//单位推荐
+        var checkStatus = table.checkStatus('flowId');
+        req_data = checkStatus.data;
+        openUnitReLayer();
+    });
+
+    form.on('submit(setBtn2)', function(){//动议一次上会
+        var checkStatus = table.checkStatus('flowId');
+        req_data  = checkStatus.data;
+        openMobilizationLayer();
+    });
+
+    form.on('submit(setBtn3)', function(){
+
+    });
+    form.on('submit(setBtn4)', function(){ //民主推挤与考察
+        var checkStatus = table.checkStatus('flowId');
+        req_data = checkStatus.data;
+        for(var i = 0;i < req_data.length;i++){
+            if(req_data[i].flowStatus == 1){
+                layer.msg(req_data[i].username+',的进度已完结', function () {
+                });
+                return;
+            }
+            if(req_data[i].step3 == undefined ){
+                layer.msg('完成动议(一次上会)才能点击此处', function () {
+                });
+                return;
+            }
+        }
+        openRecommendedStudyLayer();
+    });
+    form.on('submit(setBtn5)', function(){ //核查档案
+        var checkStatus = table.checkStatus('flowId');
+        req_data = checkStatus.data;
+        for(var i = 0;i < req_data.length;i++){
+            if(req_data[i].flowStatus == 1){
+                layer.msg(req_data[i].username+',的进度已完结', function () {
+                });
+                return;
+            }
+            if(req_data[i].step3 == undefined ){
+                layer.msg('完成动议(一次上会)才能点击此处', function () {
+                });
+                return;
+            }
+        }
+        openInspectArchivesLayer();
+    });
+    form.on('submit(setBtn6)', function(){ //征求纪委建议
+        var checkStatus = table.checkStatus('flowId');
+        req_data = checkStatus.data;
+        for(var i = 0;i < req_data.length;i++){
+            if(req_data[i].flowStatus == 1){
+                layer.msg(req_data[i].username+',的进度已完结', function () {
+                });
+                return;
+            }
+            if(req_data[i].step3 == undefined ){
+                layer.msg('完成动议(一次上会)才能点击此处', function () {
+                });
+                return;
+            }
+        }
+        openComDisInsReOpLayer();
+    });
+    form.on('submit(setBtn7)', function(){//征求合规部建议
+        var checkStatus = table.checkStatus('flowId');
+        req_data = checkStatus.data;
+        for(var i = 0;i < req_data.length;i++){
+            if(req_data[i].flowStatus == 1){
+                layer.msg(req_data[i].username+',的进度已完结', function () {
+                });
+                return;
+            }
+            if(req_data[i].step3 == undefined ){
+                layer.msg('完成动议(一次上会)才能点击此处', function () {
+                });
+                return;
+            }
+        }
+        openComplianceDepOpLayer();
+
+    });
+
+    form.on('submit(setBtn8)', function(){ //研究决定二次上会
+        //二次上会  只有民主推荐和考察、核查档案、征求纪委意见、征求合规部意见这四个部分没有先后顺序，操作员可自由选择步骤。
+        // 但只有这四个步骤全部完成才能进入。
+        var checkStatus = table.checkStatus('flowId');
+        req_data = checkStatus.data;
+        for(var i = 0;i < req_data.length;i++){
+            if(req_data[i].flowStatus == 1){
+                layer.msg(req_data[i].username+',的进度已完结', function () {
+                });
+                return;
+            }
+            if(req_data[i].step8 == undefined || req_data[i].step7==undefined
+                || req_data[i].step6 == undefined || req_data[i].step5 == undefined){
+                layer.msg('完成民主推荐和考察、核查档案、征求纪委意见、征求合规部意见这四个部分后才能点击此处', function () {
+                });
+                return;
+            }
+        }
+        openSecondMotionLayer();
+
+    });
+    form.on('submit(setBtn9)', function(){//任前公示
+        var checkStatus = table.checkStatus('flowId');
+        req_data = checkStatus.data;
+        for(var i = 0;i < req_data.length;i++){
+            if(req_data[i].flowStatus == 1){
+                layer.msg(req_data[i].username+',的进度已完结', function () {
+                });
+                return;
+            }
+            if(req_data[i].step9 == undefined){
+                layer.msg('完成研究决定(二次上会)才能点击此处', function () {
+                });
+                return;
+            }
+        }
+        openPubBeforeInOfficeLayer();
+
+    });
+    form.on('submit(setBtn10)', function(){//研究决定（三次上会）
+        var checkStatus = table.checkStatus('flowId');
+        req_data = checkStatus.data;
+        for(var i = 0;i < req_data.length;i++){
+            if(req_data[i].flowStatus == 1){
+                layer.msg(req_data[i].username+',的进度已完结', function () {
+                });
+                return;
+            }
+            if(req_data[i].step10 == undefined){
+                layer.msg('完成任前公示才能点击此处', function () {
+                });
+                return;
+            }
+        }
+        openThirdMotionLayer();
+    });
+    form.on('submit(setBtn11)', function(){ //任前报批
+        var checkStatus = table.checkStatus('flowId');
+        req_data = checkStatus.data;
+        for(var i = 0;i < req_data.length;i++){
+            if(req_data[i].flowStatus == 1){
+                layer.msg(req_data[i].username+',的进度已完结', function () {
+                });
+                return;
+            }
+            if(req_data[i].step11 == undefined){
+                layer.msg('完成研究决定（三次上会）才能点击任前报批', function () {
+                });
+                return;
+            }
+        }
+        openAppBeforeInOfficeLayer();
+
+    });
+
+    form.on('submit(setBtn12)', function(){//离职检查
+        var checkStatus = table.checkStatus('flowId');
+        req_data = checkStatus.data;
+        for(var i = 0;i < req_data.length;i++){
+            if(req_data[i].flowStatus == 1){
+                layer.msg(req_data[i].username+',的进度已完结', function () {
+                });
+                return;
+            }
+            if(req_data[i].step12 == undefined){
+                layer.msg('完成任前报批才能点击离职检查', function () {
+                });
+                return;
+            }
+        }
+        openOutgoingInspectionLayer();
+
+    });
+    form.on('submit(setBtn13)', function(){//任前谈话
+        var checkStatus = table.checkStatus('flowId');
+        req_data = checkStatus.data;
+        for(var i = 0;i < req_data.length;i++){
+            if(req_data[i].flowStatus == 1){
+                layer.msg(req_data[i].username+',的进度已完结', function () {
+                });
+                return;
+            }
+            if(req_data[i].step13 == undefined){
+                layer.msg('完成离职检查才能点击任前谈话', function () {
+                });
+                return;
+            }
+        }
+        openConInOfficeLayer();
+
+    });
+    form.on('submit(setBtn14)', function(){//廉政谈话
+        var checkStatus = table.checkStatus('flowId');
+        req_data = checkStatus.data;
+        for(var i = 0;i < req_data.length;i++){
+            if(req_data[i].flowStatus == 1){
+                layer.msg(req_data[i].username+',的进度已完结', function () {
+                });
+                return;
+            }
+            if(req_data[i].step14 == undefined){
+                layer.msg('完成任前谈话才能点击廉政谈话', function () {
+                });
+                return;
+            }
+        }
+        openConHonestLayer();
+
+    });
+    form.on('submit(setBtn15)', function(){//银保监
+        var checkStatus = table.checkStatus('flowId');
+        req_data = checkStatus.data;
+        for(var i = 0;i < req_data.length;i++){
+            if(req_data[i].flowStatus == 1){
+                layer.msg(req_data[i].username+',的进度已完结', function () {
+                });
+                return;
+            }
+            if(req_data[i].step15 == undefined){
+                layer.msg('完成廉政谈话才能点击银保监', function () {
+                });
+                return;
+            }
+        }
+        openAppBankingLayer();
+
+    });
+    form.on('submit(setBtn16)', function(){//任职宣布
+        var checkStatus = table.checkStatus('flowId');
+        req_data = checkStatus.data;
+        for(var i = 0;i < req_data.length;i++){
+            if(req_data[i].flowStatus == 1){
+                layer.msg(req_data[i].username+',的进度已完结', function () {
+                });
+                return;
+            }
+            if(req_data[i].step16 == undefined){
+                layer.msg('完成银保监才能点击任职宣布', function () {
+                });
+                return;
+            }
+        }
+        openAnnouncedInOfficeLayer();
+
+    });
+    form.on('submit(setBtn17)', function(){ //发文任免
+        var checkStatus = table.checkStatus('flowId');
+        req_data = checkStatus.data;
+        for(var i = 0;i < req_data.length;i++){
+            if(req_data[i].flowStatus == 1){
+                layer.msg(req_data[i].username+',的进度已完结', function () {
+                });
+                return;
+            }
+            if(req_data[i].step16 == undefined){
+                layer.msg('完成任职宣布才能点击发文任免', function () {
+                });
+                return;
+            }
+        }
+        openPostAppointmentLayer();
+
+    });
+    $("#launched").on("click", function() {
+        // layer.alert("5")
+        launchedLayer =layer.open({
+            id:'launchedLayer',
+            type : 1,
+            title : '发起类型',
+            area : ['500px','300px'],
+            content : $("#typeLayer"),
+            done:function(){
+
+            },
+            end: function () {//弹出层关闭就执行
+                if(changed){
+                    tableIns.reload();//刷新数据表格
+                }
+            }
+        });
+    });
+    $("#recmd").on("click",function(){
+        //layer.msg("12");
+        layer.open({
+            type: 2,
+            title: '民主推荐',
+            area: ['1000px', '400px'],
+            maxmin: true,
+            fixed: false, //不固定
+            //maxmin: true,
+            content: 'recmd.html',
+            scrollbar: false,
+
+            successs:function(){
+
+                // var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                // parent.layer.close(index);
+                // // layer.alert("成功回调");
+                //
+                // url:'';
+            },
+            end: function () {//弹出层关闭就执行
+                if(changed){
+                    tableIns.reload();//刷新数据表格
+                }
+            }
+        });
+    });
+    $("#competition").on("click",function(){
+        layer.open({
+            type: 2,
+            title: '公开竞聘',
+            area: ['1000px', '400px'],
+            maxmin: true,
+            fixed: false, //不固定
+            //maxmin: true,
+            content: 'competition.html',
+            scrollbar: false,
+            successs:function(){
+
+            },
+            end: function () {//弹出层关闭就执行
+                if(changed){
+                    tableIns.reload();//刷新数据表格
+                }
+            }
+
+        });
+    });
+    form.on('submit(query)', function (data) {
+        // alert(JSON.stringify(data.field))
+        query(data.field);
+        return false;
+    });
+
+    function query(param) {
+        // alert(param)
+        tableIns.reload({
+            page: {
+                curr: 1 //重新从第 1 页开始
+            }
+            , where: param
+        });
+    }
+    //单元格监听事件
+    table.on('tool(demo)',function(obj){
+        var data = obj.data;
+        var layEvent = obj.event;
+        console.log(data);
+        req_data = data;
+        if(layEvent === 'unitRe'){
+            openUnitReLayer();
+        } else if(layEvent === 'firstMotion'){ //动议一次上会
+            openMobilizationLayer();
+        } else if(layEvent ==='democracyInsRe'){// 民主推挤及考察
+            if(data.flowStatus == 1){
+                layer.msg('进度已完结', function () {
+                });
+                return;
+            }
+            if(data.step3 == undefined ){ //完成动议
+                layer.msg('完成动议(一次上会)才能点击此处', function () {
+                });
+                return;
+            }
+            openRecommendedStudyLayer();
+        }  else if(layEvent==='inspectArchives'){//档案核查
+            if(data.flowStatus == 1){
+                layer.msg('进度已完结', function () {
+                });
+                return;
+            }
+            if(data.step3 == undefined ){
+                layer.msg('完成动议(一次上会)才能点击此处', function () {
+                });
+                return;
+            }
+            openInspectArchivesLayer();
+        }else if(layEvent ==='comDisInsReOp'){//征求纪委建议
+            if(data.flowStatus == 1){
+                layer.msg('进度已完结', function () {
+                });
+                return;
+            }
+            if(data.step3 == undefined ){
+                layer.msg('完成动议(一次上会)才能点击此处', function () {
+                });
+                return;
+            }
+            openComDisInsReOpLayer();
+        } else if(layEvent==='complianceDepOp'){ //合规部意见
+            if(data.flowStatus == 1){
+                layer.msg('进度已完结', function () {
+                });
+                return;
+            }
+            if(data.step3 == undefined ){
+                layer.msg('完成动议(一次上会)才能点击此处', function () {
+                });
+                return;
+            }
+            openComplianceDepOpLayer();
+        } else if(layEvent ==='secondMotion'){//研究决定二次上会
+            if(data.flowStatus == 1){
+                layer.msg('进度已完结', function () {
+                });
+                return;
+            }
+            if(data.step8 == undefined || data.step7 ==undefined ||
+                data.step6 == undefined || data.step5 == undefined){
+                layer.msg('完成民主推荐和考察、核查档案、征求纪委意见、征求合规部意见这四个部分后才能点击此处', function () {
+                });
+                return;
+            }
+            openSecondMotionLayer();
+        } else if(layEvent ==='pubBeforeInOffice' ){//任前公示
+            if(data.flowStatus == 1){
+                layer.msg('进度已完结', function () {
+                });
+                return;
+            }
+            if(data.step9 == undefined){
+                layer.msg('完成研究决定(二次上会)才能点击此处', function () {
+                });
+                return;
+            }
+            openPubBeforeInOfficeLayer();
+        } else if(layEvent ==='thirdMotion'){ //研究决定三次上会
+            if(data.flowStatus == 1){
+                layer.msg('进度已完结', function () {
+                });
+                return;
+            }
+            if(data.step10 == undefined){
+                layer.msg('完成任前公示才能点击此处', function () {
+                });
+                return;
+            }
+            openThirdMotionLayer();
+        } else if(layEvent ==='appBeforeInOffice'){ //任前报批
+            if(data.flowStatus == 1){
+                layer.msg('进度已完结', function () {
+                });
+                return;
+            }
+            if(data.step11 == undefined){
+                layer.msg('完成研究决定三次上会才能点击此处', function () {
+                });
+                return;
+            }
+            openAppBeforeInOfficeLayer();
+        } else if(layEvent==='outgoingInspection'){ //离任检查
+            if(data.flowStatus == 1){
+                layer.msg('进度已完结', function () {
+                });
+                return;
+            }
+            if(data.step12 == undefined){
+                layer.msg('完成任前报批才能点击此处', function () {
+                });
+                return;
+            }
+            openOutgoingInspectionLayer();
+        } else if(layEvent ==='conInOffice'){ //任职谈话
+            if(data.flowStatus == 1){
+                layer.msg('进度已完结', function () {
+                });
+                return;
+            }
+            if(data.step13 == undefined){
+                layer.msg('完成离任检查才能点击此处', function () {
+                });
+                return;
+            }
+            openConInOfficeLayer();
+        } else if(layEvent ==='conHonest'){ // 廉政谈话
+            if(data.flowStatus == 1){
+                layer.msg('进度已完结', function () {
+                });
+                return;
+            }
+            if(data.step14 == undefined){
+                layer.msg('完成任职谈话才能点击此处', function () {
+                });
+                return;
+            }
+            openConHonestLayer();
+        } else if(layEvent ==='appBanking'){ //银保监
+            if(data.flowStatus == 1){
+                layer.msg('进度已完结', function () {
+                });
+                return;
+            }
+            if(data.step15 == undefined){
+                layer.msg('完成廉政谈话才能点击此处', function () {
+                });
+                return;
+            }
+            openAppBankingLayer();
+        } else if(layEvent ==='announcedInOffice'){ //任职宣布
+            if(data.flowStatus == 1){
+                layer.msg('进度已完结', function () {
+                });
+                return;
+            }
+            if(data.step16 == undefined){
+                layer.msg('完成银保监才能点击此处', function () {
+                });
+                return;
+            }
+            openAnnouncedInOfficeLayer();
+        } else if(layEvent ==='postAppoint'){ //宣布任免
+            if(data.flowStatus == 1){
+                layer.msg('进度已完结', function () {
+                });
+                return;
+            }
+            if(data.step17 == undefined){
+                layer.msg('完成任职宣布才能点击此处', function () {
+                });
+                return;
+            }
+            openPostAppointmentLayer();
+        }
+    });
+    function openPostAppointmentLayer(){
+        layer.open({
+            type: 2,
+            title: '宣布任免',
+            area: ['1000px','400px'],
+            fixed: false, //不固定
+            maxmin: true,
+            content: 'appBeforeInOffice.html',
+            scrollbar: false,
+            success:function(layero, index){
+                var body = layer.getChildFrame('body', index);
+                var iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
+                console.log(body.html()) //得到iframe页的body内容
+                //body.find('input').val('Hi，我是从父页来的')
+            },
+            end: function () {//弹出层关闭就执行
+                if(changed){
+                    tableIns.reload();//刷新数据表格
+                }
+            }
+        });
+    }
+    function openAppBeforeInOfficeLayer(){
+        layer.open({
+            type: 2,
+            title: '任前报批',
+            area: ['1000px','400px'],
+            fixed: false, //不固定
+            maxmin: true,
+            content: 'appBeforeInOffice.html',
+            scrollbar: false,
+            success:function(layero, index){
+                var body = layer.getChildFrame('body', index);
+                var iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
+                console.log(body.html()) //得到iframe页的body内容
+                //body.find('input').val('Hi，我是从父页来的')
+            },
+            end: function () {//弹出层关闭就执行
+                if(changed){
+                    tableIns.reload();//刷新数据表格
+                }
+            }
+        });
+    }
+    function openThirdMotionLayer(){
+        layer.open({
+            type: 2,
+            title: '研究决定（三次上会）',
+            area: ['1000px','400px'],
+            fixed: false, //不固定
+            maxmin: true,
+            content: 'thirdMotion.html',
+            scrollbar: false,
+            success:function(layero, index){
+                var body = layer.getChildFrame('body', index);
+                var iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
+                console.log(body.html()) //得到iframe页的body内容
+                //body.find('input').val('Hi，我是从父页来的')
+            },
+            end: function () {//弹出层关闭就执行
+                if(changed){
+                    tableIns.reload();//刷新数据表格
+
+                }
+            }
+        });
+    }
+    function openPubBeforeInOfficeLayer(){
+        layer.open({
+            type: 2,
+            title: '任前公示',
+            area: ['1000px','400px'],
+            fixed: false, //不固定
+            maxmin: true,
+            content: 'pubBeforeInOffice.html',
+            scrollbar: false,
+            success:function(layero, index){
+                var body = layer.getChildFrame('body', index);
+                var iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
+                console.log(body.html()) //得到iframe页的body内容
+                //body.find('input').val('Hi，我是从父页来的')
+            },
+            end: function () {//弹出层关闭就执行
+                if(changed){
+                    tableIns.reload();//刷新数据表格
+
+                }
+            }
+        });
+    }
+    function openComDisInsReOpLayer(){
+        layer.open({
+            type: 2,
+            title: '征求纪委意见',
+            area: ['800px','400px'],
+            fixed: false, //不固定
+            maxmin: true,
+            content: 'comdisinsreop.html',
+            scrollbar: false,
+            success:function(layero, index){
+                var body = layer.getChildFrame('body', index);
+                var iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
+                console.log(body.html()) //得到iframe页的body内容
+                //body.find('input').val('Hi，我是从父页来的')
+            },
+            end: function () {//弹出层关闭就执行
+                if(changed  == true){
+                    tableIns.reload({
+                        page: {
+                            curr: 1 //重新从第 1 页开始
+                        }
+                    });//刷新数据表格
+                }
+            }
+        });
+    }
+    function openRecommendedStudyLayer(){
+        layer.open({
+            type: 2,
+            title: '民主推荐及考察',
+            area: ['1000px', '400px'],
+            fixed: false, //不固定
+            maxmin: true,
+            content: 'recommendedStudy.html',
+            scrollbar: false,
+            success: function(layero, index){
+                var body = layer.getChildFrame('body', index);
+                var iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
+                console.log(body.html()) //得到iframe页的body内容
+                // body.find('input').val('Hi，我是从父页来的')
+            },
+            end: function () {//弹出层关闭就执行
+                if(changed){
+                    tableIns.reload({
+                        page: {
+                            curr: 1 //重新从第 1 页开始
+                        }
+                    });//刷新数据表格
+                    //changed = false;
+                }
+            }
+        });
+    }
+    function openMobilizationLayer(){
+        layer.open({
+            type: 2,
+            title: '动议(一次上会)',
+            area: ['1000px', '400px'],
+            fixed: false, //不固定
+            maxmin: true,
+            content: 'mobilization.html',
+            scrollbar: false,
+            success: function(layero, index){
+                var body = layer.getChildFrame('body', index);
+                var iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
+                console.log(body.html()) //得到iframe页的body内容
+                // body.find('input').val('Hi，我是从父页来的')
+            },
+            end: function () {//弹出层关闭就执行
+                if(changed){
+                    tableIns.reload({
+                        page: {
+                            curr: 1 //重新从第 1 页开始
+                        }
+                    });
+                    //changed = false;
+                }
+            }
+        });
+    }
+    function openAnnouncedInOfficeLayer(){
+        layer.open({
+            type: 2,
+            title: '任职宣布',
+            area: ['800px','400px'],
+            fixed: false, //不固定
+            maxmin: true,
+            content: 'announcedInOffice.html',
+            scrollbar: false,
+            success:function(layero, index){
+                var body = layer.getChildFrame('body', index);
+                var iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
+                console.log(body.html()) //得到iframe页的body内容
+                //body.find('input').val('Hi，我是从父页来的')
+            },
+            end: function () {//弹出层关闭就执行
+                if(changed == true){
+                    tableIns.reload({
+
+                    });//刷新数据表格
+                    //changed = false;
+                }
+            }
+        });
+    }
+    function openAppBankingLayer(){
+        layer.open({
+            type: 2,
+            title: '银保监核准',
+            area: ['800px','400px'],
+            fixed: false, //不固定
+            maxmin: true,
+            content: 'appBankingSupervision.html',
+            scrollbar: false,
+            success:function(layero, index){
+                var body = layer.getChildFrame('body', index);
+                var iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
+                console.log(body.html()) //得到iframe页的body内容
+                //body.find('input').val('Hi，我是从父页来的')
+            },
+            end: function () {//弹出层关闭就执行
+                if(changed == true){
+                    tableIns.reload({
+                        page: {
+                            curr: 1 //重新从第 1 页开始
+                        }
+                    });//刷新数据表格
+                    //changed = false;
+                }
+            }
+        });
+    }
+    function openConHonestLayer(){
+        layer.open({
+            type: 2,
+            title: '廉政谈话',
+            area: ['800px','400px'],
+            fixed: false, //不固定
+            maxmin: true,
+            content: 'conHonest.html',
+            scrollbar: false,
+            success:function(layero, index){
+                var body = layer.getChildFrame('body', index);
+                var iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
+                console.log(body.html()) //得到iframe页的body内容
+                //body.find('input').val('Hi，我是从父页来的')
+            },
+            end: function () {//弹出层关闭就执行
+                if(changed == true){
+                    tableIns.reload({
+                        page: {
+                            curr: 1 //重新从第 1 页开始
+                        }
+                    });//刷新数据表格
+                    //changed = false;
+                }
+            }
+        });
+    }
+    function openConInOfficeLayer(){
+        layer.open({
+            type: 2,
+            title: '任前谈话',
+            area: ['800px','400px'],
+            fixed: false, //不固定
+            maxmin: true,
+            content: 'conInOffice.html',
+            scrollbar: false,
+            success:function(layero, index){
+                var body = layer.getChildFrame('body', index);
+                var iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
+                console.log(body.html()) //得到iframe页的body内容
+                //body.find('input').val('Hi，我是从父页来的')
+            },
+            end: function () {//弹出层关闭就执行
+                if(changed == true){
+                    tableIns.reload({
+                        page: {
+                            curr: 1 //重新从第 1 页开始
+                        }
+                    });//刷新数据表格
+                    //changed = false;
+                }
+            }
+        });
+    }
+    function openOutgoingInspectionLayer(){
+        layer.open({
+            type: 2,
+            title: '离任检查',
+            area: ['800px','400px'],
+            fixed: false, //不固定
+            maxmin: true,
+            content: 'outGoingInspection.html',
+            scrollbar: false,
+            success:function(layero, index){
+                var body = layer.getChildFrame('body', index);
+                var iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
+                console.log(body.html()) //得到iframe页的body内容
+                //body.find('input').val('Hi，我是从父页来的')
+            },
+            end: function () {//弹出层关闭就执行
+                if(changed == true){
+                    tableIns.reload({
+                        page: {
+                            curr: 1 //重新从第 1 页开始
+                        }
+                    });//刷新数据表格
+                    //changed = false;
+                }
+            }
+        });
+    }
+    function openSecondMotionLayer(){
+        layer.open({
+            type: 2,
+            title: '动议(二次上会)',
+            area: ['800px','400px'],
+            fixed: false, //不固定
+            maxmin: true,
+            content: 'secondMotion.html',
+            scrollbar: false,
+            success:function(layero, index){
+                var body = layer.getChildFrame('body', index);
+                var iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
+                console.log(body.html()) //得到iframe页的body内容
+                //body.find('input').val('Hi，我是从父页来的')
+            },
+            end: function () {//弹出层关闭就执行
+                if(changed == true){
+                    tableIns.reload({
+                        page: {
+                            curr: 1 //重新从第 1 页开始
+                        }
+                    });//刷新数据表格
+                    //changed = false;
+                }
+            }
+        });
+    }
+    function openComplianceDepOpLayer(){
+        layer.open({
+            type: 2,
+            title: '征求合规部建议',
+            area: ['800px','400px'],
+            fixed: false, //不固定
+            maxmin: true,
+            content: 'complianceDepOp.html',
+            scrollbar: false,
+            success:function(layero, index){
+                var body = layer.getChildFrame('body', index);
+                var iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
+                console.log(body.html()) //得到iframe页的body内容
+                //body.find('input').val('Hi，我是从父页来的')
+            },
+            end: function () {//弹出层关闭就执行
+                if(changed == true){
+                    tableIns.reload({
+                        page: {
+                            curr: 1 //重新从第 1 页开始
+                        }
+                    });//刷新数据表格
+                    //changed = false;
+                }
+            }
+        });
+    }
+    function openInspectArchivesLayer() {
+        layer.open({
+            type: 2,
+            title: '核查档案',
+            area: ['800px','400px'],
+            fixed: false, //不固定
+            maxmin: true,
+            content: 'inspectArchives.html',
+            scrollbar: false,
+            success:function(layero, index){
+                var body = layer.getChildFrame('body', index);
+                var iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
+                console.log(body.html()) //得到iframe页的body内容
+                //body.find('input').val('Hi，我是从父页来的')
+            },
+            end: function () {//弹出层关闭就执行
+                if(changed  == true){
+                    tableIns.reload({
+                        page: {
+                            curr: 1 //重新从第 1 页开始
+                        }
+                    });//刷新数据表格
+                    //changed = false;
+                }
+            }
+        });
+    }
+    function openUnitReLayer(){
+        layer.open({
+            type: 2,
+            title: '单位推荐',
+            area: ['800px','400px'],
+            fixed: false, //不固定
+            maxmin: true,
+            content: 'unitRecommended.html',
+            scrollbar: false,
+            success:function(layero, index){
+                var body = layer.getChildFrame('body', index);
+                var iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
+                console.log(body.html()) //得到iframe页的body内容
+                //body.find('input').val('Hi，我是从父页来的')
+            },
+            end: function () {//弹出层关闭就执行
+                if(changed == true){
+                    tableIns.reload({
+                        page: {
+                            curr: 1 //重新从第 1 页开始
+                        }
+                    });//刷新数据表格
+                    //changed = false;
+                }
+            }
+        });
+    }
+
+</script>
+</body>
+</html>

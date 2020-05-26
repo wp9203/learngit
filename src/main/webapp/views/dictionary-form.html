@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="../framework/layui/css/layui.css">
+    <title></title>
+    <style>
+        body {
+            margin-top: 10px;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+
+<body layadmin-themealias="default">
+
+
+<form class="layui-form" id="dict-form" action="" lay-filter="dict">
+    <div class="layui-form-item">
+        <label class="layui-form-label">字典名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="dictName" id="dictName" lay-verify="required" lay-reqtext="字典名称不能为空！" placeholder="请输入字典英文名称" autocomplete="off" class="layui-input" >
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">字典key</label>
+        <div class="layui-input-block">
+            <input type="text" name="dictKey" placeholder="请输入字典key" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">字典value</label>
+        <div class="layui-input-block">
+            <input type="text" name="dictValue" placeholder="请输入字典value" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">字典备注</label>
+        <div class="layui-input-block">
+            <input type="text" name="remark" placeholder="请输入字典备注" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button type="submit" id="add" class="layui-btn" lay-submit="" lay-filter="submit-btn">立即提交</button>
+            <button type="button" id="rsbtn" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+<script src="../framework/layui/layui.all.js"></script>
+<script src="../js/http.js"></script>
+<script src="../js/common.js"></script>
+<script src="../js/regular.js"></script>
+<script>
+    //记录当前操作类型
+    var type = null;
+    //当编辑时，记录用户id
+    var dictId = '';
+    var $ = layui.$,
+        layer = layui.layer,
+        http = layui.http,
+        form = layui.form;
+    form.on('submit(submit-btn)', function (data) {
+        var address = "";//请求地址
+        var confirmMsg = '';//提示信息
+        if (type == 'edit') {
+            address = "update";
+            confirmMsg = '字典信息更新成功';
+        } else {
+            address = "add";
+            confirmMsg = '添加字典成功';
+        }
+        var param = data.field;
+        param.id = dictId;
+        http.post("../api/dict/" + address, param, function (data) {
+            var errcode = data.errcode;
+            var errmsg = data.errmsg;
+            if ("0" == errcode) {
+                parent.changed = true;
+                layer.confirm(confirmMsg, {
+                        icon: 1,
+                        btn:['确定', '取消']
+                    },
+                    function (index) {
+                        layer.close(index);
+                        var index2 = parent.layer.getFrameIndex(window.name); //获取窗口索引
+                        parent.layer.close(index2);
+                    });
+            } else {
+                layer.msg(errmsg);
+            }
+        });
+        return false;
+    });
+    /**
+     *
+     * 表单重置
+     */
+    $("#rsbtn").on('click', function(){
+        resetForm('dict-form', 'dict-form');
+    });
+
+    function dictEdit(id) {
+        dictId = id;//记录id
+        type = 'edit';//当前模式为编辑
+        layui.define(['form', 'layer'],function(exports){
+            var $ = layui.$,
+                http = layui.http,
+                form = layui.form;
+            var param = {};
+            param.id = id;
+            http.post("../api/dict/getDict", param, function (data) {
+                var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+                var errcode = data.errcode;
+                var errmsg = data.errmsg;
+                if ("0" == errcode) {
+                    var info = data.data;
+                    form.val("dict", info);
+                } else {
+                    layer.msg(errmsg);
+                }
+            });
+
+            $("#dictName").addClass("layui-disabled");
+            $('#dictName').attr("disabled", "disabled");
+            form.render(null, 'dict');
+
+        });
+    }
+
+</script>
+</body>
+</html>

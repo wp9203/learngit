@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="../framework/layui/css/layui.css">
+    <title></title>
+    <style>
+        body {
+            margin-top: 10px;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+
+<body layadmin-themealias="default">
+
+
+<form class="layui-form" id="role" action="" lay-filter="role">
+    <div class="layui-form-item">
+        <label class="layui-form-label">角色编号</label>
+        <div class="layui-input-block">
+            <input type="text" id="roleNo" name="roleNo" lay-verify="required" lay-reqtext="角色编号不能为空！" autocomplete="off" placeholder="请输入角色编号" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">中文名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="name" lay-verify="required" lay-reqtext="中文名称不能为空！" placeholder="请输入角色中文名称" autocomplete="off" class="layui-input" >
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">英文名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="engName" placeholder="请输入角色英文名称" autocomplete="off" class="layui-input" >
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">状态</label>
+        <div class="layui-input-block">
+            <select name="status" lay-filter="aihao" lay-verify="required">
+                <option value=""></option>
+                <option value="1" selected="">正常</option>
+                <option value="0">废止</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button type="submit" id="add" class="layui-btn" lay-submit="" lay-filter="submit-btn">立即提交</button>
+            <button type="button" id="rsbtn" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+<script src="../framework/layui/layui.js"></script>
+<script src="../js/http.js"></script>
+<script src="../js/common.js"></script>
+<script src="../js/regular.js"></script>
+<script>
+    //记录当前操作类型
+    var type = null;
+    //当编辑时，记录用户id
+    var roleId = '';
+    layui.define(['form', 'layer'],function(exports){
+
+        var $ = layui.$,
+            layer = layui.layer,
+            http = layui.http,
+            form = layui.form;
+        var regular = layui.regular;
+        form.on('submit(submit-btn)', function (data) {
+            var address = "";//请求地址
+            var confirmMsg = '';//提示信息
+            if (type == 'edit') {
+                address = "update";
+                confirmMsg = '角色信息更新成功';
+            } else {
+                address = "add";
+                confirmMsg = '添加角色成功';
+            }
+            var param = data.field;
+            param.id = roleId;
+            http.post("../api/role/" + address, param, function (data) {
+                var errcode = data.errcode;
+                var errmsg = data.errmsg;
+                if ("0" == errcode) {
+                    parent.changed = true;
+                    layer.confirm(confirmMsg,{
+                            icon: 1,
+                            btn:['确定']
+                        },
+                        function (index) {
+                            layer.close(index);
+                            var index2 = parent.layer.getFrameIndex(window.name); //获取窗口索引
+                            parent.layer.close(index2);
+                        });
+                } else {
+                    layer.msg(errmsg);
+                }
+            });
+            return false;
+        });
+    });
+
+    /**
+     *
+     * 表单重置
+     */
+    $("#rsbtn").on('click', function(){
+        resetForm('role', 'role');
+    });
+    function roleEdit(id) {
+        roleId = id;//记录id
+        type = 'edit';//当前模式为编辑
+        layui.define(['form', 'layer'],function(exports){
+            var $ = layui.$,
+                http = layui.http,
+                form = layui.form;
+            var param = {};
+            param.roleId = id;
+            http.post("../api/role/getRole", param, function (data) {
+                var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+                var errcode = data.errcode;
+                var errmsg = data.errmsg;
+                if ("0" == errcode) {
+                    var info = data.data;
+                    form.val("role", info);
+
+                } else {
+                    layer.msg(errmsg);
+                }
+            });
+            //设置角色编号不可编辑
+            $("#roleNo").addClass("layui-disabled");
+            $('#roleNo').attr("disabled","disabled");
+            form.render(null, 'role');
+
+        });
+    }
+
+</script>
+</body>
+</html>

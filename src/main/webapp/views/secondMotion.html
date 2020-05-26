@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../framework/layui/css/layui.css">
+    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="icon" href="/favicon.ico">
+    <title>动议(二次上会)</title>
+</head>
+<body>
+
+
+
+    <div style="text-align: center;padding:10px;">
+        <button class="layui-btn ">     研究决定(二次上会)      </button>
+    </div>
+
+
+
+<form class="layui-form" action="" id="tableForm" lay-filter="tableForm" style="padding:10px;" >
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">日期</label>
+            <div class="layui-input-inline" >
+                <input type="text" class="layui-input" name="meetingDate" required layui-verify="required" id="meetingDate" lay-filter="meetingDate" autocomplete="off">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">主持人</label>
+            <div class="layui-input-inline" >
+                <input type="text" name="host" required  lay-verify="required"  class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">应参会人数</label>
+            <div class="layui-input-inline" >
+                <input type="text" name="dueNumber" required  lay-verify="required"  class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">实际参会人数</label>
+            <div class="layui-input-inline" >
+                <input type="text" name="actualNumber" required  lay-verify="required" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">纪要文号</label>
+            <div class="layui-input-inline" >
+                <input type="text" name="summaryNumber" required  lay-verify="required" class="layui-input">
+            </div>
+        </div>
+
+    </div>
+    <div style="padding:10px;">
+    <table class="layui-hide" id="tableId" lay-filter="tableId" ></table>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <button type="button" class="layui-btn" id="sign_file">上传签报</button>
+            <div class="layui-input-inline" >
+                <input type="text" name="signFilePath" class="layui-input" id="signFilePath" required  lay-verify="required">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <button type="button" class="layui-btn" id="summary_file">上传纪要</button>
+            <div class="layui-input-inline" >
+                <input type="text" name="summaryFilePath" class="layui-input" id="summaryFilePath" required  lay-verify="required">
+            </div>
+        </div>
+    </div>
+    <script type="text/html" id="barDemo">
+        <div class="layui-form-item iradio">
+            <a href="javascript:void(0)" lay-event="radio1click"><input type="radio"  name="pass_{{d.id}}" value="1" title="是,但调整任职单位" lay-filter="rdo1" {{d.pass=="1"?"checked":""}}></a>
+            <a href="javascript:void(0)" lay-event="radio2click"><input type="radio"  name="pass_{{d.id}}" value="2" title="否" lay-filter="rdo2" {{d.pass=="2"?"checked":""}}></a>
+        </div>
+    </script>
+
+    <div class="layui-form-item" style="text-align: center; padding:20px">
+        <div class="layui-input-block">
+            <button id="do_save" lay-filter="do_save" class="layui-btn" type="submit" lay-submit="">保存</button>
+            <button id="submit_btn" lay-filter="submit_btn" class="layui-btn" type="submit" lay-submit="">提交</button>
+        </div>
+    </div>
+</form>
+<div  style="display:none;padding:10px;" id="newPositionLayer">
+    <form class="layui-form" action="" id="dataForm" lay-filter="dataForm" >
+        <div class="layui-form-item">
+            <label class="layui-form-label">调整任职单位:</label>
+            <div class="layui-input-block">
+                <select name="newPosition" lay-verify="">
+                    <option value=""></option>
+                    <option value="001">行长</option>
+                    <option value="002">付行长</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item" style="display: none;">
+            <label class="layui-form-label">id:</label>
+            <div class="layui-input-block">
+                <input name="id" class="layui-input" type="text">
+            </div>
+        </div>
+        <div class="layui-form-item" style="text-align:center;">
+            <div class="layui-input-block">
+                <button lay-filter="doSubmit" class="layui-btn layui-btn-sm " type="submit" lay-submit="">保存</button>
+                <button class="layui-btn layui-btn-primary layui-btn-sm layui-icon layui-icon-refresh" type="reset">重置</button>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+<script src="../framework/layui/layui.all.js"></script>
+<script src="../js/dictionary.js"></script>
+<script src="../js/http.js"></script>
+<script src="../js/jquery-1.8.0.min.js"></script>
+<script>
+
+    var table = layui.table;
+    var layer = layui.layer;
+    var form = layui.form;
+    var element = layui.element;
+    var $ = layui.jquery;
+    var http = layui.http;
+    var laydate = layui.laydate;
+    var upload = layui.upload;
+    laydate.render({
+        elem:"#meetingDate"
+    });
+    //获取父页面传递的参数
+    var parent_json =parent.req_data;
+    var secondMotionIds = new Array();
+    //封装访问后天请求参数
+    var ids = new Array();
+    var param = {};
+    if(parent_json.length == undefined){
+        ids.push(parent_json.userid);
+        secondMotionIds.push(parent_json.secondMotionId);
+    }else{
+        for(var i = 0;i<parent_json.length;i++){
+            ids.push(parent_json[i].userid);
+            secondMotionIds.push(parent_json[i].secondMotionId);
+        }
+    }
+
+    param.ids =ids;
+    // alert("ids:"+JSON.stringify(ids));
+    http.setHeader("Content-Type", "application/json; charset=utf-8");//请求参数格式为json是需要添加请求头
+    http.post("../api/secondMotion/queryByIds",JSON.stringify(param),function(data){
+        console.log(data.dataForm);
+
+        // //表单赋值
+        // for(var k =0;k<req_data.length;i++){
+        //     var formVal =
+        // }
+        form.val("tableForm",data.dataForm);
+        console.log("data:"+JSON.stringify(data.data));
+        var result =data.data;
+        var tableData =[];
+        for(var i =0;i<result.length;i++){
+            var user = {};
+            user.id =result[i].id;
+            user.candidateName=result[i].candidateName;
+            user.unit =result[i].unit;
+            user.position = result[i].position;
+            user.positionLevel = result[i].positionLevel;
+            user.note = result[i].note;
+            user.pass = result[i].pass;
+            user.newPosition = result[i].newPosition;
+            tableData.push(user);
+        }
+        console.log("tableData:"+JSON.stringify(tableData));
+        table.render({
+            elem: "#tableId"
+            ,url: ''
+           // ,cellMinWidth:100
+            ,parseData: function (res) {    //res 即为原始返回的数据
+                return {
+                    "code": res.errcode,  //解析接口状态
+                    "msg": res.errmsg,    //解析提示文本
+                    "count": res.data.count,   //解析数据长度
+                    "data": res.data.rows //解析数据列表
+                };
+            }
+            ,done:function(){
+                //返回值赋值给单选框
+            }
+            ,cols: [[ //标题栏
+                {type:'checkbox' ,tilte:'选择'}
+                , {field:'id',title:'ID',hide:true,align:'center'}
+                , {field: 'candidateName', title: '姓名', align: 'center'} //rowspan即纵向跨越的单元格数
+                , {field: 'unit', title: '任职单位', align: 'center'}
+                , {field: 'position', title: '任职职务', align: 'center'}
+                , {field: 'positionLevel', title: '任职职等', align: 'center'}
+                , {field: 'note', title: '备注', align: 'center'}
+                , {field: 'pass',title:'pass',align:'center',hide:true}
+                //, {field: 'newPosition',title:'newPosition',align:'center',hide:true}
+                , {field: 'pass_btn', title: '是否通过',align: 'center',templet:'#barDemo',width:200}
+            ]]
+            ,id: 'tableId'
+            ,data:tableData
+        })
+    })
+
+    table.on('tool(tableId)',function(obj){
+        var data = obj.data; //获得当前行数据
+        console.log('行工具监听');
+        var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+        var tr = obj.tr; //获得当前行 tr 的DOM对象
+
+        if(layEvent ==='radio1click')
+        {
+            // //用obj.data.row_id更新数据库
+            // $.post('status_change',{id:obj.data.row_id, statusText:'确定'});
+            // //直接用obj.update更新同一行数据，而无需刷新数据表格
+            obj.data.pass = 1;
+            obj.update(obj.data);
+           //插入一个弹出框给操作者选择新的任职单位
+            console.log(data);
+            openNewPosition(data);
+
+        }
+        if(layEvent==='radio2click'){
+            obj.data.pass = 2;
+            obj.update(obj.data);
+        }
+    });
+
+    // form.on("radio(rdo1)",function(data) {
+    //     console.log("radio")
+    //     console.log(data.elem); //得到radio原始DOM对象
+    //     console.log(data.value); //被点击的radio的value值
+    //     var elem = $(data.elem);
+    //     var trElem = elem.parents('tr');
+    //     var tableData = table.cache['tableId'];
+    //     // 更新到表格的缓存数据中，才能在获得选中行等等其他的方法中得到更新之后的值
+    //     tableData[trElem.data('index')].pass = data.value;
+    //     if(data.value == 1){
+    //         layer.msg('打开');
+    //     }
+    // });
+    // form.on("radio(rdo2)",function(data) {
+    //     var elem = $(data.elem);
+    //     var trElem = elem.parents('tr');
+    //     var tableData = table.cache['tableId'];
+    //     // 更新到表格的缓存数据中，才能在获得选中行等等其他的方法中得到更新之后的值
+    //     tableData[trElem.data('index')].pass = data.value;
+    //
+    // });
+    function openNewPosition(obj){
+        var data = obj;
+        var oldPosition = data.position;
+        console.log(oldPosition);
+        layer.open({
+            type : 1,
+            title : '选择任职单位',
+            area : [ '300px', '300px' ],
+            content : $("#newPositionLayer"),
+            success: function(index){
+                form.val("dataForm",data);
+              //此处可根据其原任职单位去查询其可调整的任职单位
+            }
+        })
+    }
+
+
+    //文件上传
+
+    var upload_sign = upload.render({
+        elem: '#sign_file'
+        ,accept:'file'
+        ,url: '../api/fileUpload/upload' //改成您自己的上传接口
+        ,before: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+            obj.preview(function(index, file, result) {
+                console.log(index); //得到文件索引
+                console.log(file); //得到文件对象
+                console.log(result); //得到文件base64编码，比如图片
+            })
+        }
+        ,done: function(res, index, upload){
+            if(res.errcode == 0 ){
+                layer.msg("上传成功");
+            }
+            var diskFilePath = res.diskFilePath;
+            //table.cache[tableId][this.item.closest('tr').data('index')]["replyData"] =diskFilePath;
+            $("#signFilePath").val(diskFilePath);
+        }
+        ,error: function(index, upload){
+
+        }
+    });
+    var upload_summary = upload.render({
+        elem: '#summary_file'
+        ,accept:'file'
+        ,url: '../api/fileUpload/upload' //改成您自己的上传接口
+        ,before: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+            obj.preview(function(index, file, result) {
+                console.log(index); //得到文件索引
+                console.log(file); //得到文件对象
+                console.log(result); //得到文件base64编码，比如图片
+            })
+        }
+        ,done: function (res, index, upload) {
+            if(res.errcode == 0 ){
+                layer.msg("上传成功");
+            }
+            var diskFilePath = res.diskFilePath;
+            //table.cache[tableId][this.item.closest('tr').data('index')]["replyData"] =diskFilePath;
+            $("#summaryFilePath").val(diskFilePath);
+        }
+        ,error: function(index, upload){
+
+        }
+    });
+    // $(document).on('click','#submit_btn',function(data) {
+    //     var checkStatus = table.checkStatus('tableId');
+    //     var tableData = checkStatus.data
+    //     alert("tableData1:"+JSON.stringify(tableData));
+    //     alert("data.field:"+data.field);
+    //     return false;
+    // });
+    form.on('submit(submit_btn)',function(data){
+        var checkStatus = table.checkStatus('tableId');
+        var tableData = checkStatus.data;
+        //alert("tableData1:"+JSON.stringify(tableData));
+        if(tableData.length == 0){
+            layer.msg('请勾选需要保存的人员', function () {
+            });
+            return false;
+        }
+        var infos = new Array();
+        var param = {};
+        for(var i=0;i<tableData.length;i++){
+            var user = {};
+            user.id =tableData[i].id;
+            user.candidateName=tableData[i].candidateName;
+            if(secondMotionIds.includes(user.id)== true){
+                layer.msg(user.candidateName+"已提交,不能修改!",function(){
+
+                });
+                return false;
+            }
+            user.unit =tableData[i].unit;
+            user.position = tableData[i].position;
+            user.positionLevel = tableData[i].positionLevel;
+            user.note = tableData[i].note;
+            user.pass =tableData[i].pass;
+            if(user.pass == undefined || user.pass == ''){
+                layer.msg('请为'+user.candidateName+"选择是否通过",function(){
+
+                });
+                return false;
+            }
+            //user.newPosition = tableData[i].newPosition;
+            console.log("user"+JSON.stringify(user));
+
+            infos.push(user);
+        }
+        param.infos = infos;
+        param.req = data.field;
+        console.log("param:"+JSON.stringify(param));
+        layer.confirm("确认提交吗?提交后不得修改", function(index){
+            http.setHeader("Content-Type", "application/json; charset=utf-8");
+            http.post('../api/secondMotion/submit', JSON.stringify(param), function (rep) {
+                var errcode = rep.errcode;
+                if (errcode == '0') {
+                    layer.msg("提交成功", {icon: 1});
+                }else{
+                    layer.msg(rep.errmsg);
+                }
+            });
+
+        })
+        return false;
+    });
+    form.on('submit(do_save)',function(data){
+        var checkStatus = table.checkStatus('tableId');
+        var tableData = checkStatus.data;
+        if(tableData.length == 0){
+            layer.msg('请勾选需要保存的人员', function () {
+            });
+            return false;
+        }
+        var infos = new Array();
+        var param = {};
+
+        for(var i=0;i<tableData.length;i++){
+            var user = {};
+            user.id =tableData[i].id;
+            user.candidateName=tableData[i].candidateName;
+            user.unit =tableData[i].unit;
+            if(secondMotionIds.includes(user.id)== true){
+                layer.msg(user.candidateName+"已提交,不能修改!",function(){
+
+                });
+                return false;
+            }
+            user.position = tableData[i].position;
+            user.positionLevel = tableData[i].positionLevel;
+            user.note = tableData[i].note;
+            user.pass =tableData[i].pass;
+           // user.newPosition = tableData[i].newPosition;
+            console.log("user"+JSON.stringify(user));
+
+            infos.push(user);
+        }
+        param.infos = infos;
+        console.log(data.field);
+        param.req = data.field;
+        console.log("param:"+JSON.stringify(param));
+        http.setHeader("Content-Type", "application/json; charset=utf-8");
+        http.post('../api/secondMotion/add', JSON.stringify(param), function (rep) {
+            var errcode = rep.errcode;
+            if (errcode == '0') {
+                layer.msg("保存成功", {icon: 1});
+            }
+        });
+        return false;
+    });
+
+
+    //保存调整任职单位
+    // $(document).on('click','#doSubmit',function(data){
+    //     console.log("提交");
+    //     console.log(JSON.stringify(data.field));
+    //    //return false;
+    // });
+    form.on("submit(doSubmit)",function(obj){
+        var data = obj.field;
+        console.log(data);
+        var param = {};
+        param.infos=data;
+        http.setHeader("Content-Type", "application/json; charset=utf-8");
+        http.post('../api/secondMotion/update', JSON.stringify(param), function (rep) {
+            var errcode = rep.errcode;
+            if (errcode == '0') {
+                layer.msg("保存调整任职单位成功", {icon: 1});
+            }
+        });
+        return false;
+    });
+
+</script>
+</body>
+</html>

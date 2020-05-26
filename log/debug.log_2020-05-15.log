@@ -1,0 +1,82 @@
+2020-05-15 08:57:09 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:246) ]
+INFO:开始检查配置数据...
+2020-05-15 08:57:09 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:248) ]
+INFO:开始组装数据...
+2020-05-15 08:57:09 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:251) ]
+INFO:开始生成配置信息
+2020-05-15 08:57:09 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:254) ]
+DEBUG:生成的配置信息：
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+  <context id="MysqlContext" targetRuntime="MyBatis3">
+    <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+    <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
+    <commentGenerator type="com.nantian.generator.ChineseCommentGenerator">
+      <property name="suppressAllComments" value="false"/>
+      <property name="suppressDate" value="false"/>
+    </commentGenerator>
+    <jdbcConnection driverClass="oracle.jdbc.driver.OracleDriver" connectionURL="jdbc:oracle:thin:@127.0.0.1:1521:ORCL" userId="admin" password="123456">
+      <property name="nullCatalogMeansCurrent" value="true"/>
+      <property name="remarksReporting" value="true"/>
+    </jdbcConnection>
+    <javaTypeResolver>
+      <property name="forceBigDecimals" value="false"/>
+    </javaTypeResolver>
+    <javaModelGenerator targetPackage="com.nantian.entity.sys" targetProject="./src/main/java">
+      <property name="enableSubPackages" value="false"/>
+      <property name="trimStrings" value="false"/>
+    </javaModelGenerator>
+    <sqlMapGenerator targetPackage="com.nantian.mapper.sys" targetProject="./src/main/java">
+      <property name="enableSubPackages" value="false"/>
+    </sqlMapGenerator>
+    <javaClientGenerator type="XMLMAPPER" targetPackage="com.nantian.mapper.sys" targetProject="./src/main/java">
+      <property name="enableSubPackages" value="false"/>
+    </javaClientGenerator>
+    <table tableName="SYS_ANNOUNCED_IN_OFFICE" enableCountByExample="true" enableDeleteByExample="true" enableUpdateByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+      <columnOverride column="CREATION_TIME" jdbcType="TIMESTAMP"/>
+      <columnOverride column="UPDATE_TIME" jdbcType="TIMESTAMP"/>
+      <columnOverride column="ANNOUNCE_TIME" jdbcType="TIMESTAMP"/>
+    </table>
+  </context>
+</generatorConfiguration>
+
+2020-05-15 08:57:09 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:255) ]
+INFO:开始生成代码...
+2020-05-15 08:57:09 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Retrieving column information for table "SYS_ANNOUNCED_IN_OFFICE"
+2020-05-15 08:57:10 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "ID", data type 3, in table "ADMIN.SYS_ANNOUNCED_IN_OFFICE"
+2020-05-15 08:57:10 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "CANDIDATE_NAME", data type 12, in table "ADMIN.SYS_ANNOUNCED_IN_OFFICE"
+2020-05-15 08:57:10 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "UNIT", data type 12, in table "ADMIN.SYS_ANNOUNCED_IN_OFFICE"
+2020-05-15 08:57:10 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "POSITION", data type 12, in table "ADMIN.SYS_ANNOUNCED_IN_OFFICE"
+2020-05-15 08:57:10 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "POSITION_LEVEL", data type 12, in table "ADMIN.SYS_ANNOUNCED_IN_OFFICE"
+2020-05-15 08:57:10 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "ASPIRING_UNIT", data type 12, in table "ADMIN.SYS_ANNOUNCED_IN_OFFICE"
+2020-05-15 08:57:10 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "ASPIRING_POSITION", data type 12, in table "ADMIN.SYS_ANNOUNCED_IN_OFFICE"
+2020-05-15 08:57:10 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "ASPIRING_POSITION_LEVEL", data type 12, in table "ADMIN.SYS_ANNOUNCED_IN_OFFICE"
+2020-05-15 08:57:10 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "NOTE", data type 12, in table "ADMIN.SYS_ANNOUNCED_IN_OFFICE"
+2020-05-15 08:57:10 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "ANNOUNCE_TIME", data type 91, in table "ADMIN.SYS_ANNOUNCED_IN_OFFICE"
+2020-05-15 08:57:10 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "ANNOUNCE_PERSON", data type 12, in table "ADMIN.SYS_ANNOUNCED_IN_OFFICE"
+2020-05-15 08:57:10 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "CREATION_TIME", data type 91, in table "ADMIN.SYS_ANNOUNCED_IN_OFFICE"
+2020-05-15 08:57:10 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "UPDATE_TIME", data type 91, in table "ADMIN.SYS_ANNOUNCED_IN_OFFICE"
+2020-05-15 08:57:10 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found override for column "ANNOUNCE_TIME" in table "ADMIN.SYS_ANNOUNCED_IN_OFFICE"
+2020-05-15 08:57:10 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found override for column "CREATION_TIME" in table "ADMIN.SYS_ANNOUNCED_IN_OFFICE"
+2020-05-15 08:57:10 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found override for column "UPDATE_TIME" in table "ADMIN.SYS_ANNOUNCED_IN_OFFICE"
+2020-05-15 08:57:10 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:258) ]
+INFO:生成代码结束.

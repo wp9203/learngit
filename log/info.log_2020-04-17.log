@@ -1,0 +1,70 @@
+2020-04-17 09:31:29 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:246) ]
+INFO:开始检查配置数据...
+2020-04-17 09:31:29 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:248) ]
+INFO:开始组装数据...
+2020-04-17 09:31:29 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:251) ]
+INFO:开始生成配置信息
+2020-04-17 09:31:29 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:255) ]
+INFO:开始生成代码...
+2020-04-17 09:31:30 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:258) ]
+INFO:生成代码结束.
+2020-04-17 10:27:36 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:246) ]
+INFO:开始检查配置数据...
+2020-04-17 10:27:36 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:248) ]
+INFO:开始组装数据...
+2020-04-17 10:27:36 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:251) ]
+INFO:开始生成配置信息
+2020-04-17 10:27:36 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:255) ]
+INFO:开始生成代码...
+2020-04-17 10:27:37 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:258) ]
+INFO:生成代码结束.
+2020-04-17 11:00:30 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:246) ]
+INFO:开始检查配置数据...
+2020-04-17 11:00:30 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:248) ]
+INFO:开始组装数据...
+2020-04-17 11:00:30 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:251) ]
+INFO:开始生成配置信息
+2020-04-17 11:00:30 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:255) ]
+INFO:开始生成代码...
+2020-04-17 11:00:31 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:258) ]
+INFO:生成代码结束.
+2020-04-17 11:09:55 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:246) ]
+INFO:开始检查配置数据...
+2020-04-17 11:09:55 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:248) ]
+INFO:开始组装数据...
+2020-04-17 11:09:55 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:251) ]
+INFO:开始生成配置信息
+2020-04-17 11:09:55 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:255) ]
+INFO:开始生成代码...
+2020-04-17 11:09:55 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:258) ]
+INFO:生成代码结束.
+2020-04-17 11:57:43 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:246) ]
+INFO:开始检查配置数据...
+2020-04-17 11:57:43 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:248) ]
+INFO:开始组装数据...
+2020-04-17 11:57:43 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:251) ]
+INFO:开始生成配置信息
+2020-04-17 11:57:43 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:255) ]
+INFO:开始生成代码...
+2020-04-17 11:57:46 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:258) ]
+INFO:生成代码结束.
+2020-04-17 12:01:53 下午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:246) ]
+INFO:开始检查配置数据...
+2020-04-17 12:01:53 下午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:248) ]
+INFO:开始组装数据...
+2020-04-17 12:01:53 下午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:251) ]
+INFO:开始生成配置信息
+2020-04-17 12:01:53 下午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:255) ]
+INFO:开始生成代码...
+2020-04-17 12:01:55 下午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:258) ]
+INFO:生成代码结束.
+2020-04-17 14:26:02 下午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:246) ]
+INFO:开始检查配置数据...
+2020-04-17 14:26:02 下午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:248) ]
+INFO:开始组装数据...
+2020-04-17 14:26:02 下午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:251) ]
+INFO:开始生成配置信息
+2020-04-17 14:26:02 下午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:255) ]
+INFO:开始生成代码...
+2020-04-17 14:26:04 下午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:258) ]
+INFO:生成代码结束.

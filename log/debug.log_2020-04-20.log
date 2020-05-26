@@ -1,0 +1,189 @@
+2020-04-20 10:45:22 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:246) ]
+INFO:开始检查配置数据...
+2020-04-20 10:45:22 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:248) ]
+INFO:开始组装数据...
+2020-04-20 10:45:22 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:251) ]
+INFO:开始生成配置信息
+2020-04-20 10:45:22 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:254) ]
+DEBUG:生成的配置信息：
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+  <context id="MysqlContext" targetRuntime="MyBatis3">
+    <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+    <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
+    <commentGenerator type="com.nantian.generator.ChineseCommentGenerator">
+      <property name="suppressAllComments" value="false"/>
+      <property name="suppressDate" value="false"/>
+    </commentGenerator>
+    <jdbcConnection driverClass="oracle.jdbc.driver.OracleDriver" connectionURL="jdbc:oracle:thin:@127.0.0.1:1521:ORCL" userId="gpp" password="gpp">
+      <property name="nullCatalogMeansCurrent" value="true"/>
+      <property name="remarksReporting" value="true"/>
+    </jdbcConnection>
+    <javaTypeResolver>
+      <property name="forceBigDecimals" value="false"/>
+    </javaTypeResolver>
+    <javaModelGenerator targetPackage="com.nantian.entity.sys" targetProject="./src/main/java">
+      <property name="enableSubPackages" value="false"/>
+      <property name="trimStrings" value="false"/>
+    </javaModelGenerator>
+    <sqlMapGenerator targetPackage="com.nantian.mapper.sys" targetProject="./src/main/java">
+      <property name="enableSubPackages" value="false"/>
+    </sqlMapGenerator>
+    <javaClientGenerator type="XMLMAPPER" targetPackage="com.nantian.mapper.sys" targetProject="./src/main/java">
+      <property name="enableSubPackages" value="false"/>
+    </javaClientGenerator>
+    <table schema="gpp" tableName="SYS_FLOW" enableCountByExample="true" enableDeleteByExample="true" enableUpdateByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+      <columnOverride column="CREATION_TIME" jdbcType="TIMESTAMP"/>
+      <columnOverride column="UPDATE_TIME" jdbcType="TIMESTAMP"/>
+      <columnOverride column="START_DATE" jdbcType="TIMESTAMP"/>
+      <columnOverride column="END_DATE" jdbcType="TIMESTAMP"/>
+    </table>
+  </context>
+</generatorConfiguration>
+
+2020-04-20 10:45:22 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:255) ]
+INFO:开始生成代码...
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Retrieving column information for table "GPP.SYS_FLOW"
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "ID", data type 3, in table "GPP.SYS_FLOW"
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "USERID", data type 3, in table "GPP.SYS_FLOW"
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "USERNAME", data type 12, in table "GPP.SYS_FLOW"
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "ASPIRING_UNIT", data type 12, in table "GPP.SYS_FLOW"
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "ASPIRING_POSITION", data type 12, in table "GPP.SYS_FLOW"
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "STEP1", data type 12, in table "GPP.SYS_FLOW"
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "UNIT_RE_ID", data type 3, in table "GPP.SYS_FLOW"
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "UNIT_RE_RESULT", data type 12, in table "GPP.SYS_FLOW"
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "STEP2", data type 12, in table "GPP.SYS_FLOW"
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "FIRST_MOTION_ID", data type 3, in table "GPP.SYS_FLOW"
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "FIRST_MOTION_RESULT", data type 12, in table "GPP.SYS_FLOW"
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "STEP3", data type 12, in table "GPP.SYS_FLOW"
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "REPORT_BEFORE_IM_ID", data type 3, in table "GPP.SYS_FLOW"
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "REPORT_BEFORE_IM_RESULT", data type 12, in table "GPP.SYS_FLOW"
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "STEP4", data type 12, in table "GPP.SYS_FLOW"
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "DEMOCRACY_INS_RE_ID", data type 3, in table "GPP.SYS_FLOW"
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "DEMOCRACY_INS_RE_RESULT", data type 12, in table "GPP.SYS_FLOW"
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "STEP5", data type 12, in table "GPP.SYS_FLOW"
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "INSPECT_ARCHIVES_ID", data type 3, in table "GPP.SYS_FLOW"
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "INSPECT_ARCHIVES_RESULT", data type 12, in table "GPP.SYS_FLOW"
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "STEP6", data type 12, in table "GPP.SYS_FLOW"
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "COM_DIS_INS_RE_OP_ID", data type 3, in table "GPP.SYS_FLOW"
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "COM_DIS_INS_RE_OP_RESULT", data type 12, in table "GPP.SYS_FLOW"
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "STEP7", data type 12, in table "GPP.SYS_FLOW"
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "COMPLIANCE_DEP_OP_ID", data type 3, in table "GPP.SYS_FLOW"
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "COMPLIANCE_DEP_OP_RESULT", data type 12, in table "GPP.SYS_FLOW"
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "STEP8", data type 12, in table "GPP.SYS_FLOW"
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "SECOND_MOTION_ID", data type 3, in table "GPP.SYS_FLOW"
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "SECOND_MOTION_RESULT", data type 12, in table "GPP.SYS_FLOW"
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "STEP9", data type 12, in table "GPP.SYS_FLOW"
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "PUB_BEFORE_IN_OFFICE_ID", data type 3, in table "GPP.SYS_FLOW"
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "PUB_BEFORE_IN_OFFICE_RESULT", data type 12, in table "GPP.SYS_FLOW"
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "STEP10", data type 12, in table "GPP.SYS_FLOW"
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "THIRD_MOTION_ID", data type 3, in table "GPP.SYS_FLOW"
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "THIRD_MOTION_RESULT", data type 12, in table "GPP.SYS_FLOW"
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "STEP11", data type 12, in table "GPP.SYS_FLOW"
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "APP_BEFORE_IN_OFFICE_ID", data type 3, in table "GPP.SYS_FLOW"
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "APP_BEFORE_IN_OFFICE_RESULT", data type 12, in table "GPP.SYS_FLOW"
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "STEP12", data type 12, in table "GPP.SYS_FLOW"
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "OUTGOING_INSPECTION_ID", data type 3, in table "GPP.SYS_FLOW"
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "OUTGOING_INSPECTION_RESULT", data type 12, in table "GPP.SYS_FLOW"
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "STEP13", data type 12, in table "GPP.SYS_FLOW"
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "CON_IN_OFFICE_ID", data type 3, in table "GPP.SYS_FLOW"
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "CON_IN_OFFICE_RESULT", data type 12, in table "GPP.SYS_FLOW"
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "STEP14", data type 12, in table "GPP.SYS_FLOW"
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "CON_HONEST_ID", data type 3, in table "GPP.SYS_FLOW"
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "CON_HONEST_RESULT", data type 12, in table "GPP.SYS_FLOW"
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "STEP15", data type 12, in table "GPP.SYS_FLOW"
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "APP_BANKING_SUPERVISION_ID", data type 3, in table "GPP.SYS_FLOW"
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "APP_BANKING_SUPERVISION_RESULT", data type 12, in table "GPP.SYS_FLOW"
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "STEP16", data type 12, in table "GPP.SYS_FLOW"
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "ANNOUNCED_IN_OFFICE_ID", data type 3, in table "GPP.SYS_FLOW"
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "ANNOUNCED_IN_OFFICE_RESULT", data type 12, in table "GPP.SYS_FLOW"
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "STEP17", data type 12, in table "GPP.SYS_FLOW"
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "POST_APPOINT_ID", data type 3, in table "GPP.SYS_FLOW"
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "POST_APPOINT_RESULT", data type 12, in table "GPP.SYS_FLOW"
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "STEP18", data type 12, in table "GPP.SYS_FLOW"
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "CREATION_TIME", data type 91, in table "GPP.SYS_FLOW"
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "UPDATE_TIME", data type 91, in table "GPP.SYS_FLOW"
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "FLOW_STATUS", data type 12, in table "GPP.SYS_FLOW"
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "ORG", data type 12, in table "GPP.SYS_FLOW"
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "ADJUST_TYPE", data type 12, in table "GPP.SYS_FLOW"
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "POSITION_LEVEL", data type 12, in table "GPP.SYS_FLOW"
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "START_DATE", data type 91, in table "GPP.SYS_FLOW"
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "END_DATE", data type 91, in table "GPP.SYS_FLOW"
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found override for column "CREATION_TIME" in table "GPP.SYS_FLOW"
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found override for column "UPDATE_TIME" in table "GPP.SYS_FLOW"
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found override for column "START_DATE" in table "GPP.SYS_FLOW"
+2020-04-20 10:45:23 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found override for column "END_DATE" in table "GPP.SYS_FLOW"
+2020-04-20 10:45:24 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:258) ]
+INFO:生成代码结束.

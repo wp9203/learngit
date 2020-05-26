@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../framework/layui/css/layui.css">
+    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="icon" href="/favicon.ico">
+    <title>角色授权</title>
+</head>
+<body class="layui-view-body">
+    <div class="layui-container">
+        <div class="layui-content">
+            <div class="layui-row">
+                <div class="layui-card">
+                    <div class="layui-card-body">
+                        <div id="permission-tree" class="demo-tree"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        <div class="center layui-btn-container">
+            <button type="submit" class="layui-btn" lay-submit="" id="authorization">授权</button>
+        </div>
+    </div>
+    <script src="../framework/layui/layui.all.js"></script>
+    <script src="../js/http.js"></script>
+    <script>
+        var tree = layui.tree
+            ,$ = layui.$
+            ,layer = layui.layer
+            ,util = layui.util
+            ,http = layui.http;
+        var rId = '';
+        /**
+         * 查询角色权限树
+         */
+        function getRolePermission(roleId) {
+            rId = roleId;
+            var param = {};
+            param.roleId = roleId;
+            //查询机构树
+            http.post('../api/role/getRolePermission', param, function (respone) {
+                var errcode = respone.errcode;
+                if (errcode == '0') {
+                    var data = respone.data;
+
+                    tree.render({
+                        elem: '#permission-tree'
+                        ,id:'permission-tree'
+                        ,data: data
+                        ,showCheckbox: true  //是否仅允许节点左侧图标控制展开收缩
+                        ,click: function(obj){
+
+                        }
+                    });
+                }
+            });
+        }
+        /**
+         * 授权按钮
+         */
+        $('#authorization').click(function () {
+            var checkedData = tree.getChecked('permission-tree'); //获取选中节点的数据
+            var ids = new Array();
+            for (var i = 0; i < checkedData.length; i++) {
+                var node = checkedData[i];
+                getIds(node, ids);
+            }
+            if (ids.length == 0) {
+                layer.confirm("请确认是否清空授权", {
+                        icon: 1,
+                        btn: ['确定', '取消']
+                    },
+                    function (index) {
+                        layer.close(index);//关闭提示框
+                        updatePermission(ids);
+                    }
+                );
+            } else {
+                updatePermission(ids);
+            }
+        });
+
+        /**
+         * 更新权限
+         * @param ids
+         */
+        function updatePermission(ids){
+            var param = {};
+            param.roleId = rId;
+            var confirmMsg;//授权提示信息
+            if(ids == null || ids == undefined || ids == ""){
+                confirmMsg = "清空权限成功！";
+            }else{
+                confirmMsg = "授权成功！";
+            }
+            param.permissionIds = ids;
+            http.setHeader("Content-Type", "application/json; charset=utf-8");
+            http.post("../api/role/updateRolePermission", JSON.stringify(param), function (data) {
+                var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+                var errcode = data.errcode;
+                var errmsg = data.errmsg;
+                if ("0" == errcode) {
+                    layer.confirm(confirmMsg, {
+                        btn: ['确定','取消'] //按钮
+                    }, function(){
+                        layer.close(index);
+                        parent.layer.close(index);
+                    }, function(){
+
+                    });
+                } else {
+                    layer.msg(errmsg, function () {
+
+                    });
+                }
+            });
+        }
+        function getIds(node, ids) {
+            var id = node.id;
+            ids.push(id);
+            var children = node.children;
+            for (var i = 0; i < children.length; i ++) {
+                var child = children[i];
+                getIds(child, ids);
+            }
+            return ids;
+        }
+
+    </script>
+</body>
+</html>

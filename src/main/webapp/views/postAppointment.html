@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../framework/layui/css/layui.css">
+    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="icon" href="/favicon.ico">
+    <title>发文任免</title>
+</head>
+<body>
+<style>
+    .layui-table-cell{
+        overflow: visible !important;
+    }
+    .layui-table-box {
+        overflow: visible;
+    }
+    .layui-table-body{
+        overflow: visible;
+    }
+    .layui-input, .layui-select, .layui-textarea {
+        height: 28px;
+        line-height: 1.3;
+        line-height: 38px\9;
+        border-width: 1px;
+        border-style: solid;
+        background-color: #fff;
+        border-radius: 2px;
+    }
+    .layui-btn {
+        display: inline-block;
+        height: 28px;
+        line-height: 28px;
+        padding: 0 15px;
+        background-color: #009688;
+        color: #fff;
+        white-space: nowrap;
+        text-align: center;
+        font-size: 14px;
+        border: none;
+        border-radius: 2px;
+        cursor: pointer;
+    }
+
+</style>
+
+
+
+<div style="text-align: center;">
+    <button class="layui-btn ">发文任免</button>
+</div>
+
+<table class="layui-hide" id="tableId" lay-filter="tableId" ></table>
+
+
+<div class="layui-form-item" style="text-align: center; padding:10px">
+    <div class="layui-input-block">
+        <button type="button" lay-filter="save" class="layui-btn"  id="opinion">生成正式文件草稿</button>
+        <button type="button" lay-filter="save" class="layui-btn"  id="save">保存</button>
+        <button type="button" lay-filter="doSubmit" class="layui-btn" id="do_submit">提交</button>
+
+    </div>
+</div>
+<!-- 选择人员layer end-->
+<script src="../framework/layui/layui.all.js"></script>
+<script src="../js/dictionary.js"></script>
+<script src="../js/http.js"></script>
+<script src="../js/jquery-1.8.0.min.js"></script>
+<script>
+
+    var table = layui.table;
+    var layer = layui.layer;
+    var form = layui.form;
+    var element = layui.element;
+    var $ = layui.jquery;
+    var http = layui.http;
+    var laydate = layui.laydate;
+    var upload =layui.upload;
+    var tableIns;
+    var LAY_TABLE_INDEX;
+    //获取父页面传递的参数
+    var parent_json =parent.req_data;
+    console.log("parent:"+parent_json);
+
+    //封装访问后天请求参数
+    var ids = new Array();
+    var param = {};
+    //遍历获取选择行数据的ID；
+    for(var i = 0;i<parent_json.length;i++){
+        ids.push(parent_json[i].userid);
+    }
+
+    param.ids = ids;
+
+    //根据ID先查询该记录是否已经保存在档案表中
+    http.setHeader("Content-Type", "application/json; charset=utf-8");//请求参数格式为json是需要添加请求头
+    http.post("../api/postappointment/queryByIds",JSON.stringify(param),function(data){
+        console.log("data:"+JSON.stringify(data.data));
+        var result =data.data;
+        var tableData =[];
+        for(var i =0;i<result.length;i++){
+            var user = {};
+            user.id =result[i].id;
+            user.candidateName=result[i].candidateName;
+            user.unit=result[i].unit;
+            user.position =result[i].position;
+            user.newPosition = result[i].newPosition;
+            user.newUnit = result[i].newUnit;
+            user.appointmentNumber = result[i].appointmentNumber;
+            user.appointmentDate = result[i].appointmentDate;
+            user.dismissalNumber = result[i].dismissalNumber;
+            user.dismissalDate = result[i].dismissalDate;
+            user.employmentNumber = result[i].employmentNumber;
+            user.employmentDate = result[i].employmentDate;
+            user.firedNumber = result[i].firedNumber;
+            user.firedDate = result[i].firedDate;
+
+            tableData.push(user);
+        }
+        console.log("tableData:"+JSON.stringify(tableData));
+        tableIns= table.render({
+            elem: "#tableId"
+            ,url: ''
+            ,cellMinWidth:100
+            ,page:true
+            , parseData: function (res) {    //res 即为原始返回的数据
+                //alert(JSON.stringify(res))
+                return {
+                    "code": res.errcode,  //解析接口状态
+                    "msg": res.errmsg,    //解析提示文本
+                    "count": res.data.count,   //解析数据长度
+                    "data": res.data.rows //解析数据列表
+                };
+            }
+            ,done:function(res, curr, count){
+            }
+            ,cols: [[ //标题栏
+                {type:'checkbox' ,tilte:'选择',rowspan:2}
+                , {field: 'id',title:'id',align:'center',hide:true}
+                , {field: 'candidateName', title: '姓名',  align: 'center',rowspan:2,width:70}
+                , {field: 'unit', title: '原单位',  align: 'center',rowspan:2,edit:'text',width:80}
+                , {field: 'position', title: '原职务',  align: 'center',rowspan:2,edit:'text',width:80}
+                , {field: 'newUnit', title: '任职单位',  align: 'center',rowspan:2,edit:'text',width:80}
+                , {field: 'newPosition', title: '任职职务',  align: 'center',rowspan:2,edit:'text',width:80}
+                , {field: 'candidateName', title: '党内任职文件',  align: 'center' ,rowspan:1, colspan:2} //rowspan即纵向跨越的单元格数
+
+                , {field: 'candidateName', title: '党内免职文件',  align: 'center' ,rowspan:1,colspan:2} //rowspan即纵向跨越的单元格数
+                , {field: 'candidateName', title: '党内聘任文件',  align: 'center' ,rowspan:1,colspan:2} //rowspan即纵向跨越的单元格数
+                , {field: 'candidateName', title: '党内解聘文件',  align: 'center' ,rowspan:1,colspan:2} //rowspan即纵向跨越的单元格数
+                ],[
+                {field: 'appointmentNumber', title: '任职文号', rowspan:1,colspan:1,edit:'text',width:80}
+                ,  {field: 'appointmentDate', title: '发文时间',event:'chooseDate',  align: 'center',width:80,templet:function(d){
+                        return d.appointmentDate ==null?'':toDate(d.appointmentDate);
+                    }}
+                ,{field: 'dismissalNumber', title: '免职文号', rowspan:1,colspan:1,edit:'text',width:80}
+                ,  {field: 'dismissalDate', title: '发文时间',event:'chooseDate1',  align: 'center',width:80,templet:function(d){
+                        return d.dismissalDate ==null?'':toDate(d.dismissalDate);
+                    }}
+                ,{field: 'employmentNumber', title: '聘任文号', rowspan:1,colspan:1,edit:'text',width:80}
+                ,  {field: 'employmentDate', title: '发文时间',event:'chooseDate2',  align: 'center',width:80,templet:function(d){
+                        return d.employmentDate ==null?'':toDate(d.employmentDate);
+                    }}
+                ,{field: 'firedNumber', title: '解聘文号', rowspan:1,colspan:1,edit:'text',width:80}
+                ,  {field: 'firedDate', title: '发文时间',event:'chooseDate3',  align: 'center',width:80,templet:function(d){
+                        return d.firedDate ==null?'':toDate(d.firedDate);
+                    }}
+            ]
+                ]
+
+            ,data:tableData
+            ,id: 'tableId'
+            ,done: function(res, curr, count) {
+                var tableId = this.id;
+                var checkStatus = table.checkStatus(tableId);
+                console.log(JSON.stringify(checkStatus.data));
+                var tableElem = this.elem;
+                // table render出来实际显示的table组件
+                var tableViewElem = tableElem.next();
+                console.log(res);
+
+
+                // 渲染当前页面的所有的upload组件
+                upload.render({
+                    elem: tableViewElem.find('.up_route_btn'),
+                    url: '../api/fileUpload/upload',
+                    accept:'file',
+                    //exts:'pdf',
+                    multiple: false,
+                    before: function (obj) {
+                        console.log("111");//obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+                        obj.preview(function(index, file, result) {
+                            console.log('上传前调');
+                            console.log(index); //得到文件索引
+                            console.log(file); //得到文件对象
+                            console.log(result); //得到文件base64编码，比如图片
+                        })
+                    },
+                    done: function (res, index, upload) {
+                        if(res.errcode == 0 ){
+                            layer.msg("上传成功");
+                        }
+                        var diskFilePath = res.diskFilePath;
+                        table.cache[tableId][this.item.closest('tr').data('index')]["replyData"] =diskFilePath;
+                    }
+                });
+
+            }
+
+        })
+    })
+
+
+
+    table.on('tool(tableId)',function(obj){
+
+        if(obj.event === 'chooseDate'){
+            var field = $(this).data('field');
+            console.log("field:"+field);
+            laydate.render({
+                elem:this.firstChild
+                // ,show:true
+                // ,closeStop:this
+                ,done:function(value,date){
+                    console.log(value);
+                    obj.data.appointmentDate = value;
+                    obj.update(obj.data);
+
+                    console.log("时间:"+JSON.stringify(date));
+                    console.log(obj.data);
+                }
+            })
+        }
+        if(obj.event === 'chooseDate1'){
+            var field = $(this).data('field');
+            console.log("field:"+field);
+            laydate.render({
+                elem:this.firstChild
+                // ,show:true
+                // ,closeStop:this
+                ,done:function(value,date){
+                    console.log(value);
+                    obj.data.dismissalDate = value;
+                    obj.update(obj.data);
+
+                    console.log("时间:"+JSON.stringify(date));
+                    console.log(obj.data);
+                }
+            })
+        }
+        if(obj.event === 'chooseDate2'){
+            var field = $(this).data('field');
+            console.log("field:"+field);
+            laydate.render({
+                elem:this.firstChild
+                // ,show:true
+                // ,closeStop:this
+                ,done:function(value,date){
+                    console.log(value);
+                    obj.data.employmentDate = value;
+                    obj.update(obj.data);
+
+                    console.log("时间:"+JSON.stringify(date));
+                    console.log(obj.data);
+                }
+            })
+        }
+        if(obj.event === 'chooseDate3'){
+            var field = $(this).data('field');
+            console.log("field:"+field);
+            laydate.render({
+                elem:this.firstChild
+                // ,show:true
+                // ,closeStop:this
+                ,done:function(value,date){
+                    console.log(value);
+                    obj.data.firedDate = value;
+                    obj.update(obj.data);
+
+                    console.log("时间:"+JSON.stringify(date));
+                    console.log(obj.data);
+                }
+            })
+        }
+    })
+
+
+    //提交
+    $('#do_submit').click(function(){
+        var checkStatus = table.checkStatus('tableId');
+        var data = checkStatus.data
+        alert("data:"+JSON.stringify(data));
+        if(data.length == 0){
+            layer.msg('请勾选需要提交的人员', function () {
+            });
+            return;
+        }
+        var infos = new Array();
+        var param = {};
+
+        for(var i=0;i<data.length;i++){
+            var user = {};
+            user.id =data[i].id;
+            user.candidateName=data[i].candidateName;
+            user.unit=data[i].unit;
+            user.position =data[i].position;
+            user.newPosition = data[i].newPosition;
+            user.newUnit = data[i].newUnit;
+            user.appointmentNumber = data[i].appointmentNumber;
+            user.appointmentDate=data[i].appointmentDate;
+            user.dismissalNumber=data[i].dismissalNumber;
+            user.dismissalDate =data[i].dismissalDate;
+            user.employmentNumber = data[i].employmentNumber;
+            user.employmentDate = data[i].employmentDate;
+            user.firedNumber = data[i].firedNumber;
+            user.firedDate = data[i].firedDate;
+            console.log("user"+JSON.stringify(user));
+
+            infos.push(user);
+        }
+        param.infos = infos;
+        console.log("param:"+JSON.stringify(param));
+
+        // for(var i=0;i<data.length;i++) {
+        //     alert(JSON.stringify("1111"+data[i].replyTime))
+        //     if (undefined==data[i].replyTime||undefined==data[i].replyOpinion||undefined==data[i].replyNumber) {
+        //         layer.msg("信息不完整，请补充", function () {
+        //         });
+        //         return;
+        //     }
+        // }
+
+        http.setHeader("Content-Type", "application/json; charset=utf-8");
+        http.post('../api/postappointment/updateflow', JSON.stringify(param), function (rep) {
+            var errcode = rep.errcode;
+            if (errcode == '0') {
+                layer.msg("提交成功", {icon: 1});
+            }else{
+                layer.msg(rep.errmsg);
+            }
+        });
+
+    });
+
+
+    //保存数据
+    $('#save').click(function(){
+        //layer.msg("保存");
+        var checkStatus = table.checkStatus('tableId');
+        var data = checkStatus.data
+        alert("data:"+JSON.stringify(data));
+        if(data.length == 0){
+            layer.msg('请勾选需要保存的人员', function () {
+            });
+            return;
+        }
+        var infos = new Array();
+        var param = {};
+
+        for(var i=0;i<data.length;i++){
+            var user = {};
+            user.id =data[i].id;
+            user.candidateName=data[i].candidateName;
+            user.unit=data[i].unit;
+            user.position =data[i].position;
+            user.newPosition = data[i].newPosition;
+            user.newUnit = data[i].newUnit;
+            user.appointmentNumber = data[i].appointmentNumber;
+            user.appointmentDate=data[i].appointmentDate;
+            user.dismissalNumber=data[i].dismissalNumber;
+            user.dismissalDate =data[i].dismissalDate;
+            user.employmentNumber = data[i].employmentNumber;
+            user.employmentDate = data[i].employmentDate;
+            user.firedNumber = data[i].firedNumber;
+            user.firedDate = data[i].firedDate;
+
+            console.log("user"+JSON.stringify(user));
+
+            infos.push(user);
+        }
+        param.infos = infos;
+        console.log("param:"+JSON.stringify(param));
+        http.setHeader("Content-Type", "application/json; charset=utf-8");
+        http.post('../api/postappointment/add', JSON.stringify(param), function (rep) {
+            var errcode = rep.errcode;
+            if (errcode == '0') {
+                layer.msg("保存成功", {icon: 1});
+            }
+        });
+
+
+    });
+    function toDate(data){
+        var date = new Date(data);
+        var y = date.getFullYear() +'_';
+        var m = (date.getMonth()+1<10?'0'+(date.getMonth()+1):date.getMonth()+1 )+'_';
+        var d = (date.getDate()<10?'0'+date.getDate():date.getDate());
+        return y+m+d;
+    }
+
+</script>
+
+</body>
+</html>

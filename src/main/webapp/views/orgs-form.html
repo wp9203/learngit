@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="../framework/layui/css/layui.css">
+    <title></title>
+    <style>
+        body {
+            margin-top: 10px;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+
+<body layadmin-themealias="default">
+
+
+<form class="layui-form" action="" id="org-form" lay-filter="org-form" >
+    <div class="layui-form-item">
+        <label class="layui-form-label">机构号</label>
+        <div class="layui-input-block">
+            <input type="text" id="orgNo" name="orgNo" lay-verify="required" lay-reqtext="机构号不能为空" autocomplete="off" placeholder="请输入机构号" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">机构名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="name" lay-verify="required" lay-reqtext="机构名称不能为空" placeholder="请输入机构名称" autocomplete="off" class="layui-input" >
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">电话号码</label>
+        <div class="layui-input-block">
+            <input type="text" name="tel" lay-verify="required" lay-reqtext="机构电话不能为空" placeholder="请输入机构电话" autocomplete="off" class="layui-input" >
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">机构级别</label>
+        <div class="layui-input-block">
+            <input type="text" name="grade" lay-verify="required" lay-reqtext="机构级别不能为空" placeholder="请输入机构级别" autocomplete="off" class="layui-input" >
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">机构负责人</label>
+        <div class="layui-input-block">
+            <input type="text" name="charger" lay-verify="required" lay-reqtext="机构负责人不能为空" placeholder="请输入机构负责人" autocomplete="off" class="layui-input" >
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">机构类型</label>
+        <div class="layui-input-block">
+            <select name="orgLevel" id="orgLevel" lay-filter="org-orgLevel" lay-verify="required">
+                <option value=""></option>
+            </select>
+        </div>
+
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">上级机构号</label>
+        <div class="layui-input-block">
+            <input type="text" name="parentId" lay-verify="parentId" placeholder="请选择机构" autocomplete="off" class="layui-input layui-disabled" disabled="disabled">
+        </div>
+    </div>
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">地址</label>
+        <div class="layui-input-block">
+            <textarea name="adress" placeholder="请输入地址信息" class="layui-textarea"></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">状态</label>
+        <div class="layui-input-block">
+            <select name="status" lay-filter="aihao" lay-verify="required">
+                <option value=""></option>
+                <option value="1" selected="">正常</option>
+                <option value="0">废止</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button type="submit" id="add" class="layui-btn" lay-submit="" lay-filter="submit-btn">立即提交</button>
+            <button type="button" id="rsbtn" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+<script src="../framework/layui/layui.all.js"></script>
+<script src="../js/common.js"></script>
+<script src="../js/http.js"></script>
+<script>
+    //记录当前操作类型
+    var type = null;
+    //当编辑时，记录用户id
+    var orgId = '';
+    var $ = layui.$,
+        layer = layui.layer,
+        http = layui.http,
+        form = layui.form;
+    //正则验证
+    form.verify({
+        parentId: function (value) {
+            if (value.length <= 0) {
+                var orgLevel = $('select[name="orgLevel"] option:selected').val();
+                if (orgLevel != "1") {
+                    return "上级机构id不能为空";
+                }
+            }
+        }
+    });
+    form.on('submit(submit-btn)', function(data){
+        var address = "";//请求地址
+        var confirmMsg = '';//提示信息
+        if (type == 'edit') {
+            address = "update";
+            confirmMsg = '机构信息更新成功';
+        }else {
+            address = "add";
+            confirmMsg = '添加机构成功';
+        }
+        var param = data.field;
+        param.id = orgId;
+        http.post("../api/org/" + address, param, function (data) {
+            var errcode = data.errcode;
+            var errmsg = data.errmsg;
+            if ("0" == errcode) {
+                parent.changed = true;//新增或修改成功
+                layer.confirm(confirmMsg,{
+                        icon: 1,
+                        btn:['确定', '取消']
+                },
+                    function (index) {
+                        layer.close(index);//关闭提示框
+                        var index2 = parent.layer.getFrameIndex(window.name);
+                        parent.layer.close(index2);//关闭添加层
+                    }
+                );
+            } else {
+                layer.msg(errmsg, function () {
+
+                });
+            }
+        });
+        return false;
+    });
+
+    /**
+     *
+     * 表单重置
+     */
+    $("#rsbtn").on('click', function(){
+        resetForm('org-form', 'org-form');
+    });
+
+    function orgEdit(id) {
+        orgId = id;//记录id
+        type = 'edit';//当前模式为编辑
+        var param = {};
+        param.orgId = orgId;
+        http.post("../api/org/getOrg", param, function (data) {
+            var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+            var errcode = data.errcode;
+            var errmsg = data.errmsg;
+            if ("0" == errcode) {
+                var option = '';
+
+                //设置帐号不可编辑
+                option += getOption(1, false);
+                option += getOption(2, false);
+                option += getOption(3, false);
+                option += getOption(4, false);
+                option += getOption(5, false);
+                option += getOption(6, false);
+                option += getOption(7, false);
+                option += getOption(8, false);
+                option += getOption(9, false);
+                $("#orgLevel").append(option);
+
+                var info = data.data;
+                form.val("org-form", info);
+            } else {
+                layer.msg(errmsg, function () {
+
+                });
+            }
+        });
+        $("#orgNo").addClass("layui-disabled");
+        $('#orgNo').attr("disabled","disabled");
+        $("#orgLevel").addClass("layui-disabled");
+        $('#orgLevel').attr("disabled","disabled");
+        form.render(null, 'org-form');
+
+    }
+
+
+    function parentOrg(orgNo, level) {
+        var orgLevel = parseInt(level);
+        var option = '';
+        if (orgLevel == undefined || orgLevel == '') {
+            option += getOption(1, false);
+            option += getOption(2, false);
+            option += getOption(3, false);
+            option += getOption(4, false);
+            option += getOption(5, false);
+            option += getOption(6, false);
+            option += getOption(7, false);
+            option += getOption(8, false);
+            option += getOption(9, false);
+        }
+        var orgLevel = parseInt(orgLevel);
+        if (orgLevel == 1) {
+            option += getOption(1, false);
+            option += getOption(2, false);
+            option += getOption(3, false);
+            option += getOption(4, false);
+            option += getOption(5, false);
+            option += getOption(6, false);
+            option += getOption(7, false);
+            option += getOption(8, false);
+            option += getOption(9, false);
+        } else if (orgLevel == 3) {
+            option += getOption(1, false);
+            option += getOption(2, false);
+            option += getOption(3, false);
+            option += getOption(4, false);
+            option += getOption(5, false);
+            option += getOption(6, false);
+            option += getOption(7, false);
+            option += getOption(8, false);
+            option += getOption(9, false);
+        }
+        else if (orgLevel == 5) {
+            option += getOption(1, false);
+            option += getOption(2, false);
+            option += getOption(3, false);
+            option += getOption(4, false);
+            option += getOption(5, false);
+            option += getOption(6, false);
+            option += getOption(7, false);
+            option += getOption(8, false);
+            option += getOption(9, false);
+        }
+        $("#orgLevel").append(option);
+        form.render(null, 'org-form');
+        var val = form.val('org');
+        val.parentId = orgNo;
+        form.val('org-form', val);
+
+    }
+
+    function getOption(orgLevel, disable) {
+        var orgLevel = parseInt(orgLevel);
+        var html = '';
+
+        if (orgLevel == 1) {
+            html += "<option value=\"1\"";
+            if (disable) {
+                html += " disabled=\"\" "
+            }
+            html +=">省行</option>";
+        } else if (orgLevel == 2) {
+            html += "<option value=\"2\"";
+            if (disable) {
+                html += " disabled=\"\" "
+            }
+            html +=">省分行内设部门</option>";
+        } else if (orgLevel == 3) {
+            html += "<option value=\"3\"";
+            if (disable) {
+                html += " disabled=\"\" "
+            }
+            html +=">广州分行</option>";
+        } else if (orgLevel == 4) {
+            html += "<option value=\"4\"";
+            if (disable) {
+                html += " disabled=\"\" "
+            }
+            html +=">广州分行内设部门</option>";
+        } else if (orgLevel == 5) {
+            html += "<option value=\"5\"";
+            if (disable) {
+                html += " disabled=\"\" "
+            }
+            html +=">二级分支行</option>";
+        }else if (orgLevel == 6) {
+            html += "<option value=\"6\"";
+            if (disable) {
+                html += " disabled=\"\" "
+            }
+            html +=">二级分支行内设部门</option>";
+        }
+        else if (orgLevel == 7) {
+            html += "<option value=\"7\"";
+            if (disable) {
+                html += " disabled=\"\" "
+            }
+            html +=">综合型支行</option>";
+        }
+        else if (orgLevel == 8) {
+            html += "<option value=\"8\"";
+            if (disable) {
+                html += " disabled=\"\" "
+            }
+            html +=">综合型支行内设部门</option>";
+        }
+        else if (orgLevel == 9) {
+            html += "<option value=\"9\"";
+            if (disable) {
+                html += " disabled=\"\" "
+            }
+            html +=">网点</option>";
+        }
+        return html;
+    }
+</script>
+</body>
+</html>

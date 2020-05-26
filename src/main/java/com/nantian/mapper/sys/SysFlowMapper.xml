@@ -1,0 +1,1167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nantian.mapper.sys.SysFlowMapper">
+  <resultMap id="BaseResultMap" type="com.nantian.entity.sys.SysFlow">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="USERID" jdbcType="DECIMAL" property="userid" />
+    <result column="USERNAME" jdbcType="VARCHAR" property="username" />
+    <result column="ASPIRING_UNIT" jdbcType="VARCHAR" property="aspiringUnit" />
+    <result column="ASPIRING_POSITION" jdbcType="VARCHAR" property="aspiringPosition" />
+    <result column="STEP1" jdbcType="VARCHAR" property="step1" />
+    <result column="UNIT_RE_ID" jdbcType="DECIMAL" property="unitReId" />
+    <result column="UNIT_RE_RESULT" jdbcType="VARCHAR" property="unitReResult" />
+    <result column="STEP2" jdbcType="VARCHAR" property="step2" />
+    <result column="FIRST_MOTION_ID" jdbcType="DECIMAL" property="firstMotionId" />
+    <result column="FIRST_MOTION_RESULT" jdbcType="VARCHAR" property="firstMotionResult" />
+    <result column="STEP3" jdbcType="VARCHAR" property="step3" />
+    <result column="REPORT_BEFORE_IM_ID" jdbcType="DECIMAL" property="reportBeforeImId" />
+    <result column="REPORT_BEFORE_IM_RESULT" jdbcType="VARCHAR" property="reportBeforeImResult" />
+    <result column="STEP4" jdbcType="VARCHAR" property="step4" />
+    <result column="DEMOCRACY_INS_RE_ID" jdbcType="DECIMAL" property="democracyInsReId" />
+    <result column="DEMOCRACY_INS_RE_RESULT" jdbcType="VARCHAR" property="democracyInsReResult" />
+    <result column="STEP5" jdbcType="VARCHAR" property="step5" />
+    <result column="INSPECT_ARCHIVES_ID" jdbcType="DECIMAL" property="inspectArchivesId" />
+    <result column="INSPECT_ARCHIVES_RESULT" jdbcType="VARCHAR" property="inspectArchivesResult" />
+    <result column="STEP6" jdbcType="VARCHAR" property="step6" />
+    <result column="COM_DIS_INS_RE_OP_ID" jdbcType="DECIMAL" property="comDisInsReOpId" />
+    <result column="COM_DIS_INS_RE_OP_RESULT" jdbcType="VARCHAR" property="comDisInsReOpResult" />
+    <result column="STEP7" jdbcType="VARCHAR" property="step7" />
+    <result column="COMPLIANCE_DEP_OP_ID" jdbcType="DECIMAL" property="complianceDepOpId" />
+    <result column="COMPLIANCE_DEP_OP_RESULT" jdbcType="VARCHAR" property="complianceDepOpResult" />
+    <result column="STEP8" jdbcType="VARCHAR" property="step8" />
+    <result column="SECOND_MOTION_ID" jdbcType="DECIMAL" property="secondMotionId" />
+    <result column="SECOND_MOTION_RESULT" jdbcType="VARCHAR" property="secondMotionResult" />
+    <result column="STEP9" jdbcType="VARCHAR" property="step9" />
+    <result column="PUB_BEFORE_IN_OFFICE_ID" jdbcType="DECIMAL" property="pubBeforeInOfficeId" />
+    <result column="PUB_BEFORE_IN_OFFICE_RESULT" jdbcType="VARCHAR" property="pubBeforeInOfficeResult" />
+    <result column="STEP10" jdbcType="VARCHAR" property="step10" />
+    <result column="THIRD_MOTION_ID" jdbcType="DECIMAL" property="thirdMotionId" />
+    <result column="THIRD_MOTION_RESULT" jdbcType="VARCHAR" property="thirdMotionResult" />
+    <result column="STEP11" jdbcType="VARCHAR" property="step11" />
+    <result column="APP_BEFORE_IN_OFFICE_ID" jdbcType="DECIMAL" property="appBeforeInOfficeId" />
+    <result column="APP_BEFORE_IN_OFFICE_RESULT" jdbcType="VARCHAR" property="appBeforeInOfficeResult" />
+    <result column="STEP12" jdbcType="VARCHAR" property="step12" />
+    <result column="OUTGOING_INSPECTION_ID" jdbcType="DECIMAL" property="outgoingInspectionId" />
+    <result column="OUTGOING_INSPECTION_RESULT" jdbcType="VARCHAR" property="outgoingInspectionResult" />
+    <result column="STEP13" jdbcType="VARCHAR" property="step13" />
+    <result column="CON_IN_OFFICE_ID" jdbcType="DECIMAL" property="conInOfficeId" />
+    <result column="CON_IN_OFFICE_RESULT" jdbcType="VARCHAR" property="conInOfficeResult" />
+    <result column="STEP14" jdbcType="VARCHAR" property="step14" />
+    <result column="CON_HONEST_ID" jdbcType="DECIMAL" property="conHonestId" />
+    <result column="CON_HONEST_RESULT" jdbcType="VARCHAR" property="conHonestResult" />
+    <result column="STEP15" jdbcType="VARCHAR" property="step15" />
+    <result column="APP_BANKING_SUPERVISION_ID" jdbcType="DECIMAL" property="appBankingSupervisionId" />
+    <result column="APP_BANKING_SUPERVISION_RESULT" jdbcType="VARCHAR" property="appBankingSupervisionResult" />
+    <result column="STEP16" jdbcType="VARCHAR" property="step16" />
+    <result column="ANNOUNCED_IN_OFFICE_ID" jdbcType="DECIMAL" property="announcedInOfficeId" />
+    <result column="ANNOUNCED_IN_OFFICE_RESULT" jdbcType="VARCHAR" property="announcedInOfficeResult" />
+    <result column="STEP17" jdbcType="VARCHAR" property="step17" />
+    <result column="POST_APPOINT_ID" jdbcType="DECIMAL" property="postAppointId" />
+    <result column="POST_APPOINT_RESULT" jdbcType="VARCHAR" property="postAppointResult" />
+    <result column="STEP18" jdbcType="VARCHAR" property="step18" />
+    <result column="CREATION_TIME" jdbcType="TIMESTAMP" property="creationTime" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="FLOW_STATUS" jdbcType="VARCHAR" property="flowStatus" />
+    <result column="ORG" jdbcType="VARCHAR" property="org" />
+    <result column="ADJUST_TYPE" jdbcType="VARCHAR" property="adjustType" />
+    <result column="POSITION_LEVEL" jdbcType="VARCHAR" property="positionLevel" />
+    <result column="START_DATE" jdbcType="TIMESTAMP" property="startDate" />
+    <result column="END_DATE" jdbcType="TIMESTAMP" property="endDate" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, USERID, USERNAME, ASPIRING_UNIT, ASPIRING_POSITION, STEP1, UNIT_RE_ID, UNIT_RE_RESULT, 
+    STEP2, FIRST_MOTION_ID, FIRST_MOTION_RESULT, STEP3, REPORT_BEFORE_IM_ID, REPORT_BEFORE_IM_RESULT, 
+    STEP4, DEMOCRACY_INS_RE_ID, DEMOCRACY_INS_RE_RESULT, STEP5, INSPECT_ARCHIVES_ID, 
+    INSPECT_ARCHIVES_RESULT, STEP6, COM_DIS_INS_RE_OP_ID, COM_DIS_INS_RE_OP_RESULT, STEP7, 
+    COMPLIANCE_DEP_OP_ID, COMPLIANCE_DEP_OP_RESULT, STEP8, SECOND_MOTION_ID, SECOND_MOTION_RESULT, 
+    STEP9, PUB_BEFORE_IN_OFFICE_ID, PUB_BEFORE_IN_OFFICE_RESULT, STEP10, THIRD_MOTION_ID, 
+    THIRD_MOTION_RESULT, STEP11, APP_BEFORE_IN_OFFICE_ID, APP_BEFORE_IN_OFFICE_RESULT, 
+    STEP12, OUTGOING_INSPECTION_ID, OUTGOING_INSPECTION_RESULT, STEP13, CON_IN_OFFICE_ID, 
+    CON_IN_OFFICE_RESULT, STEP14, CON_HONEST_ID, CON_HONEST_RESULT, STEP15, APP_BANKING_SUPERVISION_ID, 
+    APP_BANKING_SUPERVISION_RESULT, STEP16, ANNOUNCED_IN_OFFICE_ID, ANNOUNCED_IN_OFFICE_RESULT, 
+    STEP17, POST_APPOINT_ID, POST_APPOINT_RESULT, STEP18, CREATION_TIME, UPDATE_TIME, 
+    FLOW_STATUS, ORG, ADJUST_TYPE, POSITION_LEVEL, START_DATE, END_DATE
+  </sql>
+  <select id="selectByExample" parameterType="com.nantian.entity.sys.SysFlowExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from SYS_FLOW
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_FLOW
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from SYS_FLOW
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.nantian.entity.sys.SysFlowExample">
+    delete from SYS_FLOW
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.nantian.entity.sys.SysFlow">
+    insert into SYS_FLOW (ID, USERID, USERNAME,
+      ASPIRING_UNIT, ASPIRING_POSITION, STEP1, 
+      UNIT_RE_ID, UNIT_RE_RESULT, STEP2, 
+      FIRST_MOTION_ID, FIRST_MOTION_RESULT, STEP3, 
+      REPORT_BEFORE_IM_ID, REPORT_BEFORE_IM_RESULT, 
+      STEP4, DEMOCRACY_INS_RE_ID, DEMOCRACY_INS_RE_RESULT, 
+      STEP5, INSPECT_ARCHIVES_ID, INSPECT_ARCHIVES_RESULT, 
+      STEP6, COM_DIS_INS_RE_OP_ID, COM_DIS_INS_RE_OP_RESULT, 
+      STEP7, COMPLIANCE_DEP_OP_ID, COMPLIANCE_DEP_OP_RESULT, 
+      STEP8, SECOND_MOTION_ID, SECOND_MOTION_RESULT, 
+      STEP9, PUB_BEFORE_IN_OFFICE_ID, PUB_BEFORE_IN_OFFICE_RESULT, 
+      STEP10, THIRD_MOTION_ID, THIRD_MOTION_RESULT, 
+      STEP11, APP_BEFORE_IN_OFFICE_ID, APP_BEFORE_IN_OFFICE_RESULT, 
+      STEP12, OUTGOING_INSPECTION_ID, OUTGOING_INSPECTION_RESULT, 
+      STEP13, CON_IN_OFFICE_ID, CON_IN_OFFICE_RESULT, 
+      STEP14, CON_HONEST_ID, CON_HONEST_RESULT, 
+      STEP15, APP_BANKING_SUPERVISION_ID, APP_BANKING_SUPERVISION_RESULT, 
+      STEP16, ANNOUNCED_IN_OFFICE_ID, ANNOUNCED_IN_OFFICE_RESULT, 
+      STEP17, POST_APPOINT_ID, POST_APPOINT_RESULT, 
+      STEP18, CREATION_TIME, UPDATE_TIME, 
+      FLOW_STATUS, ORG, ADJUST_TYPE, 
+      POSITION_LEVEL, START_DATE, END_DATE
+      )
+    values (#{id,jdbcType=DECIMAL}, #{userid,jdbcType=DECIMAL}, #{username,jdbcType=VARCHAR}, 
+      #{aspiringUnit,jdbcType=VARCHAR}, #{aspiringPosition,jdbcType=VARCHAR}, #{step1,jdbcType=VARCHAR}, 
+      #{unitReId,jdbcType=DECIMAL}, #{unitReResult,jdbcType=VARCHAR}, #{step2,jdbcType=VARCHAR}, 
+      #{firstMotionId,jdbcType=DECIMAL}, #{firstMotionResult,jdbcType=VARCHAR}, #{step3,jdbcType=VARCHAR}, 
+      #{reportBeforeImId,jdbcType=DECIMAL}, #{reportBeforeImResult,jdbcType=VARCHAR}, 
+      #{step4,jdbcType=VARCHAR}, #{democracyInsReId,jdbcType=DECIMAL}, #{democracyInsReResult,jdbcType=VARCHAR}, 
+      #{step5,jdbcType=VARCHAR}, #{inspectArchivesId,jdbcType=DECIMAL}, #{inspectArchivesResult,jdbcType=VARCHAR}, 
+      #{step6,jdbcType=VARCHAR}, #{comDisInsReOpId,jdbcType=DECIMAL}, #{comDisInsReOpResult,jdbcType=VARCHAR}, 
+      #{step7,jdbcType=VARCHAR}, #{complianceDepOpId,jdbcType=DECIMAL}, #{complianceDepOpResult,jdbcType=VARCHAR}, 
+      #{step8,jdbcType=VARCHAR}, #{secondMotionId,jdbcType=DECIMAL}, #{secondMotionResult,jdbcType=VARCHAR}, 
+      #{step9,jdbcType=VARCHAR}, #{pubBeforeInOfficeId,jdbcType=DECIMAL}, #{pubBeforeInOfficeResult,jdbcType=VARCHAR}, 
+      #{step10,jdbcType=VARCHAR}, #{thirdMotionId,jdbcType=DECIMAL}, #{thirdMotionResult,jdbcType=VARCHAR}, 
+      #{step11,jdbcType=VARCHAR}, #{appBeforeInOfficeId,jdbcType=DECIMAL}, #{appBeforeInOfficeResult,jdbcType=VARCHAR}, 
+      #{step12,jdbcType=VARCHAR}, #{outgoingInspectionId,jdbcType=DECIMAL}, #{outgoingInspectionResult,jdbcType=VARCHAR}, 
+      #{step13,jdbcType=VARCHAR}, #{conInOfficeId,jdbcType=DECIMAL}, #{conInOfficeResult,jdbcType=VARCHAR}, 
+      #{step14,jdbcType=VARCHAR}, #{conHonestId,jdbcType=DECIMAL}, #{conHonestResult,jdbcType=VARCHAR}, 
+      #{step15,jdbcType=VARCHAR}, #{appBankingSupervisionId,jdbcType=DECIMAL}, #{appBankingSupervisionResult,jdbcType=VARCHAR}, 
+      #{step16,jdbcType=VARCHAR}, #{announcedInOfficeId,jdbcType=DECIMAL}, #{announcedInOfficeResult,jdbcType=VARCHAR}, 
+      #{step17,jdbcType=VARCHAR}, #{postAppointId,jdbcType=DECIMAL}, #{postAppointResult,jdbcType=VARCHAR}, 
+      #{step18,jdbcType=VARCHAR}, #{creationTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{flowStatus,jdbcType=VARCHAR}, #{org,jdbcType=VARCHAR}, #{adjustType,jdbcType=VARCHAR}, 
+      #{positionLevel,jdbcType=VARCHAR}, #{startDate,jdbcType=TIMESTAMP}, #{endDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.nantian.entity.sys.SysFlow">
+    insert into SYS_FLOW
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="userid != null">
+        USERID,
+      </if>
+      <if test="username != null">
+        USERNAME,
+      </if>
+      <if test="aspiringUnit != null">
+        ASPIRING_UNIT,
+      </if>
+      <if test="aspiringPosition != null">
+        ASPIRING_POSITION,
+      </if>
+      <if test="step1 != null">
+        STEP1,
+      </if>
+      <if test="unitReId != null">
+        UNIT_RE_ID,
+      </if>
+      <if test="unitReResult != null">
+        UNIT_RE_RESULT,
+      </if>
+      <if test="step2 != null">
+        STEP2,
+      </if>
+      <if test="firstMotionId != null">
+        FIRST_MOTION_ID,
+      </if>
+      <if test="firstMotionResult != null">
+        FIRST_MOTION_RESULT,
+      </if>
+      <if test="step3 != null">
+        STEP3,
+      </if>
+      <if test="reportBeforeImId != null">
+        REPORT_BEFORE_IM_ID,
+      </if>
+      <if test="reportBeforeImResult != null">
+        REPORT_BEFORE_IM_RESULT,
+      </if>
+      <if test="step4 != null">
+        STEP4,
+      </if>
+      <if test="democracyInsReId != null">
+        DEMOCRACY_INS_RE_ID,
+      </if>
+      <if test="democracyInsReResult != null">
+        DEMOCRACY_INS_RE_RESULT,
+      </if>
+      <if test="step5 != null">
+        STEP5,
+      </if>
+      <if test="inspectArchivesId != null">
+        INSPECT_ARCHIVES_ID,
+      </if>
+      <if test="inspectArchivesResult != null">
+        INSPECT_ARCHIVES_RESULT,
+      </if>
+      <if test="step6 != null">
+        STEP6,
+      </if>
+      <if test="comDisInsReOpId != null">
+        COM_DIS_INS_RE_OP_ID,
+      </if>
+      <if test="comDisInsReOpResult != null">
+        COM_DIS_INS_RE_OP_RESULT,
+      </if>
+      <if test="step7 != null">
+        STEP7,
+      </if>
+      <if test="complianceDepOpId != null">
+        COMPLIANCE_DEP_OP_ID,
+      </if>
+      <if test="complianceDepOpResult != null">
+        COMPLIANCE_DEP_OP_RESULT,
+      </if>
+      <if test="step8 != null">
+        STEP8,
+      </if>
+      <if test="secondMotionId != null">
+        SECOND_MOTION_ID,
+      </if>
+      <if test="secondMotionResult != null">
+        SECOND_MOTION_RESULT,
+      </if>
+      <if test="step9 != null">
+        STEP9,
+      </if>
+      <if test="pubBeforeInOfficeId != null">
+        PUB_BEFORE_IN_OFFICE_ID,
+      </if>
+      <if test="pubBeforeInOfficeResult != null">
+        PUB_BEFORE_IN_OFFICE_RESULT,
+      </if>
+      <if test="step10 != null">
+        STEP10,
+      </if>
+      <if test="thirdMotionId != null">
+        THIRD_MOTION_ID,
+      </if>
+      <if test="thirdMotionResult != null">
+        THIRD_MOTION_RESULT,
+      </if>
+      <if test="step11 != null">
+        STEP11,
+      </if>
+      <if test="appBeforeInOfficeId != null">
+        APP_BEFORE_IN_OFFICE_ID,
+      </if>
+      <if test="appBeforeInOfficeResult != null">
+        APP_BEFORE_IN_OFFICE_RESULT,
+      </if>
+      <if test="step12 != null">
+        STEP12,
+      </if>
+      <if test="outgoingInspectionId != null">
+        OUTGOING_INSPECTION_ID,
+      </if>
+      <if test="outgoingInspectionResult != null">
+        OUTGOING_INSPECTION_RESULT,
+      </if>
+      <if test="step13 != null">
+        STEP13,
+      </if>
+      <if test="conInOfficeId != null">
+        CON_IN_OFFICE_ID,
+      </if>
+      <if test="conInOfficeResult != null">
+        CON_IN_OFFICE_RESULT,
+      </if>
+      <if test="step14 != null">
+        STEP14,
+      </if>
+      <if test="conHonestId != null">
+        CON_HONEST_ID,
+      </if>
+      <if test="conHonestResult != null">
+        CON_HONEST_RESULT,
+      </if>
+      <if test="step15 != null">
+        STEP15,
+      </if>
+      <if test="appBankingSupervisionId != null">
+        APP_BANKING_SUPERVISION_ID,
+      </if>
+      <if test="appBankingSupervisionResult != null">
+        APP_BANKING_SUPERVISION_RESULT,
+      </if>
+      <if test="step16 != null">
+        STEP16,
+      </if>
+      <if test="announcedInOfficeId != null">
+        ANNOUNCED_IN_OFFICE_ID,
+      </if>
+      <if test="announcedInOfficeResult != null">
+        ANNOUNCED_IN_OFFICE_RESULT,
+      </if>
+      <if test="step17 != null">
+        STEP17,
+      </if>
+      <if test="postAppointId != null">
+        POST_APPOINT_ID,
+      </if>
+      <if test="postAppointResult != null">
+        POST_APPOINT_RESULT,
+      </if>
+      <if test="step18 != null">
+        STEP18,
+      </if>
+      <if test="creationTime != null">
+        CREATION_TIME,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="flowStatus != null">
+        FLOW_STATUS,
+      </if>
+      <if test="org != null">
+        ORG,
+      </if>
+      <if test="adjustType != null">
+        ADJUST_TYPE,
+      </if>
+      <if test="positionLevel != null">
+        POSITION_LEVEL,
+      </if>
+      <if test="startDate != null">
+        START_DATE,
+      </if>
+      <if test="endDate != null">
+        END_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=DECIMAL},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="aspiringUnit != null">
+        #{aspiringUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="aspiringPosition != null">
+        #{aspiringPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="step1 != null">
+        #{step1,jdbcType=VARCHAR},
+      </if>
+      <if test="unitReId != null">
+        #{unitReId,jdbcType=DECIMAL},
+      </if>
+      <if test="unitReResult != null">
+        #{unitReResult,jdbcType=VARCHAR},
+      </if>
+      <if test="step2 != null">
+        #{step2,jdbcType=VARCHAR},
+      </if>
+      <if test="firstMotionId != null">
+        #{firstMotionId,jdbcType=DECIMAL},
+      </if>
+      <if test="firstMotionResult != null">
+        #{firstMotionResult,jdbcType=VARCHAR},
+      </if>
+      <if test="step3 != null">
+        #{step3,jdbcType=VARCHAR},
+      </if>
+      <if test="reportBeforeImId != null">
+        #{reportBeforeImId,jdbcType=DECIMAL},
+      </if>
+      <if test="reportBeforeImResult != null">
+        #{reportBeforeImResult,jdbcType=VARCHAR},
+      </if>
+      <if test="step4 != null">
+        #{step4,jdbcType=VARCHAR},
+      </if>
+      <if test="democracyInsReId != null">
+        #{democracyInsReId,jdbcType=DECIMAL},
+      </if>
+      <if test="democracyInsReResult != null">
+        #{democracyInsReResult,jdbcType=VARCHAR},
+      </if>
+      <if test="step5 != null">
+        #{step5,jdbcType=VARCHAR},
+      </if>
+      <if test="inspectArchivesId != null">
+        #{inspectArchivesId,jdbcType=DECIMAL},
+      </if>
+      <if test="inspectArchivesResult != null">
+        #{inspectArchivesResult,jdbcType=VARCHAR},
+      </if>
+      <if test="step6 != null">
+        #{step6,jdbcType=VARCHAR},
+      </if>
+      <if test="comDisInsReOpId != null">
+        #{comDisInsReOpId,jdbcType=DECIMAL},
+      </if>
+      <if test="comDisInsReOpResult != null">
+        #{comDisInsReOpResult,jdbcType=VARCHAR},
+      </if>
+      <if test="step7 != null">
+        #{step7,jdbcType=VARCHAR},
+      </if>
+      <if test="complianceDepOpId != null">
+        #{complianceDepOpId,jdbcType=DECIMAL},
+      </if>
+      <if test="complianceDepOpResult != null">
+        #{complianceDepOpResult,jdbcType=VARCHAR},
+      </if>
+      <if test="step8 != null">
+        #{step8,jdbcType=VARCHAR},
+      </if>
+      <if test="secondMotionId != null">
+        #{secondMotionId,jdbcType=DECIMAL},
+      </if>
+      <if test="secondMotionResult != null">
+        #{secondMotionResult,jdbcType=VARCHAR},
+      </if>
+      <if test="step9 != null">
+        #{step9,jdbcType=VARCHAR},
+      </if>
+      <if test="pubBeforeInOfficeId != null">
+        #{pubBeforeInOfficeId,jdbcType=DECIMAL},
+      </if>
+      <if test="pubBeforeInOfficeResult != null">
+        #{pubBeforeInOfficeResult,jdbcType=VARCHAR},
+      </if>
+      <if test="step10 != null">
+        #{step10,jdbcType=VARCHAR},
+      </if>
+      <if test="thirdMotionId != null">
+        #{thirdMotionId,jdbcType=DECIMAL},
+      </if>
+      <if test="thirdMotionResult != null">
+        #{thirdMotionResult,jdbcType=VARCHAR},
+      </if>
+      <if test="step11 != null">
+        #{step11,jdbcType=VARCHAR},
+      </if>
+      <if test="appBeforeInOfficeId != null">
+        #{appBeforeInOfficeId,jdbcType=DECIMAL},
+      </if>
+      <if test="appBeforeInOfficeResult != null">
+        #{appBeforeInOfficeResult,jdbcType=VARCHAR},
+      </if>
+      <if test="step12 != null">
+        #{step12,jdbcType=VARCHAR},
+      </if>
+      <if test="outgoingInspectionId != null">
+        #{outgoingInspectionId,jdbcType=DECIMAL},
+      </if>
+      <if test="outgoingInspectionResult != null">
+        #{outgoingInspectionResult,jdbcType=VARCHAR},
+      </if>
+      <if test="step13 != null">
+        #{step13,jdbcType=VARCHAR},
+      </if>
+      <if test="conInOfficeId != null">
+        #{conInOfficeId,jdbcType=DECIMAL},
+      </if>
+      <if test="conInOfficeResult != null">
+        #{conInOfficeResult,jdbcType=VARCHAR},
+      </if>
+      <if test="step14 != null">
+        #{step14,jdbcType=VARCHAR},
+      </if>
+      <if test="conHonestId != null">
+        #{conHonestId,jdbcType=DECIMAL},
+      </if>
+      <if test="conHonestResult != null">
+        #{conHonestResult,jdbcType=VARCHAR},
+      </if>
+      <if test="step15 != null">
+        #{step15,jdbcType=VARCHAR},
+      </if>
+      <if test="appBankingSupervisionId != null">
+        #{appBankingSupervisionId,jdbcType=DECIMAL},
+      </if>
+      <if test="appBankingSupervisionResult != null">
+        #{appBankingSupervisionResult,jdbcType=VARCHAR},
+      </if>
+      <if test="step16 != null">
+        #{step16,jdbcType=VARCHAR},
+      </if>
+      <if test="announcedInOfficeId != null">
+        #{announcedInOfficeId,jdbcType=DECIMAL},
+      </if>
+      <if test="announcedInOfficeResult != null">
+        #{announcedInOfficeResult,jdbcType=VARCHAR},
+      </if>
+      <if test="step17 != null">
+        #{step17,jdbcType=VARCHAR},
+      </if>
+      <if test="postAppointId != null">
+        #{postAppointId,jdbcType=DECIMAL},
+      </if>
+      <if test="postAppointResult != null">
+        #{postAppointResult,jdbcType=VARCHAR},
+      </if>
+      <if test="step18 != null">
+        #{step18,jdbcType=VARCHAR},
+      </if>
+      <if test="creationTime != null">
+        #{creationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="flowStatus != null">
+        #{flowStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="org != null">
+        #{org,jdbcType=VARCHAR},
+      </if>
+      <if test="adjustType != null">
+        #{adjustType,jdbcType=VARCHAR},
+      </if>
+      <if test="positionLevel != null">
+        #{positionLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="startDate != null">
+        #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null">
+        #{endDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.nantian.entity.sys.SysFlowExample" resultType="java.lang.Long">
+    select count(*) from SYS_FLOW
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update SYS_FLOW
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=DECIMAL},
+      </if>
+      <if test="record.userid != null">
+        USERID = #{record.userid,jdbcType=DECIMAL},
+      </if>
+      <if test="record.username != null">
+        USERNAME = #{record.username,jdbcType=VARCHAR},
+      </if>
+      <if test="record.aspiringUnit != null">
+        ASPIRING_UNIT = #{record.aspiringUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.aspiringPosition != null">
+        ASPIRING_POSITION = #{record.aspiringPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="record.step1 != null">
+        STEP1 = #{record.step1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unitReId != null">
+        UNIT_RE_ID = #{record.unitReId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.unitReResult != null">
+        UNIT_RE_RESULT = #{record.unitReResult,jdbcType=VARCHAR},
+      </if>
+      <if test="record.step2 != null">
+        STEP2 = #{record.step2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.firstMotionId != null">
+        FIRST_MOTION_ID = #{record.firstMotionId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.firstMotionResult != null">
+        FIRST_MOTION_RESULT = #{record.firstMotionResult,jdbcType=VARCHAR},
+      </if>
+      <if test="record.step3 != null">
+        STEP3 = #{record.step3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reportBeforeImId != null">
+        REPORT_BEFORE_IM_ID = #{record.reportBeforeImId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.reportBeforeImResult != null">
+        REPORT_BEFORE_IM_RESULT = #{record.reportBeforeImResult,jdbcType=VARCHAR},
+      </if>
+      <if test="record.step4 != null">
+        STEP4 = #{record.step4,jdbcType=VARCHAR},
+      </if>
+      <if test="record.democracyInsReId != null">
+        DEMOCRACY_INS_RE_ID = #{record.democracyInsReId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.democracyInsReResult != null">
+        DEMOCRACY_INS_RE_RESULT = #{record.democracyInsReResult,jdbcType=VARCHAR},
+      </if>
+      <if test="record.step5 != null">
+        STEP5 = #{record.step5,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inspectArchivesId != null">
+        INSPECT_ARCHIVES_ID = #{record.inspectArchivesId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.inspectArchivesResult != null">
+        INSPECT_ARCHIVES_RESULT = #{record.inspectArchivesResult,jdbcType=VARCHAR},
+      </if>
+      <if test="record.step6 != null">
+        STEP6 = #{record.step6,jdbcType=VARCHAR},
+      </if>
+      <if test="record.comDisInsReOpId != null">
+        COM_DIS_INS_RE_OP_ID = #{record.comDisInsReOpId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.comDisInsReOpResult != null">
+        COM_DIS_INS_RE_OP_RESULT = #{record.comDisInsReOpResult,jdbcType=VARCHAR},
+      </if>
+      <if test="record.step7 != null">
+        STEP7 = #{record.step7,jdbcType=VARCHAR},
+      </if>
+      <if test="record.complianceDepOpId != null">
+        COMPLIANCE_DEP_OP_ID = #{record.complianceDepOpId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.complianceDepOpResult != null">
+        COMPLIANCE_DEP_OP_RESULT = #{record.complianceDepOpResult,jdbcType=VARCHAR},
+      </if>
+      <if test="record.step8 != null">
+        STEP8 = #{record.step8,jdbcType=VARCHAR},
+      </if>
+      <if test="record.secondMotionId != null">
+        SECOND_MOTION_ID = #{record.secondMotionId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.secondMotionResult != null">
+        SECOND_MOTION_RESULT = #{record.secondMotionResult,jdbcType=VARCHAR},
+      </if>
+      <if test="record.step9 != null">
+        STEP9 = #{record.step9,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pubBeforeInOfficeId != null">
+        PUB_BEFORE_IN_OFFICE_ID = #{record.pubBeforeInOfficeId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.pubBeforeInOfficeResult != null">
+        PUB_BEFORE_IN_OFFICE_RESULT = #{record.pubBeforeInOfficeResult,jdbcType=VARCHAR},
+      </if>
+      <if test="record.step10 != null">
+        STEP10 = #{record.step10,jdbcType=VARCHAR},
+      </if>
+      <if test="record.thirdMotionId != null">
+        THIRD_MOTION_ID = #{record.thirdMotionId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.thirdMotionResult != null">
+        THIRD_MOTION_RESULT = #{record.thirdMotionResult,jdbcType=VARCHAR},
+      </if>
+      <if test="record.step11 != null">
+        STEP11 = #{record.step11,jdbcType=VARCHAR},
+      </if>
+      <if test="record.appBeforeInOfficeId != null">
+        APP_BEFORE_IN_OFFICE_ID = #{record.appBeforeInOfficeId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.appBeforeInOfficeResult != null">
+        APP_BEFORE_IN_OFFICE_RESULT = #{record.appBeforeInOfficeResult,jdbcType=VARCHAR},
+      </if>
+      <if test="record.step12 != null">
+        STEP12 = #{record.step12,jdbcType=VARCHAR},
+      </if>
+      <if test="record.outgoingInspectionId != null">
+        OUTGOING_INSPECTION_ID = #{record.outgoingInspectionId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.outgoingInspectionResult != null">
+        OUTGOING_INSPECTION_RESULT = #{record.outgoingInspectionResult,jdbcType=VARCHAR},
+      </if>
+      <if test="record.step13 != null">
+        STEP13 = #{record.step13,jdbcType=VARCHAR},
+      </if>
+      <if test="record.conInOfficeId != null">
+        CON_IN_OFFICE_ID = #{record.conInOfficeId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.conInOfficeResult != null">
+        CON_IN_OFFICE_RESULT = #{record.conInOfficeResult,jdbcType=VARCHAR},
+      </if>
+      <if test="record.step14 != null">
+        STEP14 = #{record.step14,jdbcType=VARCHAR},
+      </if>
+      <if test="record.conHonestId != null">
+        CON_HONEST_ID = #{record.conHonestId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.conHonestResult != null">
+        CON_HONEST_RESULT = #{record.conHonestResult,jdbcType=VARCHAR},
+      </if>
+      <if test="record.step15 != null">
+        STEP15 = #{record.step15,jdbcType=VARCHAR},
+      </if>
+      <if test="record.appBankingSupervisionId != null">
+        APP_BANKING_SUPERVISION_ID = #{record.appBankingSupervisionId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.appBankingSupervisionResult != null">
+        APP_BANKING_SUPERVISION_RESULT = #{record.appBankingSupervisionResult,jdbcType=VARCHAR},
+      </if>
+      <if test="record.step16 != null">
+        STEP16 = #{record.step16,jdbcType=VARCHAR},
+      </if>
+      <if test="record.announcedInOfficeId != null">
+        ANNOUNCED_IN_OFFICE_ID = #{record.announcedInOfficeId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.announcedInOfficeResult != null">
+        ANNOUNCED_IN_OFFICE_RESULT = #{record.announcedInOfficeResult,jdbcType=VARCHAR},
+      </if>
+      <if test="record.step17 != null">
+        STEP17 = #{record.step17,jdbcType=VARCHAR},
+      </if>
+      <if test="record.postAppointId != null">
+        POST_APPOINT_ID = #{record.postAppointId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.postAppointResult != null">
+        POST_APPOINT_RESULT = #{record.postAppointResult,jdbcType=VARCHAR},
+      </if>
+      <if test="record.step18 != null">
+        STEP18 = #{record.step18,jdbcType=VARCHAR},
+      </if>
+      <if test="record.creationTime != null">
+        CREATION_TIME = #{record.creationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.flowStatus != null">
+        FLOW_STATUS = #{record.flowStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.org != null">
+        ORG = #{record.org,jdbcType=VARCHAR},
+      </if>
+      <if test="record.adjustType != null">
+        ADJUST_TYPE = #{record.adjustType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.positionLevel != null">
+        POSITION_LEVEL = #{record.positionLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.startDate != null">
+        START_DATE = #{record.startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endDate != null">
+        END_DATE = #{record.endDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update SYS_FLOW
+    set ID = #{record.id,jdbcType=DECIMAL},
+      USERID = #{record.userid,jdbcType=DECIMAL},
+      USERNAME = #{record.username,jdbcType=VARCHAR},
+      ASPIRING_UNIT = #{record.aspiringUnit,jdbcType=VARCHAR},
+      ASPIRING_POSITION = #{record.aspiringPosition,jdbcType=VARCHAR},
+      STEP1 = #{record.step1,jdbcType=VARCHAR},
+      UNIT_RE_ID = #{record.unitReId,jdbcType=DECIMAL},
+      UNIT_RE_RESULT = #{record.unitReResult,jdbcType=VARCHAR},
+      STEP2 = #{record.step2,jdbcType=VARCHAR},
+      FIRST_MOTION_ID = #{record.firstMotionId,jdbcType=DECIMAL},
+      FIRST_MOTION_RESULT = #{record.firstMotionResult,jdbcType=VARCHAR},
+      STEP3 = #{record.step3,jdbcType=VARCHAR},
+      REPORT_BEFORE_IM_ID = #{record.reportBeforeImId,jdbcType=DECIMAL},
+      REPORT_BEFORE_IM_RESULT = #{record.reportBeforeImResult,jdbcType=VARCHAR},
+      STEP4 = #{record.step4,jdbcType=VARCHAR},
+      DEMOCRACY_INS_RE_ID = #{record.democracyInsReId,jdbcType=DECIMAL},
+      DEMOCRACY_INS_RE_RESULT = #{record.democracyInsReResult,jdbcType=VARCHAR},
+      STEP5 = #{record.step5,jdbcType=VARCHAR},
+      INSPECT_ARCHIVES_ID = #{record.inspectArchivesId,jdbcType=DECIMAL},
+      INSPECT_ARCHIVES_RESULT = #{record.inspectArchivesResult,jdbcType=VARCHAR},
+      STEP6 = #{record.step6,jdbcType=VARCHAR},
+      COM_DIS_INS_RE_OP_ID = #{record.comDisInsReOpId,jdbcType=DECIMAL},
+      COM_DIS_INS_RE_OP_RESULT = #{record.comDisInsReOpResult,jdbcType=VARCHAR},
+      STEP7 = #{record.step7,jdbcType=VARCHAR},
+      COMPLIANCE_DEP_OP_ID = #{record.complianceDepOpId,jdbcType=DECIMAL},
+      COMPLIANCE_DEP_OP_RESULT = #{record.complianceDepOpResult,jdbcType=VARCHAR},
+      STEP8 = #{record.step8,jdbcType=VARCHAR},
+      SECOND_MOTION_ID = #{record.secondMotionId,jdbcType=DECIMAL},
+      SECOND_MOTION_RESULT = #{record.secondMotionResult,jdbcType=VARCHAR},
+      STEP9 = #{record.step9,jdbcType=VARCHAR},
+      PUB_BEFORE_IN_OFFICE_ID = #{record.pubBeforeInOfficeId,jdbcType=DECIMAL},
+      PUB_BEFORE_IN_OFFICE_RESULT = #{record.pubBeforeInOfficeResult,jdbcType=VARCHAR},
+      STEP10 = #{record.step10,jdbcType=VARCHAR},
+      THIRD_MOTION_ID = #{record.thirdMotionId,jdbcType=DECIMAL},
+      THIRD_MOTION_RESULT = #{record.thirdMotionResult,jdbcType=VARCHAR},
+      STEP11 = #{record.step11,jdbcType=VARCHAR},
+      APP_BEFORE_IN_OFFICE_ID = #{record.appBeforeInOfficeId,jdbcType=DECIMAL},
+      APP_BEFORE_IN_OFFICE_RESULT = #{record.appBeforeInOfficeResult,jdbcType=VARCHAR},
+      STEP12 = #{record.step12,jdbcType=VARCHAR},
+      OUTGOING_INSPECTION_ID = #{record.outgoingInspectionId,jdbcType=DECIMAL},
+      OUTGOING_INSPECTION_RESULT = #{record.outgoingInspectionResult,jdbcType=VARCHAR},
+      STEP13 = #{record.step13,jdbcType=VARCHAR},
+      CON_IN_OFFICE_ID = #{record.conInOfficeId,jdbcType=DECIMAL},
+      CON_IN_OFFICE_RESULT = #{record.conInOfficeResult,jdbcType=VARCHAR},
+      STEP14 = #{record.step14,jdbcType=VARCHAR},
+      CON_HONEST_ID = #{record.conHonestId,jdbcType=DECIMAL},
+      CON_HONEST_RESULT = #{record.conHonestResult,jdbcType=VARCHAR},
+      STEP15 = #{record.step15,jdbcType=VARCHAR},
+      APP_BANKING_SUPERVISION_ID = #{record.appBankingSupervisionId,jdbcType=DECIMAL},
+      APP_BANKING_SUPERVISION_RESULT = #{record.appBankingSupervisionResult,jdbcType=VARCHAR},
+      STEP16 = #{record.step16,jdbcType=VARCHAR},
+      ANNOUNCED_IN_OFFICE_ID = #{record.announcedInOfficeId,jdbcType=DECIMAL},
+      ANNOUNCED_IN_OFFICE_RESULT = #{record.announcedInOfficeResult,jdbcType=VARCHAR},
+      STEP17 = #{record.step17,jdbcType=VARCHAR},
+      POST_APPOINT_ID = #{record.postAppointId,jdbcType=DECIMAL},
+      POST_APPOINT_RESULT = #{record.postAppointResult,jdbcType=VARCHAR},
+      STEP18 = #{record.step18,jdbcType=VARCHAR},
+      CREATION_TIME = #{record.creationTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      FLOW_STATUS = #{record.flowStatus,jdbcType=VARCHAR},
+      ORG = #{record.org,jdbcType=VARCHAR},
+      ADJUST_TYPE = #{record.adjustType,jdbcType=VARCHAR},
+      POSITION_LEVEL = #{record.positionLevel,jdbcType=VARCHAR},
+      START_DATE = #{record.startDate,jdbcType=TIMESTAMP},
+      END_DATE = #{record.endDate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.nantian.entity.sys.SysFlow">
+    update SYS_FLOW
+    <set>
+      <if test="userid != null">
+        USERID = #{userid,jdbcType=DECIMAL},
+      </if>
+      <if test="username != null">
+        USERNAME = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="aspiringUnit != null">
+        ASPIRING_UNIT = #{aspiringUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="aspiringPosition != null">
+        ASPIRING_POSITION = #{aspiringPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="step1 != null">
+        STEP1 = #{step1,jdbcType=VARCHAR},
+      </if>
+      <if test="unitReId != null">
+        UNIT_RE_ID = #{unitReId,jdbcType=DECIMAL},
+      </if>
+      <if test="unitReResult != null">
+        UNIT_RE_RESULT = #{unitReResult,jdbcType=VARCHAR},
+      </if>
+      <if test="step2 != null">
+        STEP2 = #{step2,jdbcType=VARCHAR},
+      </if>
+      <if test="firstMotionId != null">
+        FIRST_MOTION_ID = #{firstMotionId,jdbcType=DECIMAL},
+      </if>
+      <if test="firstMotionResult != null">
+        FIRST_MOTION_RESULT = #{firstMotionResult,jdbcType=VARCHAR},
+      </if>
+      <if test="step3 != null">
+        STEP3 = #{step3,jdbcType=VARCHAR},
+      </if>
+      <if test="reportBeforeImId != null">
+        REPORT_BEFORE_IM_ID = #{reportBeforeImId,jdbcType=DECIMAL},
+      </if>
+      <if test="reportBeforeImResult != null">
+        REPORT_BEFORE_IM_RESULT = #{reportBeforeImResult,jdbcType=VARCHAR},
+      </if>
+      <if test="step4 != null">
+        STEP4 = #{step4,jdbcType=VARCHAR},
+      </if>
+      <if test="democracyInsReId != null">
+        DEMOCRACY_INS_RE_ID = #{democracyInsReId,jdbcType=DECIMAL},
+      </if>
+      <if test="democracyInsReResult != null">
+        DEMOCRACY_INS_RE_RESULT = #{democracyInsReResult,jdbcType=VARCHAR},
+      </if>
+      <if test="step5 != null">
+        STEP5 = #{step5,jdbcType=VARCHAR},
+      </if>
+      <if test="inspectArchivesId != null">
+        INSPECT_ARCHIVES_ID = #{inspectArchivesId,jdbcType=DECIMAL},
+      </if>
+      <if test="inspectArchivesResult != null">
+        INSPECT_ARCHIVES_RESULT = #{inspectArchivesResult,jdbcType=VARCHAR},
+      </if>
+      <if test="step6 != null">
+        STEP6 = #{step6,jdbcType=VARCHAR},
+      </if>
+      <if test="comDisInsReOpId != null">
+        COM_DIS_INS_RE_OP_ID = #{comDisInsReOpId,jdbcType=DECIMAL},
+      </if>
+      <if test="comDisInsReOpResult != null">
+        COM_DIS_INS_RE_OP_RESULT = #{comDisInsReOpResult,jdbcType=VARCHAR},
+      </if>
+      <if test="step7 != null">
+        STEP7 = #{step7,jdbcType=VARCHAR},
+      </if>
+      <if test="complianceDepOpId != null">
+        COMPLIANCE_DEP_OP_ID = #{complianceDepOpId,jdbcType=DECIMAL},
+      </if>
+      <if test="complianceDepOpResult != null">
+        COMPLIANCE_DEP_OP_RESULT = #{complianceDepOpResult,jdbcType=VARCHAR},
+      </if>
+      <if test="step8 != null">
+        STEP8 = #{step8,jdbcType=VARCHAR},
+      </if>
+      <if test="secondMotionId != null">
+        SECOND_MOTION_ID = #{secondMotionId,jdbcType=DECIMAL},
+      </if>
+      <if test="secondMotionResult != null">
+        SECOND_MOTION_RESULT = #{secondMotionResult,jdbcType=VARCHAR},
+      </if>
+      <if test="step9 != null">
+        STEP9 = #{step9,jdbcType=VARCHAR},
+      </if>
+      <if test="pubBeforeInOfficeId != null">
+        PUB_BEFORE_IN_OFFICE_ID = #{pubBeforeInOfficeId,jdbcType=DECIMAL},
+      </if>
+      <if test="pubBeforeInOfficeResult != null">
+        PUB_BEFORE_IN_OFFICE_RESULT = #{pubBeforeInOfficeResult,jdbcType=VARCHAR},
+      </if>
+      <if test="step10 != null">
+        STEP10 = #{step10,jdbcType=VARCHAR},
+      </if>
+      <if test="thirdMotionId != null">
+        THIRD_MOTION_ID = #{thirdMotionId,jdbcType=DECIMAL},
+      </if>
+      <if test="thirdMotionResult != null">
+        THIRD_MOTION_RESULT = #{thirdMotionResult,jdbcType=VARCHAR},
+      </if>
+      <if test="step11 != null">
+        STEP11 = #{step11,jdbcType=VARCHAR},
+      </if>
+      <if test="appBeforeInOfficeId != null">
+        APP_BEFORE_IN_OFFICE_ID = #{appBeforeInOfficeId,jdbcType=DECIMAL},
+      </if>
+      <if test="appBeforeInOfficeResult != null">
+        APP_BEFORE_IN_OFFICE_RESULT = #{appBeforeInOfficeResult,jdbcType=VARCHAR},
+      </if>
+      <if test="step12 != null">
+        STEP12 = #{step12,jdbcType=VARCHAR},
+      </if>
+      <if test="outgoingInspectionId != null">
+        OUTGOING_INSPECTION_ID = #{outgoingInspectionId,jdbcType=DECIMAL},
+      </if>
+      <if test="outgoingInspectionResult != null">
+        OUTGOING_INSPECTION_RESULT = #{outgoingInspectionResult,jdbcType=VARCHAR},
+      </if>
+      <if test="step13 != null">
+        STEP13 = #{step13,jdbcType=VARCHAR},
+      </if>
+      <if test="conInOfficeId != null">
+        CON_IN_OFFICE_ID = #{conInOfficeId,jdbcType=DECIMAL},
+      </if>
+      <if test="conInOfficeResult != null">
+        CON_IN_OFFICE_RESULT = #{conInOfficeResult,jdbcType=VARCHAR},
+      </if>
+      <if test="step14 != null">
+        STEP14 = #{step14,jdbcType=VARCHAR},
+      </if>
+      <if test="conHonestId != null">
+        CON_HONEST_ID = #{conHonestId,jdbcType=DECIMAL},
+      </if>
+      <if test="conHonestResult != null">
+        CON_HONEST_RESULT = #{conHonestResult,jdbcType=VARCHAR},
+      </if>
+      <if test="step15 != null">
+        STEP15 = #{step15,jdbcType=VARCHAR},
+      </if>
+      <if test="appBankingSupervisionId != null">
+        APP_BANKING_SUPERVISION_ID = #{appBankingSupervisionId,jdbcType=DECIMAL},
+      </if>
+      <if test="appBankingSupervisionResult != null">
+        APP_BANKING_SUPERVISION_RESULT = #{appBankingSupervisionResult,jdbcType=VARCHAR},
+      </if>
+      <if test="step16 != null">
+        STEP16 = #{step16,jdbcType=VARCHAR},
+      </if>
+      <if test="announcedInOfficeId != null">
+        ANNOUNCED_IN_OFFICE_ID = #{announcedInOfficeId,jdbcType=DECIMAL},
+      </if>
+      <if test="announcedInOfficeResult != null">
+        ANNOUNCED_IN_OFFICE_RESULT = #{announcedInOfficeResult,jdbcType=VARCHAR},
+      </if>
+      <if test="step17 != null">
+        STEP17 = #{step17,jdbcType=VARCHAR},
+      </if>
+      <if test="postAppointId != null">
+        POST_APPOINT_ID = #{postAppointId,jdbcType=DECIMAL},
+      </if>
+      <if test="postAppointResult != null">
+        POST_APPOINT_RESULT = #{postAppointResult,jdbcType=VARCHAR},
+      </if>
+      <if test="step18 != null">
+        STEP18 = #{step18,jdbcType=VARCHAR},
+      </if>
+      <if test="creationTime != null">
+        CREATION_TIME = #{creationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="flowStatus != null">
+        FLOW_STATUS = #{flowStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="org != null">
+        ORG = #{org,jdbcType=VARCHAR},
+      </if>
+      <if test="adjustType != null">
+        ADJUST_TYPE = #{adjustType,jdbcType=VARCHAR},
+      </if>
+      <if test="positionLevel != null">
+        POSITION_LEVEL = #{positionLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="startDate != null">
+        START_DATE = #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null">
+        END_DATE = #{endDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.nantian.entity.sys.SysFlow">
+    update SYS_FLOW
+    set USERID = #{userid,jdbcType=DECIMAL},
+      USERNAME = #{username,jdbcType=VARCHAR},
+      ASPIRING_UNIT = #{aspiringUnit,jdbcType=VARCHAR},
+      ASPIRING_POSITION = #{aspiringPosition,jdbcType=VARCHAR},
+      STEP1 = #{step1,jdbcType=VARCHAR},
+      UNIT_RE_ID = #{unitReId,jdbcType=DECIMAL},
+      UNIT_RE_RESULT = #{unitReResult,jdbcType=VARCHAR},
+      STEP2 = #{step2,jdbcType=VARCHAR},
+      FIRST_MOTION_ID = #{firstMotionId,jdbcType=DECIMAL},
+      FIRST_MOTION_RESULT = #{firstMotionResult,jdbcType=VARCHAR},
+      STEP3 = #{step3,jdbcType=VARCHAR},
+      REPORT_BEFORE_IM_ID = #{reportBeforeImId,jdbcType=DECIMAL},
+      REPORT_BEFORE_IM_RESULT = #{reportBeforeImResult,jdbcType=VARCHAR},
+      STEP4 = #{step4,jdbcType=VARCHAR},
+      DEMOCRACY_INS_RE_ID = #{democracyInsReId,jdbcType=DECIMAL},
+      DEMOCRACY_INS_RE_RESULT = #{democracyInsReResult,jdbcType=VARCHAR},
+      STEP5 = #{step5,jdbcType=VARCHAR},
+      INSPECT_ARCHIVES_ID = #{inspectArchivesId,jdbcType=DECIMAL},
+      INSPECT_ARCHIVES_RESULT = #{inspectArchivesResult,jdbcType=VARCHAR},
+      STEP6 = #{step6,jdbcType=VARCHAR},
+      COM_DIS_INS_RE_OP_ID = #{comDisInsReOpId,jdbcType=DECIMAL},
+      COM_DIS_INS_RE_OP_RESULT = #{comDisInsReOpResult,jdbcType=VARCHAR},
+      STEP7 = #{step7,jdbcType=VARCHAR},
+      COMPLIANCE_DEP_OP_ID = #{complianceDepOpId,jdbcType=DECIMAL},
+      COMPLIANCE_DEP_OP_RESULT = #{complianceDepOpResult,jdbcType=VARCHAR},
+      STEP8 = #{step8,jdbcType=VARCHAR},
+      SECOND_MOTION_ID = #{secondMotionId,jdbcType=DECIMAL},
+      SECOND_MOTION_RESULT = #{secondMotionResult,jdbcType=VARCHAR},
+      STEP9 = #{step9,jdbcType=VARCHAR},
+      PUB_BEFORE_IN_OFFICE_ID = #{pubBeforeInOfficeId,jdbcType=DECIMAL},
+      PUB_BEFORE_IN_OFFICE_RESULT = #{pubBeforeInOfficeResult,jdbcType=VARCHAR},
+      STEP10 = #{step10,jdbcType=VARCHAR},
+      THIRD_MOTION_ID = #{thirdMotionId,jdbcType=DECIMAL},
+      THIRD_MOTION_RESULT = #{thirdMotionResult,jdbcType=VARCHAR},
+      STEP11 = #{step11,jdbcType=VARCHAR},
+      APP_BEFORE_IN_OFFICE_ID = #{appBeforeInOfficeId,jdbcType=DECIMAL},
+      APP_BEFORE_IN_OFFICE_RESULT = #{appBeforeInOfficeResult,jdbcType=VARCHAR},
+      STEP12 = #{step12,jdbcType=VARCHAR},
+      OUTGOING_INSPECTION_ID = #{outgoingInspectionId,jdbcType=DECIMAL},
+      OUTGOING_INSPECTION_RESULT = #{outgoingInspectionResult,jdbcType=VARCHAR},
+      STEP13 = #{step13,jdbcType=VARCHAR},
+      CON_IN_OFFICE_ID = #{conInOfficeId,jdbcType=DECIMAL},
+      CON_IN_OFFICE_RESULT = #{conInOfficeResult,jdbcType=VARCHAR},
+      STEP14 = #{step14,jdbcType=VARCHAR},
+      CON_HONEST_ID = #{conHonestId,jdbcType=DECIMAL},
+      CON_HONEST_RESULT = #{conHonestResult,jdbcType=VARCHAR},
+      STEP15 = #{step15,jdbcType=VARCHAR},
+      APP_BANKING_SUPERVISION_ID = #{appBankingSupervisionId,jdbcType=DECIMAL},
+      APP_BANKING_SUPERVISION_RESULT = #{appBankingSupervisionResult,jdbcType=VARCHAR},
+      STEP16 = #{step16,jdbcType=VARCHAR},
+      ANNOUNCED_IN_OFFICE_ID = #{announcedInOfficeId,jdbcType=DECIMAL},
+      ANNOUNCED_IN_OFFICE_RESULT = #{announcedInOfficeResult,jdbcType=VARCHAR},
+      STEP17 = #{step17,jdbcType=VARCHAR},
+      POST_APPOINT_ID = #{postAppointId,jdbcType=DECIMAL},
+      POST_APPOINT_RESULT = #{postAppointResult,jdbcType=VARCHAR},
+      STEP18 = #{step18,jdbcType=VARCHAR},
+      CREATION_TIME = #{creationTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      FLOW_STATUS = #{flowStatus,jdbcType=VARCHAR},
+      ORG = #{org,jdbcType=VARCHAR},
+      ADJUST_TYPE = #{adjustType,jdbcType=VARCHAR},
+      POSITION_LEVEL = #{positionLevel,jdbcType=VARCHAR},
+      START_DATE = #{startDate,jdbcType=TIMESTAMP},
+      END_DATE = #{endDate,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+
+
+</mapper>

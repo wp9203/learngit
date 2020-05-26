@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../framework/layui/css/layui.css">
+    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="icon" href="/favicon.ico">
+    <title>研究决定(三次上会)</title>
+</head>
+<body>
+<style>
+    .layui-table-cell{
+        overflow: visible;
+    }
+    .layui-table-box {
+        overflow: visible;
+    }
+    .layui-table-body{
+        overflow: visible;
+    }
+    td .layui-form-select{
+        margin-top:-10px;
+        margin-left: -15px;
+        margin-right: -15px;
+    }
+
+
+</style>
+
+
+
+<div style="text-align: center; padding-top:10px;">
+    <button class="layui-btn">     研究决定(三次上会)       </button>
+</div>
+<form class="layui-form" action="" style="padding:10px;">
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">日期</label>
+            <div class="layui-input-inline" >
+                <input type="text" class="layui-input" name="meeting_date" required layui-verify="required" id="meeting_date">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">主持人</label>
+            <div class="layui-input-inline" >
+                <input type="text" name="host" required  lay-verify="required"  class="layui-input" >
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">应参会人数</label>
+            <div class="layui-input-inline" >
+                <input type="text" name="due_number" required  lay-verify="required"  class="layui-input" >
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">实际参会人数</label>
+            <div class="layui-input-inline" >
+                <input type="text" name="actual_number" required  lay-verify="required" class="layui-input" >
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">纪要文号</label>
+            <div class="layui-input-inline" >
+                <input type="text" name="summary_number" required  lay-verify="required" class="layui-input" >
+            </div>
+        </div>
+
+    </div>
+    <div style="padding:10px;">
+    <table class="layui-hide" id="tableId" lay-filter="tableEvent" ></table>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <button type="button" class="layui-btn" id="sign_file">上传签报</button>
+            <div class="layui-input-inline" >
+                <input type="text" name="signFileName" class="layui-input" id="signFileName">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <button type="button" class="layui-btn" id="summary_file">上传纪要</button>
+            <div class="layui-input-inline" >
+                <input type="text" name="summaryFileName" class="layui-input" id="summaryFileName">
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item layui-hide" id="toolbar" >
+        <div class="layui-input-block">
+            <input type="radio" name="pass" value="1" title="是" lay-filter='radiofilter1'>
+            <input type="radio" name="pass" value="0" title="否" lay-filter='radiofilter0'>
+
+        </div>
+    </div>
+    <div class="layui-form-item" style="text-align: center; padding:20px">
+        <div class="layui-input-block">
+            <button id="do_save" lay-filter="do_save" class="layui-btn" type="submit" lay-submit="">保存</button>
+            <button id="submit" lay-filter="submit_btn" class="layui-btn" type="submit" lay-submit="">提交</button>
+
+        </div>
+    </div>
+</form>
+
+<script src="../framework/layui/layui.all.js"></script>
+<script src="../js/dictionary.js"></script>
+<script src="../js/http.js"></script>
+<script src="../js/jquery-1.8.0.min.js"></script>
+<script>
+
+    var table = layui.table;
+    var layer = layui.layer;
+    var form = layui.form;
+    var element = layui.element;
+    var $ = layui.jquery;
+    var http = layui.http;
+    var laydate = layui.laydate;
+    var upload = layui.upload;
+    //获取父页面传递的参数
+    var parent_json =parent.req_data;
+    //封装访问后天请求参数
+    var ids = new Array();
+
+    var param = {};
+    //遍历获取选择行数据的ID；
+    // for(var i = 0;i<parent_json.length;i++){
+    //     var mob={};
+    //     mob.userid= parent_json[i].userid;
+    //     mob.id=parent_json[i].id;
+    //     ids.push(mob);
+    // }
+
+    for(var i = 0;i<parent_json.length;i++){
+        ids.push(parent_json[i].userid);
+    }
+    param.Ids =ids;
+    alert("ids:"+JSON.stringify(ids));
+    http.setHeader("Content-Type", "application/json; charset=utf-8");//请求参数格式为json是需要添加请求头
+    // http.post("../api/firstmotion/queryByIds",JSON.stringify(param),function(data){
+    http.post("../api/thirdmotion/queryByIds",JSON.stringify(param),function(data){
+        alert(JSON.stringify(data))
+        var result =data.data;
+        var tableData =[];
+        for(var i =0;i<result.length;i++){
+            var user = {};
+            user.id =result[i].id;
+            user.candidateName=result[i].candidateName;
+            user.unit =result[i].unit;
+            user.position = result[i].position;
+            user.positionLevel = result[i].positionLevel;
+            user.note = result[i].note;
+            user.pass =result[i].pass;
+            // user.reviewIdentified = result[i].reviewIdentified;
+            tableData.push(user);
+        }
+        table.render({
+            elem: "#tableId",
+            url: '',
+            cellMinWidth:100,
+            done:function(){
+                //返回值赋值给单选框
+            }
+            ,parseData: function (res) {    //res 即为原始返回的数据
+                // alert(JSON.stringify(res))
+                return {
+                    "code": res.errcode,  //解析接口状态
+                    "msg": res.errmsg,    //解析提示文本
+                    "count": res.data.count,   //解析数据长度
+                    "data": res.data.rows //解析数据列表
+                };
+            }
+            ,cols: [[ //标题栏
+                {type:'checkbox'}
+                , {field:'id',title:'ID',hide:true,align:'center'}
+                , {field: 'candidateName', title: '姓名', align: 'center'} //rowspan即纵向跨越的单元格数
+                // , {field: 'adjustType', title: '调整类型', align: 'center'}
+                , {field: 'unit', title: '任职单位', align: 'center' ,edit:'text'}
+                , {field: 'position', title: '任职职务', align: 'center',edit:'text'}
+                , {field: 'positionLevel', title: '任职职等', align: 'center',edit:'text'}
+                , {field: 'note', title: '备注', align: 'center',edit:'text'}
+                , {field: 'pass', title: '是否通过', align: 'center',toolbar:'toolbar',edit:'text'}
+            ]]
+            ,data:data.data
+            ,id: 'tableId'
+        })
+    });
+    laydate.render({
+        elem:"#meeting_date"
+    });
+
+
+
+
+    form.on("radio(rdo1)",function(data) {
+        console.log(data.elem); //得到radio原始DOM对象
+        console.log(data.value); //被点击的radio的value值
+    });
+
+    //多文件列表示例
+
+    var upload_sign = upload.render({
+        elem: '#sign_file'
+        ,accept:'file'
+        ,url: '../api/fileUpload/upload' //改成您自己的上传接口
+        ,before: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+            obj.preview(function(index, file, result) {
+                console.log(index); //得到文件索引
+                console.log(file); //得到文件对象
+                console.log(result); //得到文件base64编码，比如图片
+                // alert(file.name);
+                // $("#signFileName").val(file.name);
+                //obj.resetFile(index, file, '123.jpg'); //重命名文件名，layui 2.3.0 开始新增
+
+                //这里还可以做一些 append 文件列表 DOM 的操作
+
+                //obj.upload(index, file); //对上传失败的单个文件重新上传，一般在某个事件中使用
+                //delete files[index]; //删除列表中对应的文件，一般在某个事件中使用
+            })
+        }
+        ,done: function(res, index, upload){
+            if(res.errcode == 0 ){
+                layer.msg("上传成功");
+            }
+            var diskFilePath = res.diskFilePath;
+            $("#signFileName").val(diskFilePath);
+            table.cache[tableId][this.item.closest('tr').data('index')]["reviewIdentified"] =diskFilePath;
+        }
+        ,error: function(index, upload){
+
+        }
+    });
+    var upload_summary = upload.render({
+        elem: '#summary_file'
+        ,accept:'file'
+        ,url: '../api/fileUpload/upload' //改成您自己的上传接口
+        ,before: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+            obj.preview(function(index, file, result) {
+                console.log(index); //得到文件索引
+                console.log(file); //得到文件对象
+                console.log(result); //得到文件base64编码，比如图片
+                // $("#summaryFileName").val(file.name);
+                //obj.resetFile(index, file, '123.jpg'); //重命名文件名，layui 2.3.0 开始新增
+
+                //这里还可以做一些 append 文件列表 DOM 的操作
+
+                //obj.upload(index, file); //对上传失败的单个文件重新上传，一般在某个事件中使用
+                //delete files[index]; //删除列表中对应的文件，一般在某个事件中使用
+            })
+        }
+        ,done: function(res, index, upload){
+            if(res.errcode == 0 ){
+                layer.msg("上传成功");
+            }
+            var diskFilePath = res.diskFilePath;
+            $("#summaryFileName").val(diskFilePath);
+            table.cache[tableId][this.item.closest('tr').data('index')]["reviewIdentified"] =diskFilePath;
+        }
+        ,error: function(index, upload){
+
+        }
+    });
+
+    form.on('submit(do_save)',function(data){
+        var checkStatus = table.checkStatus('tableId'); //获取选中行状态
+        var data1=checkStatus.data;
+        if(data.length==0){
+            layer.msg("请勾选需要保存的人员",function () {
+
+            });
+            return ;
+        }
+        var infos=new Array();
+        var param={};
+        for(var i=0;i<data1.length;i++){
+            var firstMotionVO={};
+            firstMotionVO.id=data1[i].id;
+            firstMotionVO.candidateName=data1[i].candidateName;
+            // firstMotionVO.adjustType=data1[i].adjustType;
+            firstMotionVO.aspiringUnit=data1[i].unit;
+            firstMotionVO.aspiringPosition=data1[i].position;
+            firstMotionVO.aspiringPositionLevel=data1[i].positionLevel;
+            firstMotionVO.note=data1[i].note;
+            firstMotionVO.pass=data1[i].pass;
+            firstMotionVO.flowid=parent_json.flowid;
+            infos.push(firstMotionVO);
+        }
+        param.infos=infos;
+        param.req=data.field;
+        // console.log(JSON.stringify(param))
+        alert(JSON.stringify(param));
+
+        if(data.field.meeting_date.length==0){
+            layer.msg("请选择会议时间",function () {
+            });
+            return ;
+        }
+        alert("1111:"+data.field.signFileName);
+        if(''==data.field.signFileName){
+            layer.msg("请上传签报",function () {
+            });
+            alert("请上传签报");
+            return ;
+        };
+        // alert(222);
+        if(data.field.summaryFileName==null||data.field.summaryFileName==""){
+            layer.msg("请上传纪要",function () {
+            });
+            alert("请上传纪要");
+            return ;
+        }
+
+        http.setHeader("Content-Type", "application/json; charset=utf-8");//请求参数格式为json是需要添加请求头
+        http.post("../api/thirdmotion/add", JSON.stringify(param),function(data){
+            alert("保存成功");
+        })
+        return false;
+    });
+
+    var checkStatus = table.checkStatus('tableId'); //获取选中行状态
+    var data = checkStatus.data;
+
+
+    $(document).on('click','#submit',function(data) {
+        var checkStatus = table.checkStatus('tableId'); //获取选中行状态
+        var data1=checkStatus.data;
+        // alert(JSON.stringify(parent.req_data));
+        if(data.length==0){
+            layer.msg("请勾选需要提交的人员",function () {
+            });
+            return ;
+        }
+        var infos=new Array();
+        var param={};
+        for(var i=0;i<data1.length;i++){
+            var firstMotionVO={};
+            firstMotionVO.id=data1[i].id;
+            firstMotionVO.candidateName=data1[i].name;
+            // firstMotionVO.adjustType=data1[i].adjustType;
+            firstMotionVO.aspiringUnit=data1[i].aspiringUnit;
+            firstMotionVO.aspiringPosition=data1[i].aspiringPosition;
+            firstMotionVO.aspiringPositionLevel=data1[i].aspiringPositionLevel;
+            firstMotionVO.note=data1[i].note;
+            firstMotionVO.pass=data1[i].pass;
+            for(var j=0;j<parent.req_data.length;j++){
+                firstMotionVO.flowid=parent.req_data[j].flowid;
+            }
+            infos.push(firstMotionVO);
+        }
+        param.infos=infos;
+        param.req=data.field;
+        alert(JSON.stringify(param));
+        // if(data.field.meeting_date.length==0){
+        //     layer.msg("请选择会议时间",function () {
+        //     });
+        //     return ;
+        // }
+        // // alert("1111:"+data.field.signFileName);
+        // if(''==data.field.signFileName){
+        //     layer.msg("请上传签报",function () {
+        //     });
+        //     alert("请上传签报");
+        //     return ;
+        // };
+        // // alert(222);
+        // if(data.field.summaryFileName==null||data.field.summaryFileName==""){
+        //     layer.msg("请上传纪要",function () {
+        //     });
+        //     alert("请上传纪要");
+        //     return ;
+        // }
+        alert(JSON.stringify("*********"+param));
+        http.setHeader("Content-Type", "application/json; charset=utf-8");//请求参数格式为json是需要添加请求头
+        http.post("../api/thirdmotion/update", JSON.stringify(param),function(data){
+            alert("保存成功");
+        })
+        return false;
+    });
+
+</script>
+</body>
+</html>

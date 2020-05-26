@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="../framework/layui/css/layui.css">
+    <title>菜单表单</title>
+    <style>
+        body {
+            margin-top: 10px;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+
+<body layadmin-themealias="default">
+
+
+<form class="layui-form" action="" id="menu-form" lay-filter="menu-form">
+    <div class="layui-form-item">
+        <label class="layui-form-label">权限名称</label>
+        <div class="layui-input-block">
+            <input type="text" id="name" name="name" lay-verify="required" lay-reqtext="权限名称不能为空" autocomplete="off"
+                   placeholder="请输入权限名称" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">url路径</label>
+        <div class="layui-input-block">
+            <input type="text" name="url" lay-verify="url" placeholder="请输入url路径" autocomplete="off"
+                   class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">小图标</label>
+        <div class="layui-input-block">
+            <input type="text" name="smallIcon" placeholder="请输入图标的值" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">排序</label>
+        <div class="layui-input-block">
+            <input type="text" name="sorting" lay-verify="sorting" placeholder="请输入数值，越小越靠前" autocomplete="off"
+                   class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">类型</label>
+        <div class="layui-input-block">
+            <select name="type" id="type" lay-verify="required">
+                <option value=""></option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">上级菜单</label>
+        <div class="layui-input-block">
+            <input type="text" name="parentName" lay-verify="parentName" autocomplete="off"
+                   class="layui-input layui-disabled" disabled="disabled">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">是否隐藏</label>
+        <div class="layui-input-block">
+            <select name="hide" lay-verify="required">
+                <option value=""></option>
+                <option value="0" selected="">否</option>
+                <option value="1">是</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">状态</label>
+        <div class="layui-input-block">
+            <select name="status" lay-filter="status" lay-verify="required">
+                <option value=""></option>
+                <option value="1" selected="">正常</option>
+                <option value="0">废止</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button type="submit" id="add" class="layui-btn" lay-submit="" lay-filter="submit-btn">立即提交</button>
+            <button type="button" id="rsbtn" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+<script src="../framework/layui/layui.all.js"></script>
+<script src="../js/common.js"></script>
+<script src="../js/http.js"></script>
+<script>
+    //记录当前操作类型
+    var type = null;
+    //当编辑时，记录用户id
+    var permissionId = '';
+    var menuId = '';
+    var $ = layui.$,
+        layer = layui.layer,
+        http = layui.http,
+        form = layui.form;
+    //正则验证
+    form.verify({
+        parentName: function (value) {
+            if (value.length <= 0) {
+                var type = $('select[name="type"] option:selected').val();
+                if (type != "1") {
+                    return "上级菜单不能为空";
+                }
+            }
+        }
+        , url: function (value) {
+            if (value.length <= 0) {
+                var type = $('select[name="type"] option:selected').val();
+                if (type != '1') {
+                    return "url不能为空";
+                }
+            }
+        }
+        , sorting: function (value) {
+            if (value.length <= 0) {
+                //var type = $('select[name="type"] option:selected').val();
+                //if (type != '1') {
+
+                    return "排序值不能为空";
+                //}
+            }
+            if (isNaN(value)) {
+                return "排序值请输入数字";
+            }
+        }
+    });
+    form.on('submit(submit-btn)', function (data) {
+        var address = "";//请求地址
+        var confirmMsg = '';//提示信息
+        var param = data.field;
+        param.parentId = permissionId;
+        if (type == 'edit') {
+            address = "update";
+            confirmMsg = '菜单信息更新成功';
+            param.id = menuId;
+        } else {
+            address = "add";
+            confirmMsg = '添加菜单成功';
+            param.parentId = permissionId;
+        }
+
+        http.post("../api/menu/" + address, param, function (data) {
+            var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+            var errcode = data.errcode;
+            var errmsg = data.errmsg;
+            if ("0" == errcode) {
+                parent.changed = true;//新增或修改成功刷新
+                layer.confirm(confirmMsg, {
+                    btn: ['确定', '取消'] //按钮
+                }, function () {
+                    layer.close(index);
+                    parent.layer.close(index);
+                });
+            } else {
+                layer.msg(errmsg, function () {
+
+                });
+            }
+        });
+        return false;
+
+    });
+
+    /**
+     *
+     * 表单重置
+     */
+    $("#rsbtn").on('click', function(){
+        resetForm('menu-form', 'menu-form');
+    });
+
+    function menuEdit(id) {
+        menuId = id;//记录id
+        type = 'edit';//当前模式为编辑
+        var param = {};
+        param.permissionId = id;
+        http.post("../api/menu/getPermission", param, function (data) {
+            var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+            var errcode = data.errcode;
+            var errmsg = data.errmsg;
+            if ("0" == errcode) {
+                var option = '';
+
+                //设置菜单类型不可编辑
+                option += getOption(1, false);
+                option += getOption(2, false);
+                option += getOption(3, false);
+                $("#type").append(option);
+
+                var info = data.data;
+                form.val("menu-form", info);
+            } else {
+                layer.msg(errmsg, function () {
+
+                });
+            }
+        });
+
+
+        $("#type").addClass("layui-disabled");
+        $('#type').attr("disabled", "disabled");
+        form.render(null, 'menu-form');
+    }
+
+
+    function parentMenu(menuPid, menuName, menuType) {
+        permissionId = menuPid;
+        var option = '';
+        if (menuType == undefined || menuType == '') {
+            option += getOption(1, false);
+            option += getOption(2, true);
+            option += getOption(3, true);
+        }
+        var type = parseInt(menuType);
+        if (type == 1) {
+            option += getOption(1, false);
+            option += getOption(2, false);
+            option += getOption(3, true);
+        } else if (type == 2) {
+            option += getOption(1, true);
+            option += getOption(2, true);
+            option += getOption(3, false);
+        } else if (type == 3) {
+            option += getOption(1, true);
+            option += getOption(2, true);
+            option += getOption(3, true);
+        }
+        $("#type").append(option);
+        form.render(null, 'menu-form');
+        var val = form.val('menu');
+        val.parentName = menuName;
+        form.val('menu-form', val);
+
+    }
+
+    function getOption(menuType, disable) {
+        var type = parseInt(menuType);
+        var html = '';
+
+        if (type == 1) {
+            html += "<option value=\"1\"";
+            if (disable) {
+                html += " disabled=\"\" "
+            }
+            html += ">分类</option>";
+        } else if (type == 2) {
+            html += "<option value=\"2\"";
+            if (disable) {
+                html += " disabled=\"\" "
+            }
+            html += ">菜单</option>";
+        } else if (type == 3) {
+            html += "<option value=\"3\"";
+            if (disable) {
+                html += " disabled=\"\" "
+            }
+            html += ">操作</option>";
+        }
+        return html;
+    }
+
+</script>
+</body>
+</html>

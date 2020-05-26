@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../framework/layui/css/layui.css">
+    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="icon" href="/favicon.ico">
+    <title>旅居明细</title>
+    <style>
+        /*
+         * 数据表格内容换行显示
+         */
+        .layui-table-cell {
+            font-size: 14px;
+            padding: 0 5px;
+            height: auto;
+            overflow: visible;
+            text-overflow: inherit;
+            white-space: normal;
+            word-break: break-all;
+        }
+    </style>
+</head>
+<body class="layui-view-body">
+<div class="layui-content">
+    <div class="layui-row">
+        <div class="layui-card">
+            <div class="layui-card-body">
+                <form class="layui-form" action="" lay-filter="dwelling-form" id="dwelling-form">
+                    <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">查询日期</label>
+                            <div class="layui-input-inline">
+                                <input type="text" class="layui-input" name="queryTime" id="queryTime"
+                                       placeholder="请选择查询日期">
+                            </div>
+                        </div>
+
+                        <div class="layui-inline">
+                            <label class="layui-form-label">健康状况</label>
+                            <div class="layui-input-inline">
+                                <select name="health" lay-filter="aihao" lay-reqtext="请选择健康情况">
+                                    <option value="">请选择</option>
+                                    <option value="1">健康</option>
+                                    <option value="2">有咳嗽或感冒发烧</option>
+                                    <option value="3">疑似病例</option>
+                                    <option value="4">确诊病例</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="layui-inline">
+                            <label class="layui-form-label">是否接触过湖北人员</label>
+                            <div class="layui-input-inline">
+                                <select name="contact" lay-filter="aihao" lay-reqtext="请选择是否接触过湖北人员">
+                                    <option value=""></option>
+                                    <option value="0">否</option>
+                                    <option value="1">是</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-input-block center">
+                            <button type="submit" class="layui-btn" lay-submit="" lay-filter="query">查询</button>
+                            <button type="reset" class="layui-btn layui-btn-primary">清空</button>
+                        </div>
+                    </div>
+                </form>
+                <table id="dwelling-table" lay-filter="dwelling-table"></table>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../js/table2excel.js"></script>
+<script src="../framework/layui/layui.all.js"></script>
+<script src="../js/http.js"></script>
+<script src="../js/dictionary.js"></script>
+<script type="text/html" id="isTreat">
+    {{dictionary('treated',d.treated)}}
+</script>
+<script type="text/html" id="sexType">
+    {{dictionary('userSex',d.sex)}}
+</script>
+<!--<script type="text/html" id="healthState">-->
+<!--    {{dictionary('health',d.healthState)}}-->
+<!--</script>-->
+<script>
+    var element = layui.element;
+    var table = layui.table;
+    var form = layui.form;
+    var $ = layui.$;
+    var layer = layui.layer;
+    var http = layui.http;
+    var laydate = layui.laydate;
+
+    //展示已知数据
+    var tableInt = table.render({
+        // defaultToolbar: [{
+        //     title: '导出excel' //标题
+        //     , layEvent: 'printDate' //事件名，用于 toolbar 事件中使用
+        //     , icon: 'layui-icon-print' //图标类名
+        // }],
+        // defaultToolbar: ['exports'],
+        toolbar: true//'#toolbarDemo', //开启头部工具栏，并为其绑定左侧模板
+        ,title: '员工到武汉及湖北地区旅居情况表' + datetimeformat(new Date())
+        , elem: '#dwelling-table'
+        , url: '../api/dwelling/query'
+        , method: 'post'
+        , toolbar: true
+        , parseData: function (res) {    //res 即为原始返回的数据
+            return {
+                "code": res.errcode,  //解析接口状态
+                "msg": res.errmsg,    //解析提示文本
+                "count": res.data.count,   //解析数据长度
+                "data": res.data.rows //解析数据列表
+            };
+        }
+        , cols: [
+            [
+                {field: 'groupName', title: '所属经营单元、分子公司、职能部门', colspan: 4, align: 'center'}
+                , siteGroupName
+                , {field: 'siteName', title: '填报人', colspan: 1, align: 'center'}
+                , siteName
+                , {field: 'siteTime', title: '填报日期', colspan: 1, align: 'center'}
+                , siteTime
+            ],
+            [
+                {type: 'numbers',title:'序号', rowspan: 2, align: 'center'},
+                {title: '基本信息', colspan: 6, align: 'center'}
+                , {title: '期间到武汉或湖北各地区旅行、居住、中转、经停', colspan: 4, align: 'center'}
+                , {title: '与近期来自武汉或湖北各地区人员有密切接触', colspan: 5, align: 'center'}
+                , {title: '本人目前身体状况', colspan: 6, align: 'center'}
+                , {field: 'remark', title: '备注', align: 'center', rowspan: 2}
+            ],
+            [ //标题栏
+                // ,{field: 'id', title: '用户编号', align: 'center', hide:true}
+                {field: 'name', title: '姓名', align: 'center'}
+                , {field: 'corporation', title: '所属分子公司', align: 'center'}
+                , {field: 'firstDepartmentName', title: '一级部门', align: 'center'}
+                , {field: 'secondDepartmentName', title: '二级部门', align: 'center'}
+                , {field: 'sex', title: '性别', align: 'center', templet: '#sexType'}
+                , {field: 'year', title: '年龄', align: 'center'}
+                // , {field: 'groupName', title: '所属项目组', align: 'center', hide:true}
+                , {field: 'phoneNo', title: '手机号码', align: 'center'}
+                , {field: 'reachTime', title: '抵达武汉及湖北地区日期', align: 'center'}
+                , {field: 'reachArea', title: '所抵达的具体地区', align: 'center'}
+                , {field: 'backTime', title: '拟返回公司日期', align: 'center'}
+                , {field: 'backArea', title: '拟返回公司具体办公地点', align: 'center'}
+                , {field: 'contactName', title: '密切接触对象姓名', align: 'center'}
+                , {field: 'contactTime', title: '接触日期', align: 'center'}
+                , {field: 'contactHealth', title: '密切接触对象身体健康状况（体温、相关症状等）', align: 'center'}
+                , {field: 'contactArea', title: '密切接触对象目前常驻地', align: 'center'}
+                , {field: 'contactTel', title: '密切接触对象手机号码', align: 'center'}
+                , {field: 'healthState', title: '是否有疑似症状（发热、乏力、干咳、呼吸困难等）', align: 'center'}
+                , {field: 'treated', title: '是否去医院就诊', align: 'center', templet: '#isTreat'}
+                , {field: 'hospitalName', title: '医院名称', align: 'center'}
+                , {field: 'treatTime', title: '就诊日期', align: 'center'}
+                , {field: 'result', title: '医院就诊结果', align: 'center'}
+
+            ]
+        ]
+        , data: []
+        , even: true
+        , page: false //是否显示分页
+        , limits: [10, 15, 20, 50, 100, 500]
+        , limit: 10 //每页默认显示的数量
+        // ,done: function (res, curr, count) {
+        //     var header_tr = $("#dwelling-table").next().find(".layui-table-header").find("tr");
+        //     var body_tr = $("#dwelling-table").next().find(".layui-table-body").find("tr");
+        //     var header_html = "";
+        //     var body_html = "";
+        //     // 获取表头html，包括单元格的合并
+        //     $.each(header_tr,function (i,tr) {
+        //         var header_th = $(tr).find("th");
+        //         header_html += "<tr>";
+        //         $.each(header_th,function (j,th) {
+        //             var rowspan_num = $(th).attr("rowspan");// 行合并数
+        //             var colspan_num = $(th).attr("colspan");// 列合并数
+        //             if (rowspan_num && !colspan_num){// 只有行合并时
+        //                 header_html += '<th rowspan= "'+ rowspan_num +'">';
+        //             } else if (colspan_num && !rowspan_num){// 只有列合并时
+        //                 header_html += '<th colspan= "'+ colspan_num +'">';
+        //             } else if (rowspan_num && colspan_num){// 行列合并均有时
+        //                 header_html += '<th rowspan= "'+ rowspan_num +'" colspan="'+ colspan_num +'">';
+        //             } else {// 没有发生单元格合并
+        //                 header_html += '<th>';
+        //             }
+        //             header_html += $(th).children().children().text() + '</th>';// 获取表头名称并拼接th标签
+        //         });
+        //         header_html += '</tr>';
+        //     });
+        //     // 获取表格body数据
+        //     $.each(body_tr,function (i,tr) {
+        //         var body_td = $(tr).find("td");
+        //         body_html += '<tr>';
+        //         $.each(body_td,function (j,td) {
+        //             body_html += '<td>' + $(td).children().text() + '</td>';
+        //         });
+        //         body_html += '</tr>';
+        //     });
+        //     $("#dwelling-table tr").remove();// 清除之前的doom结构
+        //     $("#dwelling-table").append(header_html).append(body_html);
+        //     $("#dwelling-table").hide();
+        //     // alert($("#dwelling-table"));
+        // }
+    });
+    // table.on('toolbar(dwelling-table)', function (obj) {
+    //     switch (obj.event) {
+    //         case 'printDate':
+    //         // 传入你的tableId即可导出
+    //             var table2excel = new Table2Excel();
+    //             // 传入你的tableId即可导出
+    //             var fiileName ="员工到武汉及湖北地区旅居情况表" + datetimeformat(new Date());
+    //             table2excel.export($('#dwelling-table'), fiileName);
+    //         break;
+    //     }
+    // });
+    //常规用法
+    laydate.render({
+        elem: '#queryTime'
+    });
+    //点击查询
+    form.on('submit(query)', function(data){
+        // alert(JSON.stringify(data.field));
+        query(data.field);
+        return false;
+    });
+    /**
+     * 数据表格重载
+     */
+    function query(param) {
+        // param.queryTime = queryTime;
+        tableInt.reload({
+            page: {
+                curr: 1 //重新从第 1 页开始
+            }
+            ,where: param
+        });
+    }
+    /**
+     * 日期格式化
+     * @param time
+     * @returns {*}
+     */
+    function datetimeformat(time) {
+        var dateTime = time;
+        if (dateTime != '' && dateTime != undefined) {
+            var date = new Date(dateTime);
+            Y = date.getFullYear() + '-';
+            M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+            D = date.getDate() + ' ';
+            return Y + M + D
+        } else {
+            return dateTime;
+        }
+    }
+
+</script>
+</body>
+</html>

@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../framework/layui/css/layui.css">
+    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="icon" href="/favicon.ico">
+    <title>银保监核准</title>
+</head>
+<body>
+<style>
+
+    .layui-table-cell{
+        overflow: visible !important;
+    }
+    .layui-table-box {
+        overflow: visible;
+    }
+    .layui-table-body{
+        overflow: visible;
+    }
+    .layui-input, .layui-select, .layui-textarea {
+        height: 28px;
+        line-height: 1.3;
+        line-height: 38px\9;
+        border-width: 1px;
+        border-style: solid;
+        background-color: #fff;
+        border-radius: 2px;
+    }
+    .layui-btn {
+        display: inline-block;
+        height: 28px;
+        line-height: 28px;
+        padding: 0 15px;
+        background-color: #009688;
+        color: #fff;
+        white-space: nowrap;
+        text-align: center;
+        font-size: 14px;
+        border: none;
+        border-radius: 2px;
+        cursor: pointer;
+    }
+
+</style>
+
+
+<div style="text-align: center; padding-top:10px;">
+        <button class="layui-btn ">银保监核准</button>
+</div>
+
+<div style="padding:10px;">
+<table class="layui-hide" id="tableId" lay-filter="tableId" ></table>
+</div>
+
+<div class="layui-form-item" style="text-align: center; padding:10px">
+    <div class="layui-input-block">
+        <button type="button" lay-filter="save" class="layui-btn"  id="save">保存</button>
+        <button type="button" lay-filter="doSubmit" class="layui-btn" id="do_submit">提交</button>
+    </div>
+</div>
+<script type="text/html" id="barDemoApprove">
+    <div class="layui-form-item iradio">
+        <a href="javascript:void(0)" lay-event="radio1click"><input type="radio"  name="approve_{{d.id}}" value="1" title="是" lay-filter="rdo1" {{d.approve=="1"?"checked":""}}></a>
+        <a href="javascript:void(0)" lay-event="radio2click"><input type="radio"  name="approve_{{d.id}}" value="2" title="否" lay-filter="rdo2" {{d.approve=="2"?"checked":""}}></a>
+    </div>
+</script>
+
+<script type="text/html" id="barDemoPass">
+    <div class="layui-form-item iradio">
+        <a href="javascript:void(0)" lay-event="radio3click"><input type="radio"  name="pass_{{d.id}}" value="1" title="是" lay-filter="rdo1" {{d.pass=="1"?"checked":""}}></a>
+        <a href="javascript:void(0)" lay-event="radio4click"><input type="radio"  name="pass_{{d.id}}" value="2" title="否" lay-filter="rdo2" {{d.pass=="2"?"checked":""}}></a>
+    </div>
+</script>
+
+<!-- 选择人员layer end-->
+<script src="../framework/layui/layui.all.js"></script>
+<script src="../js/dictionary.js"></script>
+<script src="../js/http.js"></script>
+<script src="../js/jquery-1.8.0.min.js"></script>
+<script>
+
+    var table = layui.table;
+    var layer = layui.layer;
+    var form = layui.form;
+    var element = layui.element;
+    var $ = layui.jquery;
+    var http = layui.http;
+    var laydate = layui.laydate;
+    var upload =layui.upload;
+    var tableIns;
+    var LAY_TABLE_INDEX;
+    //获取父页面传递的参数
+    var parent_json =parent.req_data;
+    console.log(parent_json);
+    //
+
+
+    //封装访问后天请求参数
+    var appBankingSupervisionIds = new Array();
+    var ids = new Array();
+    var param = {};
+    if(parent_json.length==undefined){
+        ids.push(parent_json.userid);
+        appBankingSupervisionIds.push(parent_json.appBankingSupervisionId);
+    }else{
+        for(var i = 0;i<parent_json.length;i++){
+            ids.push(parent_json[i].userid);
+            appBankingSupervisionIds.push(parent_json[i].appBankingSupervisionId);
+        }
+    }
+    //遍历获取选择行数据的ID；
+
+
+    param.ids = ids;
+
+    //根据ID先查询该记录是否已经保存在档案表中
+    http.setHeader("Content-Type", "application/json; charset=utf-8");//请求参数格式为json是需要添加请求头
+    http.post("../api/appBankingSupervision/queryByIds",JSON.stringify(param),function(data){
+        console.log("data:"+JSON.stringify(data.data));
+        var result =data.data;
+        var tableData =[];
+        for(var i =0;i<result.length;i++){
+            var user = {};
+            user.id =result[i].id;
+            user.candidateName=result[i].candidateName;
+            user.unit =result[i].unit;
+            user.position = result[i].position;
+            user.approve = result[i].approve;
+            user.approvalDate = result[i].approvalDate;
+            user.approvalNumber = result[i].approvalNumber;
+            user.replyDate = result[i].replyDate;
+            user.pass = result[i].pass;
+            user.replyNumber = result[i].replyNumber;
+            user.replyData = result[i].replyData;
+            tableData.push(user);
+        }
+        console.log("tableData:"+JSON.stringify(tableData));
+        tableIns= table.render({
+            elem: "#tableId"
+            ,url: ''
+            //,cellMinWidth:100
+            ,page:true
+            , parseData: function (res) {    //res 即为原始返回的数据
+                //alert(JSON.stringify(res))
+                return {
+                    "code": res.errcode,  //解析接口状态
+                    "msg": res.errmsg,    //解析提示文本
+                    "count": res.data.count,   //解析数据长度
+                    "data": res.data.rows //解析数据列表
+                };
+            }
+            ,done:function(res, curr, count){
+            }
+            ,cols: [[ //标题栏
+                {type:'checkbox' ,tilte:'选择'}
+                , {field: 'id',title:'id',align:'center',hide:true}
+                , {field: 'candidateName', title: '姓名',  align: 'center'} //rowspan即纵向跨越的单元格数
+                , {field: 'unit', title: '任职单位',  align: 'center'}
+                , {field: 'position', title: '职务',  align: 'center'}
+                , {field: 'approve', title: '是否需要核准',  align: 'center',hide:true}
+                , {field: 'approve_btn', title: '是否需要核准',align: 'center',templet:'#barDemoApprove'}
+                , {field: 'approvalDate', title: '报批时间',event:'approvalDateEvent',  align: 'center',templet:function(d){
+                        return d.approvalDate ==null?'':toDate(d.approvalDate);
+                    }}
+                , {field: 'approvalNumber', title: '报批文号',  align: 'center',edit:'text'}
+                , {field: 'replyDate', title: '批复时间',event:'replyDateEvent',  align: 'center',templet:function(d){
+                        return d.replyDate ==null?'':toDate(d.replyDate);
+                    }}
+                , {field: 'pass', title: '是否同意',  align: 'center',hide:true}
+                , {field: 'pass_btn', title: '是否同意',align: 'center',templet:'#barDemoPass'}
+                , {field: 'replyNumber', title: '批复文号',  align: 'center' ,edit:'text'}
+                , {field: 'replyData',title:'replyData',align:'center',hide:true}
+                , {field: 'checkData_btn', title:'批复文件材料',align:'center',templet:function() {
+                        return '<button class="layui-btn layui-btn-xs up_route_btn" type="button">上传材料</button>'
+                    }
+                }
+
+            ]]
+            ,data:tableData
+            ,id: 'tableId'
+            ,done: function(res, curr, count) {
+                var tableId = this.id;
+                var checkStatus = table.checkStatus(tableId);
+                console.log(JSON.stringify(checkStatus.data));
+                var tableElem = this.elem;
+                // table render出来实际显示的table组件
+                var tableViewElem = tableElem.next();
+                console.log(res);
+                // 渲染当前页面的所有的upload组件
+                upload.render({
+                    elem: tableViewElem.find('.up_route_btn'),
+                    url: '../api/fileUpload/upload',
+                    accept:'file',
+                    //exts:'pdf',
+                    multiple: false,
+                    before: function (obj) {
+                        console.log("111");//obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+                        obj.preview(function(index, file, result) {
+                            console.log('上传前调');
+                            console.log(index); //得到文件索引
+                            console.log(file); //得到文件对象
+                            console.log(result); //得到文件base64编码，比如图片
+                        })
+                    },
+                    done: function (res, index, upload) {
+                        if(res.errcode == 0 ){
+                            layer.msg("上传成功");
+                        }
+                        var diskFilePath = res.diskFilePath;
+                        table.cache[tableId][this.item.closest('tr').data('index')]["replyData"] =diskFilePath;
+                    }
+                });
+
+            }
+
+        })
+    })
+
+
+
+    table.on('tool(tableId)',function(obj){
+        if(obj.event === 'approvalDateEvent'){
+            laydate.render({
+                elem:this.firstChild
+                // ,show:true
+                // ,closeStop:this
+                ,done:function(value,date){
+                    console.log(value);
+                    obj.data.approvalDate = value;
+                    obj.update(obj.data);
+                    console.log(obj.data);
+                }
+            })
+        } else if(obj.event === 'replyDateEvent'){
+            laydate.render({
+                elem:this.firstChild
+                // ,show:true
+                // ,closeStop:this
+                ,done:function(value,date){
+                    console.log(value);
+                    obj.data.replyDate = value;
+                    obj.update(obj.data);
+                    console.log(obj.data);
+                }
+            })
+        }else if(obj.event === 'radio1click'){
+            obj.data.approve = 1;
+            obj.update(obj.data);
+        }else if(obj.event === 'radio2click'){
+            obj.data.approve = 2;
+            obj.update(obj.data);
+        }else if(obj.event === 'radio3click'){
+            obj.data.pass = 1;
+            obj.update(obj.data);
+        }else if(obj.event === 'radio4click'){
+            obj.data.pass = 2;
+            obj.update(obj.data);
+        }
+    })
+    //生成廉政谈话提请函
+    $('#drew').click(function() {
+        console.log('生成廉政谈话提请函');
+    });
+
+    //提交
+    $('#do_submit').click(function(){
+        var checkStatus = table.checkStatus('tableId');
+        var data = checkStatus.data
+        alert("data:"+JSON.stringify(data));
+        if(data.length == 0){
+            layer.msg('请勾选需要提交的人员', function () {
+            });
+            return;
+        }
+
+        var infos = new Array();
+        var param = {};
+
+        for(var i=0;i<data.length;i++){
+            var user = {};
+            user.candidateName=data[i].candidateName;
+            user.unit =data[i].unit;
+            user.position = data[i].position;
+            user.id =data[i].id;
+            if(appBankingSupervisionIds.includes(user.id)==true){
+                layer.msg(user.candidateName+'的记录已提交,不能修改!', function () {
+                });
+                return;
+            }
+            user.approve = data[i].approve;
+            console.log(user.approve);
+            if(user.approve == undefined || user.approve == ''){
+                layer.msg('请为'+user.candidateName+'选择是否需要核准', function () {
+                });
+                return;
+            } else if(user.approve == 1 || user.approve == '1'){ //需要核准
+                user.approvalDate = data[i].approvalDate;
+                if(user.approvalDate == undefined || user.approvalDate==''){
+                    layer.msg('请为'+user.candidateName+'选择报批时间', function () {
+                    });
+                    return;
+                }
+                user.approvalNumber = data[i].approvalNumber;
+                if(user.approvalNumber == undefined || user.approvalNumber==''){
+                    layer.msg('请为'+user.candidateName+'输入报批文号', function () {
+                    });
+                    return;
+                }
+                user.replyDate = data[i].replyDate;
+                if(user.replyDate == undefined || user.replyDate==''){
+                    layer.msg('请为'+user.candidateName+'选择批复时间', function () {
+                    });
+                    return;
+                }
+                user.pass = data[i].pass;
+                console.log(user.pass)
+                if(user.pass == undefined || user.pass==''){
+                    layer.msg('请为'+user.candidateName+'选择是否同意', function () {
+                    });
+                    return;
+                }
+                user.replyNumber = data[i].replyNumber
+                if(user.replyNumber == undefined || user.replyNumber==''){
+                    layer.msg('请为'+user.candidateName+'输入批复文号', function () {
+                    });
+                    return;
+                }
+                user.replyData = data[i].replyData;
+                if(user.replyData == undefined || user.replyData==''){
+                    layer.msg('请为'+user.candidateName+'上传批复文件材料', function () {
+                    });
+                    return;
+                }
+            } else if(user.approve == 2 || user.approve == '2'){ //不需要核准
+                //
+            }
+
+            console.log("user"+JSON.stringify(user));
+
+            infos.push(user);
+        }
+        param.infos = infos;
+        console.log("param:"+JSON.stringify(param));
+        layer.confirm("确认提交吗?提交后不得修改", function(index){
+            http.setHeader("Content-Type", "application/json; charset=utf-8");
+            http.post('../api/appBankingSupervision/submit', JSON.stringify(param), function (rep) {
+                var errcode = rep.errcode;
+                if (errcode == '0') {
+                    layer.msg("提交成功", {icon: 1});
+                }else{
+                    layer.msg(rep.errmsg);
+                }
+            });
+        })
+        return false;
+
+    });
+
+
+    //保存数据
+    $('#save').click(function(){
+        var checkStatus = table.checkStatus('tableId');
+        var data = checkStatus.data
+        //alert("data:"+JSON.stringify(data));
+        if(data.length == 0){
+            layer.msg('请勾选需要保存的人员', function () {
+            });
+            return;
+        }
+        var infos = new Array();
+        var param = {};
+
+        for(var i=0;i<data.length;i++){
+            var user = {};
+            user.id =data[i].id;
+            user.candidateName=data[i].candidateName;
+            if(appBankingSupervisionIds.includes(user.id)==true){
+                layer.msg(user.candidateName+'的记录已提交', function () {
+                });
+                return;
+            }
+            user.unit =data[i].unit;
+            user.position = data[i].position;
+            user.approve = data[i].approve;
+            user.approvalDate = data[i].approvalDate;
+            user.approvalNumber = data[i].approvalNumber;
+            user.replyDate = data[i].replyDate;
+            user.pass = data[i].pass;
+            user.replyNumber = data[i].replyNumber;
+            user.replyData = data[i].replyData;
+
+            console.log("user"+JSON.stringify(user));
+
+            infos.push(user);
+        }
+        param.infos = infos;
+        console.log("param:"+JSON.stringify(param));
+        http.setHeader("Content-Type", "application/json; charset=utf-8");
+        http.post('../api/appBankingSupervision/add', JSON.stringify(param), function (rep) {
+            var errcode = rep.errcode;
+            if (errcode == '0') {
+                layer.msg("保存成功", {icon: 1});
+            }else{
+                layer.msg(rep.errmsg);
+            }
+        });
+
+
+    });
+    function toDate(data){
+        var date = new Date(data);
+        var y = date.getFullYear() +'_';
+        var m = (date.getMonth()+1<10?'0'+(date.getMonth()+1):date.getMonth()+1 )+'_';
+        var d = (date.getDate()<10?'0'+date.getDate():date.getDate());
+        return y+m+d;
+    }
+
+</script>
+
+</body>
+</html>

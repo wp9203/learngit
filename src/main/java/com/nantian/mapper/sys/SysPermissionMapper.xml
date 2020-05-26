@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nantian.mapper.sys.SysPermissionMapper">
+  <resultMap id="BaseResultMap" type="com.nantian.entity.sys.SysPermission">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="PARENT_ID" jdbcType="DECIMAL" property="parentId" />
+    <result column="PATH" jdbcType="VARCHAR" property="path" />
+    <result column="URL" jdbcType="VARCHAR" property="url" />
+    <result column="BIG_ICON" jdbcType="VARCHAR" property="bigIcon" />
+    <result column="SMALL_ICON" jdbcType="VARCHAR" property="smallIcon" />
+    <result column="SORTING" jdbcType="DECIMAL" property="sorting" />
+    <result column="TYPE" jdbcType="VARCHAR" property="type" />
+    <result column="STATUS" jdbcType="VARCHAR" property="status" />
+    <result column="EXTEND1" jdbcType="VARCHAR" property="extend1" />
+    <result column="EXTEND2" jdbcType="VARCHAR" property="extend2" />
+    <result column="CREATION_TIME" jdbcType="TIMESTAMP" property="creationTime" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="HIDE" jdbcType="VARCHAR" property="hide" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, NAME, PARENT_ID, PATH, URL, BIG_ICON, SMALL_ICON, SORTING, TYPE, STATUS, EXTEND1, 
+    EXTEND2, CREATION_TIME, UPDATE_TIME, HIDE
+  </sql>
+  <select id="selectByExample" parameterType="com.nantian.entity.sys.SysPermissionExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from SYS_PERMISSION
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_PERMISSION
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from SYS_PERMISSION
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.nantian.entity.sys.SysPermissionExample">
+    delete from SYS_PERMISSION
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.nantian.entity.sys.SysPermission">
+    insert into SYS_PERMISSION (ID, NAME, PARENT_ID, 
+      PATH, URL, BIG_ICON, 
+      SMALL_ICON, SORTING, TYPE, 
+      STATUS, EXTEND1, EXTEND2, 
+      CREATION_TIME, UPDATE_TIME, HIDE
+      )
+    values (#{id,jdbcType=DECIMAL}, #{name,jdbcType=VARCHAR}, #{parentId,jdbcType=DECIMAL}, 
+      #{path,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{bigIcon,jdbcType=VARCHAR}, 
+      #{smallIcon,jdbcType=VARCHAR}, #{sorting,jdbcType=DECIMAL}, #{type,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{extend1,jdbcType=VARCHAR}, #{extend2,jdbcType=VARCHAR}, 
+      #{creationTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{hide,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.nantian.entity.sys.SysPermission">
+    insert into SYS_PERMISSION
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="name != null">
+        NAME,
+      </if>
+      <if test="parentId != null">
+        PARENT_ID,
+      </if>
+      <if test="path != null">
+        PATH,
+      </if>
+      <if test="url != null">
+        URL,
+      </if>
+      <if test="bigIcon != null">
+        BIG_ICON,
+      </if>
+      <if test="smallIcon != null">
+        SMALL_ICON,
+      </if>
+      <if test="sorting != null">
+        SORTING,
+      </if>
+      <if test="type != null">
+        TYPE,
+      </if>
+      <if test="status != null">
+        STATUS,
+      </if>
+      <if test="extend1 != null">
+        EXTEND1,
+      </if>
+      <if test="extend2 != null">
+        EXTEND2,
+      </if>
+      <if test="creationTime != null">
+        CREATION_TIME,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="hide != null">
+        HIDE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=DECIMAL},
+      </if>
+      <if test="path != null">
+        #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="bigIcon != null">
+        #{bigIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="smallIcon != null">
+        #{smallIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="sorting != null">
+        #{sorting,jdbcType=DECIMAL},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="extend1 != null">
+        #{extend1,jdbcType=VARCHAR},
+      </if>
+      <if test="extend2 != null">
+        #{extend2,jdbcType=VARCHAR},
+      </if>
+      <if test="creationTime != null">
+        #{creationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="hide != null">
+        #{hide,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.nantian.entity.sys.SysPermissionExample" resultType="java.lang.Long">
+    select count(*) from SYS_PERMISSION
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update SYS_PERMISSION
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=DECIMAL},
+      </if>
+      <if test="record.name != null">
+        NAME = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parentId != null">
+        PARENT_ID = #{record.parentId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.path != null">
+        PATH = #{record.path,jdbcType=VARCHAR},
+      </if>
+      <if test="record.url != null">
+        URL = #{record.url,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bigIcon != null">
+        BIG_ICON = #{record.bigIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="record.smallIcon != null">
+        SMALL_ICON = #{record.smallIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sorting != null">
+        SORTING = #{record.sorting,jdbcType=DECIMAL},
+      </if>
+      <if test="record.type != null">
+        TYPE = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        STATUS = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.extend1 != null">
+        EXTEND1 = #{record.extend1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.extend2 != null">
+        EXTEND2 = #{record.extend2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.creationTime != null">
+        CREATION_TIME = #{record.creationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.hide != null">
+        HIDE = #{record.hide,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update SYS_PERMISSION
+    set ID = #{record.id,jdbcType=DECIMAL},
+      NAME = #{record.name,jdbcType=VARCHAR},
+      PARENT_ID = #{record.parentId,jdbcType=DECIMAL},
+      PATH = #{record.path,jdbcType=VARCHAR},
+      URL = #{record.url,jdbcType=VARCHAR},
+      BIG_ICON = #{record.bigIcon,jdbcType=VARCHAR},
+      SMALL_ICON = #{record.smallIcon,jdbcType=VARCHAR},
+      SORTING = #{record.sorting,jdbcType=DECIMAL},
+      TYPE = #{record.type,jdbcType=VARCHAR},
+      STATUS = #{record.status,jdbcType=VARCHAR},
+      EXTEND1 = #{record.extend1,jdbcType=VARCHAR},
+      EXTEND2 = #{record.extend2,jdbcType=VARCHAR},
+      CREATION_TIME = #{record.creationTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      HIDE = #{record.hide,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.nantian.entity.sys.SysPermission">
+    update SYS_PERMISSION
+    <set>
+      <if test="name != null">
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        PARENT_ID = #{parentId,jdbcType=DECIMAL},
+      </if>
+      <if test="path != null">
+        PATH = #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        URL = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="bigIcon != null">
+        BIG_ICON = #{bigIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="smallIcon != null">
+        SMALL_ICON = #{smallIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="sorting != null">
+        SORTING = #{sorting,jdbcType=DECIMAL},
+      </if>
+      <if test="type != null">
+        TYPE = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="extend1 != null">
+        EXTEND1 = #{extend1,jdbcType=VARCHAR},
+      </if>
+      <if test="extend2 != null">
+        EXTEND2 = #{extend2,jdbcType=VARCHAR},
+      </if>
+      <if test="creationTime != null">
+        CREATION_TIME = #{creationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="hide != null">
+        HIDE = #{hide,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.nantian.entity.sys.SysPermission">
+    update SYS_PERMISSION
+    set NAME = #{name,jdbcType=VARCHAR},
+      PARENT_ID = #{parentId,jdbcType=DECIMAL},
+      PATH = #{path,jdbcType=VARCHAR},
+      URL = #{url,jdbcType=VARCHAR},
+      BIG_ICON = #{bigIcon,jdbcType=VARCHAR},
+      SMALL_ICON = #{smallIcon,jdbcType=VARCHAR},
+      SORTING = #{sorting,jdbcType=DECIMAL},
+      TYPE = #{type,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      EXTEND1 = #{extend1,jdbcType=VARCHAR},
+      EXTEND2 = #{extend2,jdbcType=VARCHAR},
+      CREATION_TIME = #{creationTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      HIDE = #{hide,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+</mapper>

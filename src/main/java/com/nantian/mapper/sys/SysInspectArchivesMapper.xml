@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nantian.mapper.sys.SysInspectArchivesMapper">
+  <resultMap id="BaseResultMap" type="com.nantian.entity.sys.SysInspectArchives">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="CANDIDATE_NAME" jdbcType="VARCHAR" property="candidateName" />
+    <result column="UNIT" jdbcType="VARCHAR" property="unit" />
+    <result column="POSITION" jdbcType="VARCHAR" property="position" />
+    <result column="INSPECT_TIME" jdbcType="TIMESTAMP" property="inspectTime" />
+    <result column="INSPECT_PROBLEM" jdbcType="VARCHAR" property="inspectProblem" />
+    <result column="INSPECT_RECORD" jdbcType="VARCHAR" property="inspectRecord" />
+    <result column="REVIEW_IDENTIFIED" jdbcType="VARCHAR" property="reviewIdentified" />
+    <result column="CREATION_TIME" jdbcType="TIMESTAMP" property="creationTime" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, CANDIDATE_NAME, UNIT, POSITION, INSPECT_TIME, INSPECT_PROBLEM, INSPECT_RECORD, 
+    REVIEW_IDENTIFIED, CREATION_TIME, UPDATE_TIME
+  </sql>
+  <select id="selectByExample" parameterType="com.nantian.entity.sys.SysInspectArchivesExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from SYS_INSPECT_ARCHIVES
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_INSPECT_ARCHIVES
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from SYS_INSPECT_ARCHIVES
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.nantian.entity.sys.SysInspectArchivesExample">
+    delete from SYS_INSPECT_ARCHIVES
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.nantian.entity.sys.SysInspectArchives">
+    insert into SYS_INSPECT_ARCHIVES (ID, CANDIDATE_NAME, UNIT, 
+      POSITION, INSPECT_TIME, INSPECT_PROBLEM, 
+      INSPECT_RECORD, REVIEW_IDENTIFIED, CREATION_TIME, 
+      UPDATE_TIME)
+    values (#{id,jdbcType=DECIMAL}, #{candidateName,jdbcType=VARCHAR}, #{unit,jdbcType=VARCHAR}, 
+      #{position,jdbcType=VARCHAR}, #{inspectTime,jdbcType=TIMESTAMP}, #{inspectProblem,jdbcType=VARCHAR}, 
+      #{inspectRecord,jdbcType=VARCHAR}, #{reviewIdentified,jdbcType=VARCHAR}, #{creationTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.nantian.entity.sys.SysInspectArchives">
+    insert into SYS_INSPECT_ARCHIVES
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="candidateName != null">
+        CANDIDATE_NAME,
+      </if>
+      <if test="unit != null">
+        UNIT,
+      </if>
+      <if test="position != null">
+        POSITION,
+      </if>
+      <if test="inspectTime != null">
+        INSPECT_TIME,
+      </if>
+      <if test="inspectProblem != null">
+        INSPECT_PROBLEM,
+      </if>
+      <if test="inspectRecord != null">
+        INSPECT_RECORD,
+      </if>
+      <if test="reviewIdentified != null">
+        REVIEW_IDENTIFIED,
+      </if>
+      <if test="creationTime != null">
+        CREATION_TIME,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="candidateName != null">
+        #{candidateName,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null">
+        #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="position != null">
+        #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="inspectTime != null">
+        #{inspectTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="inspectProblem != null">
+        #{inspectProblem,jdbcType=VARCHAR},
+      </if>
+      <if test="inspectRecord != null">
+        #{inspectRecord,jdbcType=VARCHAR},
+      </if>
+      <if test="reviewIdentified != null">
+        #{reviewIdentified,jdbcType=VARCHAR},
+      </if>
+      <if test="creationTime != null">
+        #{creationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.nantian.entity.sys.SysInspectArchivesExample" resultType="java.lang.Long">
+    select count(*) from SYS_INSPECT_ARCHIVES
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update SYS_INSPECT_ARCHIVES
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=DECIMAL},
+      </if>
+      <if test="record.candidateName != null">
+        CANDIDATE_NAME = #{record.candidateName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unit != null">
+        UNIT = #{record.unit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.position != null">
+        POSITION = #{record.position,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inspectTime != null">
+        INSPECT_TIME = #{record.inspectTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.inspectProblem != null">
+        INSPECT_PROBLEM = #{record.inspectProblem,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inspectRecord != null">
+        INSPECT_RECORD = #{record.inspectRecord,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reviewIdentified != null">
+        REVIEW_IDENTIFIED = #{record.reviewIdentified,jdbcType=VARCHAR},
+      </if>
+      <if test="record.creationTime != null">
+        CREATION_TIME = #{record.creationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update SYS_INSPECT_ARCHIVES
+    set ID = #{record.id,jdbcType=DECIMAL},
+      CANDIDATE_NAME = #{record.candidateName,jdbcType=VARCHAR},
+      UNIT = #{record.unit,jdbcType=VARCHAR},
+      POSITION = #{record.position,jdbcType=VARCHAR},
+      INSPECT_TIME = #{record.inspectTime,jdbcType=TIMESTAMP},
+      INSPECT_PROBLEM = #{record.inspectProblem,jdbcType=VARCHAR},
+      INSPECT_RECORD = #{record.inspectRecord,jdbcType=VARCHAR},
+      REVIEW_IDENTIFIED = #{record.reviewIdentified,jdbcType=VARCHAR},
+      CREATION_TIME = #{record.creationTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.nantian.entity.sys.SysInspectArchives">
+    update SYS_INSPECT_ARCHIVES
+    <set>
+      <if test="candidateName != null">
+        CANDIDATE_NAME = #{candidateName,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null">
+        UNIT = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="position != null">
+        POSITION = #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="inspectTime != null">
+        INSPECT_TIME = #{inspectTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="inspectProblem != null">
+        INSPECT_PROBLEM = #{inspectProblem,jdbcType=VARCHAR},
+      </if>
+      <if test="inspectRecord != null">
+        INSPECT_RECORD = #{inspectRecord,jdbcType=VARCHAR},
+      </if>
+      <if test="reviewIdentified != null">
+        REVIEW_IDENTIFIED = #{reviewIdentified,jdbcType=VARCHAR},
+      </if>
+      <if test="creationTime != null">
+        CREATION_TIME = #{creationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.nantian.entity.sys.SysInspectArchives">
+    update SYS_INSPECT_ARCHIVES
+    set CANDIDATE_NAME = #{candidateName,jdbcType=VARCHAR},
+      UNIT = #{unit,jdbcType=VARCHAR},
+      POSITION = #{position,jdbcType=VARCHAR},
+      INSPECT_TIME = #{inspectTime,jdbcType=TIMESTAMP},
+      INSPECT_PROBLEM = #{inspectProblem,jdbcType=VARCHAR},
+      INSPECT_RECORD = #{inspectRecord,jdbcType=VARCHAR},
+      REVIEW_IDENTIFIED = #{reviewIdentified,jdbcType=VARCHAR},
+      CREATION_TIME = #{creationTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByUserId" parameterType="com.nantian.entity.sys.SysFlow">
+    update SYS_FLOW
+    SET INSPECT_ARCHIVES_ID = #{inspectArchivesId,jdbcType=DECIMAL},
+      INSPECT_ARCHIVES_RESULT = #{inspectArchivesResult,jdbcType=VARCHAR},
+      STEP6 = #{step6,jdbcType=VARCHAR}
+    WHERE USERID =  #{userid,jdbcType=DECIMAL}
+  </update>
+</mapper>

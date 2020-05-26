@@ -1,0 +1,811 @@
+2020-04-16 08:49:42 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:246) ]
+INFO:开始检查配置数据...
+2020-04-16 08:49:42 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:248) ]
+INFO:开始组装数据...
+2020-04-16 08:49:42 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:251) ]
+INFO:开始生成配置信息
+2020-04-16 08:49:42 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:254) ]
+DEBUG:生成的配置信息：
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+  <context id="MysqlContext" targetRuntime="MyBatis3">
+    <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+    <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
+    <commentGenerator type="com.nantian.generator.ChineseCommentGenerator">
+      <property name="suppressAllComments" value="false"/>
+      <property name="suppressDate" value="false"/>
+    </commentGenerator>
+    <jdbcConnection driverClass="oracle.jdbc.driver.OracleDriver" connectionURL="jdbc:oracle:thin:@120.79.222.247:1521:ORCL" userId="auth" password="auth">
+      <property name="nullCatalogMeansCurrent" value="true"/>
+      <property name="remarksReporting" value="true"/>
+    </jdbcConnection>
+    <javaTypeResolver>
+      <property name="forceBigDecimals" value="false"/>
+    </javaTypeResolver>
+    <javaModelGenerator targetPackage="com.nantian.entity.sys" targetProject="./src/main/java">
+      <property name="enableSubPackages" value="false"/>
+      <property name="trimStrings" value="false"/>
+    </javaModelGenerator>
+    <sqlMapGenerator targetPackage="com.nantian.mapper.sys" targetProject="./src/main/java">
+      <property name="enableSubPackages" value="false"/>
+    </sqlMapGenerator>
+    <javaClientGenerator type="XMLMAPPER" targetPackage="com.nantian.mapper.sys" targetProject="./src/main/java">
+      <property name="enableSubPackages" value="false"/>
+    </javaClientGenerator>
+    <table schema="auth" tableName="SYS_FLOW" enableCountByExample="true" enableDeleteByExample="true" enableUpdateByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+      <columnOverride column="CREATION_TIME" jdbcType="TIMESTAMP"/>
+    </table>
+  </context>
+</generatorConfiguration>
+
+2020-04-16 08:49:42 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:255) ]
+INFO:开始生成代码...
+2020-04-16 08:49:43 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.generateCode(MybatisGenerator.java:565) ]
+ERROR:Io 异常: The Network Adapter could not establish the connection
+java.sql.SQLException: Io 异常: The Network Adapter could not establish the connection
+	at oracle.jdbc.driver.DatabaseError.throwSqlException(DatabaseError.java:112)
+	at oracle.jdbc.driver.DatabaseError.throwSqlException(DatabaseError.java:146)
+	at oracle.jdbc.driver.DatabaseError.throwSqlException(DatabaseError.java:255)
+	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:387)
+	at oracle.jdbc.driver.PhysicalConnection.<init>(PhysicalConnection.java:439)
+	at oracle.jdbc.driver.T4CConnection.<init>(T4CConnection.java:165)
+	at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:35)
+	at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:801)
+	at org.mybatis.generator.internal.JDBCConnectionFactory.getConnection(JDBCConnectionFactory.java:84)
+	at org.mybatis.generator.config.Context.getConnection(Context.java:753)
+	at org.mybatis.generator.config.Context.introspectTables(Context.java:631)
+	at org.mybatis.generator.api.MyBatisGenerator.generate(MyBatisGenerator.java:257)
+	at org.mybatis.generator.api.MyBatisGenerator.generate(MyBatisGenerator.java:139)
+	at com.nantian.generator.impl.MybatisGenerator.generateCode(MybatisGenerator.java:563)
+	at com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:257)
+	at com.nantian.Main.createTable(Main.java:118)
+	at com.nantian.Main.main(Main.java:40)
+2020-04-16 08:50:52 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:246) ]
+INFO:开始检查配置数据...
+2020-04-16 08:50:52 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:248) ]
+INFO:开始组装数据...
+2020-04-16 08:50:52 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:251) ]
+INFO:开始生成配置信息
+2020-04-16 08:50:52 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:254) ]
+DEBUG:生成的配置信息：
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+  <context id="MysqlContext" targetRuntime="MyBatis3">
+    <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+    <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
+    <commentGenerator type="com.nantian.generator.ChineseCommentGenerator">
+      <property name="suppressAllComments" value="false"/>
+      <property name="suppressDate" value="false"/>
+    </commentGenerator>
+    <jdbcConnection driverClass="oracle.jdbc.driver.OracleDriver" connectionURL="jdbc:oracle:thin:@120.79.222.247:1521:ORCL" userId="auth" password="auth">
+      <property name="nullCatalogMeansCurrent" value="true"/>
+      <property name="remarksReporting" value="true"/>
+    </jdbcConnection>
+    <javaTypeResolver>
+      <property name="forceBigDecimals" value="false"/>
+    </javaTypeResolver>
+    <javaModelGenerator targetPackage="com.nantian.entity.sys" targetProject="./src/main/java">
+      <property name="enableSubPackages" value="false"/>
+      <property name="trimStrings" value="false"/>
+    </javaModelGenerator>
+    <sqlMapGenerator targetPackage="com.nantian.mapper.sys" targetProject="./src/main/java">
+      <property name="enableSubPackages" value="false"/>
+    </sqlMapGenerator>
+    <javaClientGenerator type="XMLMAPPER" targetPackage="com.nantian.mapper.sys" targetProject="./src/main/java">
+      <property name="enableSubPackages" value="false"/>
+    </javaClientGenerator>
+    <table schema="auth" tableName="SYS_FLOW" enableCountByExample="true" enableDeleteByExample="true" enableUpdateByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+      <columnOverride column="CREATION_TIME" jdbcType="TIMESTAMP"/>
+    </table>
+  </context>
+</generatorConfiguration>
+
+2020-04-16 08:50:52 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:255) ]
+INFO:开始生成代码...
+2020-04-16 08:50:53 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.generateCode(MybatisGenerator.java:565) ]
+ERROR:Io 异常: The Network Adapter could not establish the connection
+java.sql.SQLException: Io 异常: The Network Adapter could not establish the connection
+	at oracle.jdbc.driver.DatabaseError.throwSqlException(DatabaseError.java:112)
+	at oracle.jdbc.driver.DatabaseError.throwSqlException(DatabaseError.java:146)
+	at oracle.jdbc.driver.DatabaseError.throwSqlException(DatabaseError.java:255)
+	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:387)
+	at oracle.jdbc.driver.PhysicalConnection.<init>(PhysicalConnection.java:439)
+	at oracle.jdbc.driver.T4CConnection.<init>(T4CConnection.java:165)
+	at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:35)
+	at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:801)
+	at org.mybatis.generator.internal.JDBCConnectionFactory.getConnection(JDBCConnectionFactory.java:84)
+	at org.mybatis.generator.config.Context.getConnection(Context.java:753)
+	at org.mybatis.generator.config.Context.introspectTables(Context.java:631)
+	at org.mybatis.generator.api.MyBatisGenerator.generate(MyBatisGenerator.java:257)
+	at org.mybatis.generator.api.MyBatisGenerator.generate(MyBatisGenerator.java:139)
+	at com.nantian.generator.impl.MybatisGenerator.generateCode(MybatisGenerator.java:563)
+	at com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:257)
+	at com.nantian.Main.createTable(Main.java:118)
+	at com.nantian.Main.main(Main.java:40)
+2020-04-16 08:51:58 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:246) ]
+INFO:开始检查配置数据...
+2020-04-16 08:51:58 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:248) ]
+INFO:开始组装数据...
+2020-04-16 08:51:58 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:251) ]
+INFO:开始生成配置信息
+2020-04-16 08:51:58 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:254) ]
+DEBUG:生成的配置信息：
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+  <context id="MysqlContext" targetRuntime="MyBatis3">
+    <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+    <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
+    <commentGenerator type="com.nantian.generator.ChineseCommentGenerator">
+      <property name="suppressAllComments" value="false"/>
+      <property name="suppressDate" value="false"/>
+    </commentGenerator>
+    <jdbcConnection driverClass="oracle.jdbc.driver.OracleDriver" connectionURL="jdbc:oracle:thin:@127.0.0.1:1521:ORCL" userId="gpp" password="gpp">
+      <property name="nullCatalogMeansCurrent" value="true"/>
+      <property name="remarksReporting" value="true"/>
+    </jdbcConnection>
+    <javaTypeResolver>
+      <property name="forceBigDecimals" value="false"/>
+    </javaTypeResolver>
+    <javaModelGenerator targetPackage="com.nantian.entity.sys" targetProject="./src/main/java">
+      <property name="enableSubPackages" value="false"/>
+      <property name="trimStrings" value="false"/>
+    </javaModelGenerator>
+    <sqlMapGenerator targetPackage="com.nantian.mapper.sys" targetProject="./src/main/java">
+      <property name="enableSubPackages" value="false"/>
+    </sqlMapGenerator>
+    <javaClientGenerator type="XMLMAPPER" targetPackage="com.nantian.mapper.sys" targetProject="./src/main/java">
+      <property name="enableSubPackages" value="false"/>
+    </javaClientGenerator>
+    <table schema="auth" tableName="SYS_FLOW" enableCountByExample="true" enableDeleteByExample="true" enableUpdateByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+      <columnOverride column="CREATION_TIME" jdbcType="TIMESTAMP"/>
+    </table>
+  </context>
+</generatorConfiguration>
+
+2020-04-16 08:51:58 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:255) ]
+INFO:开始生成代码...
+2020-04-16 08:51:58 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Retrieving column information for table "AUTH.SYS_FLOW"
+2020-04-16 08:51:58 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:258) ]
+INFO:生成代码结束.
+2020-04-16 08:54:00 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:246) ]
+INFO:开始检查配置数据...
+2020-04-16 08:54:00 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:248) ]
+INFO:开始组装数据...
+2020-04-16 08:54:00 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:251) ]
+INFO:开始生成配置信息
+2020-04-16 08:54:00 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:254) ]
+DEBUG:生成的配置信息：
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+  <context id="MysqlContext" targetRuntime="MyBatis3">
+    <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+    <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
+    <commentGenerator type="com.nantian.generator.ChineseCommentGenerator">
+      <property name="suppressAllComments" value="false"/>
+      <property name="suppressDate" value="false"/>
+    </commentGenerator>
+    <jdbcConnection driverClass="oracle.jdbc.driver.OracleDriver" connectionURL="jdbc:oracle:thin:@127.0.0.1:1521:GPP" userId="gpp" password="gpp">
+      <property name="nullCatalogMeansCurrent" value="true"/>
+      <property name="remarksReporting" value="true"/>
+    </jdbcConnection>
+    <javaTypeResolver>
+      <property name="forceBigDecimals" value="false"/>
+    </javaTypeResolver>
+    <javaModelGenerator targetPackage="com.nantian.entity.sys" targetProject="./src/main/java">
+      <property name="enableSubPackages" value="false"/>
+      <property name="trimStrings" value="false"/>
+    </javaModelGenerator>
+    <sqlMapGenerator targetPackage="com.nantian.mapper.sys" targetProject="./src/main/java">
+      <property name="enableSubPackages" value="false"/>
+    </sqlMapGenerator>
+    <javaClientGenerator type="XMLMAPPER" targetPackage="com.nantian.mapper.sys" targetProject="./src/main/java">
+      <property name="enableSubPackages" value="false"/>
+    </javaClientGenerator>
+    <table schema="auth" tableName="SYS_FLOW" enableCountByExample="true" enableDeleteByExample="true" enableUpdateByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+      <columnOverride column="CREATION_TIME" jdbcType="TIMESTAMP"/>
+    </table>
+  </context>
+</generatorConfiguration>
+
+2020-04-16 08:54:00 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:255) ]
+INFO:开始生成代码...
+2020-04-16 08:54:00 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.generateCode(MybatisGenerator.java:565) ]
+ERROR:Listener refused the connection with the following error:
+ORA-12505, TNS:listener does not currently know of SID given in connect descriptor
+The Connection descriptor used by the client was:
+127.0.0.1:1521:GPP
+
+java.sql.SQLException: Listener refused the connection with the following error:
+ORA-12505, TNS:listener does not currently know of SID given in connect descriptor
+The Connection descriptor used by the client was:
+127.0.0.1:1521:GPP
+
+	at oracle.jdbc.driver.DatabaseError.throwSqlException(DatabaseError.java:112)
+	at oracle.jdbc.driver.DatabaseError.throwSqlException(DatabaseError.java:261)
+	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:387)
+	at oracle.jdbc.driver.PhysicalConnection.<init>(PhysicalConnection.java:439)
+	at oracle.jdbc.driver.T4CConnection.<init>(T4CConnection.java:165)
+	at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:35)
+	at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:801)
+	at org.mybatis.generator.internal.JDBCConnectionFactory.getConnection(JDBCConnectionFactory.java:84)
+	at org.mybatis.generator.config.Context.getConnection(Context.java:753)
+	at org.mybatis.generator.config.Context.introspectTables(Context.java:631)
+	at org.mybatis.generator.api.MyBatisGenerator.generate(MyBatisGenerator.java:257)
+	at org.mybatis.generator.api.MyBatisGenerator.generate(MyBatisGenerator.java:139)
+	at com.nantian.generator.impl.MybatisGenerator.generateCode(MybatisGenerator.java:563)
+	at com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:257)
+	at com.nantian.Main.createTable(Main.java:118)
+	at com.nantian.Main.main(Main.java:40)
+2020-04-16 08:54:11 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:246) ]
+INFO:开始检查配置数据...
+2020-04-16 08:54:11 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:248) ]
+INFO:开始组装数据...
+2020-04-16 08:54:11 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:251) ]
+INFO:开始生成配置信息
+2020-04-16 08:54:11 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:254) ]
+DEBUG:生成的配置信息：
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+  <context id="MysqlContext" targetRuntime="MyBatis3">
+    <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+    <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
+    <commentGenerator type="com.nantian.generator.ChineseCommentGenerator">
+      <property name="suppressAllComments" value="false"/>
+      <property name="suppressDate" value="false"/>
+    </commentGenerator>
+    <jdbcConnection driverClass="oracle.jdbc.driver.OracleDriver" connectionURL="jdbc:oracle:thin:@127.0.0.1:1521:ORCL" userId="gpp" password="gpp">
+      <property name="nullCatalogMeansCurrent" value="true"/>
+      <property name="remarksReporting" value="true"/>
+    </jdbcConnection>
+    <javaTypeResolver>
+      <property name="forceBigDecimals" value="false"/>
+    </javaTypeResolver>
+    <javaModelGenerator targetPackage="com.nantian.entity.sys" targetProject="./src/main/java">
+      <property name="enableSubPackages" value="false"/>
+      <property name="trimStrings" value="false"/>
+    </javaModelGenerator>
+    <sqlMapGenerator targetPackage="com.nantian.mapper.sys" targetProject="./src/main/java">
+      <property name="enableSubPackages" value="false"/>
+    </sqlMapGenerator>
+    <javaClientGenerator type="XMLMAPPER" targetPackage="com.nantian.mapper.sys" targetProject="./src/main/java">
+      <property name="enableSubPackages" value="false"/>
+    </javaClientGenerator>
+    <table schema="auth" tableName="SYS_FLOW" enableCountByExample="true" enableDeleteByExample="true" enableUpdateByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+      <columnOverride column="CREATION_TIME" jdbcType="TIMESTAMP"/>
+    </table>
+  </context>
+</generatorConfiguration>
+
+2020-04-16 08:54:11 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:255) ]
+INFO:开始生成代码...
+2020-04-16 08:54:11 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Retrieving column information for table "AUTH.SYS_FLOW"
+2020-04-16 08:54:11 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:258) ]
+INFO:生成代码结束.
+2020-04-16 08:55:21 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:246) ]
+INFO:开始检查配置数据...
+2020-04-16 08:55:21 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:248) ]
+INFO:开始组装数据...
+2020-04-16 08:55:21 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:251) ]
+INFO:开始生成配置信息
+2020-04-16 08:55:21 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:254) ]
+DEBUG:生成的配置信息：
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+  <context id="MysqlContext" targetRuntime="MyBatis3">
+    <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+    <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
+    <commentGenerator type="com.nantian.generator.ChineseCommentGenerator">
+      <property name="suppressAllComments" value="false"/>
+      <property name="suppressDate" value="false"/>
+    </commentGenerator>
+    <jdbcConnection driverClass="oracle.jdbc.driver.OracleDriver" connectionURL="jdbc:oracle:thin:@127.0.0.1:1521:ORCL" userId="gpp" password="gpp">
+      <property name="nullCatalogMeansCurrent" value="true"/>
+      <property name="remarksReporting" value="true"/>
+    </jdbcConnection>
+    <javaTypeResolver>
+      <property name="forceBigDecimals" value="false"/>
+    </javaTypeResolver>
+    <javaModelGenerator targetPackage="com.nantian.entity.sys" targetProject="./src/main/java">
+      <property name="enableSubPackages" value="false"/>
+      <property name="trimStrings" value="false"/>
+    </javaModelGenerator>
+    <sqlMapGenerator targetPackage="com.nantian.mapper.sys" targetProject="./src/main/java">
+      <property name="enableSubPackages" value="false"/>
+    </sqlMapGenerator>
+    <javaClientGenerator type="XMLMAPPER" targetPackage="com.nantian.mapper.sys" targetProject="./src/main/java">
+      <property name="enableSubPackages" value="false"/>
+    </javaClientGenerator>
+    <table schema="auth" tableName="SYS_CON_HONEST" enableCountByExample="true" enableDeleteByExample="true" enableUpdateByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+      <columnOverride column="CREATION_TIME" jdbcType="TIMESTAMP"/>
+    </table>
+  </context>
+</generatorConfiguration>
+
+2020-04-16 08:55:21 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:255) ]
+INFO:开始生成代码...
+2020-04-16 08:55:22 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Retrieving column information for table "AUTH.SYS_CON_HONEST"
+2020-04-16 08:55:22 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:258) ]
+INFO:生成代码结束.
+2020-04-16 08:58:33 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:246) ]
+INFO:开始检查配置数据...
+2020-04-16 08:58:33 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:248) ]
+INFO:开始组装数据...
+2020-04-16 08:58:33 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:251) ]
+INFO:开始生成配置信息
+2020-04-16 08:58:33 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:254) ]
+DEBUG:生成的配置信息：
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+  <context id="MysqlContext" targetRuntime="MyBatis3">
+    <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+    <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
+    <commentGenerator type="com.nantian.generator.ChineseCommentGenerator">
+      <property name="suppressAllComments" value="false"/>
+      <property name="suppressDate" value="false"/>
+    </commentGenerator>
+    <jdbcConnection driverClass="oracle.jdbc.driver.OracleDriver" connectionURL="jdbc:oracle:thin:@127.0.0.1:1521:ORCL" userId="gpp" password="gpp">
+      <property name="nullCatalogMeansCurrent" value="true"/>
+      <property name="remarksReporting" value="true"/>
+    </jdbcConnection>
+    <javaTypeResolver>
+      <property name="forceBigDecimals" value="false"/>
+    </javaTypeResolver>
+    <javaModelGenerator targetPackage="com.nantian.entity.sys" targetProject="./src/main/java">
+      <property name="enableSubPackages" value="false"/>
+      <property name="trimStrings" value="false"/>
+    </javaModelGenerator>
+    <sqlMapGenerator targetPackage="com.nantian.mapper.sys" targetProject="./src/main/java">
+      <property name="enableSubPackages" value="false"/>
+    </sqlMapGenerator>
+    <javaClientGenerator type="XMLMAPPER" targetPackage="com.nantian.mapper.sys" targetProject="./src/main/java">
+      <property name="enableSubPackages" value="false"/>
+    </javaClientGenerator>
+    <table schema="auth" tableName="SYS_CON_HONEST" enableCountByExample="true" enableDeleteByExample="true" enableUpdateByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+      <columnOverride column="CREATION_TIME" jdbcType="TIMESTAMP"/>
+    </table>
+  </context>
+</generatorConfiguration>
+
+2020-04-16 08:58:33 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:255) ]
+INFO:开始生成代码...
+2020-04-16 08:58:33 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Retrieving column information for table "AUTH.SYS_CON_HONEST"
+2020-04-16 08:58:33 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:258) ]
+INFO:生成代码结束.
+2020-04-16 09:04:06 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:246) ]
+INFO:开始检查配置数据...
+2020-04-16 09:04:06 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:248) ]
+INFO:开始组装数据...
+2020-04-16 09:04:06 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:251) ]
+INFO:开始生成配置信息
+2020-04-16 09:04:06 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:254) ]
+DEBUG:生成的配置信息：
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+  <context id="MysqlContext" targetRuntime="MyBatis3">
+    <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+    <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
+    <commentGenerator type="com.nantian.generator.ChineseCommentGenerator">
+      <property name="suppressAllComments" value="false"/>
+      <property name="suppressDate" value="false"/>
+    </commentGenerator>
+    <jdbcConnection driverClass="oracle.jdbc.driver.OracleDriver" connectionURL="jdbc:oracle:thin:@127.0.0.1:1521:ORCL" userId="gpp" password="gpp">
+      <property name="nullCatalogMeansCurrent" value="true"/>
+      <property name="remarksReporting" value="true"/>
+    </jdbcConnection>
+    <javaTypeResolver>
+      <property name="forceBigDecimals" value="false"/>
+    </javaTypeResolver>
+    <javaModelGenerator targetPackage="com.nantian.entity.sys" targetProject="./src/main/java">
+      <property name="enableSubPackages" value="false"/>
+      <property name="trimStrings" value="false"/>
+    </javaModelGenerator>
+    <sqlMapGenerator targetPackage="com.nantian.mapper.sys" targetProject="./src/main/java">
+      <property name="enableSubPackages" value="false"/>
+    </sqlMapGenerator>
+    <javaClientGenerator type="XMLMAPPER" targetPackage="com.nantian.mapper.sys" targetProject="./src/main/java">
+      <property name="enableSubPackages" value="false"/>
+    </javaClientGenerator>
+    <table schema="auth" tableName="SYS_CON_HONEST" enableCountByExample="true" enableDeleteByExample="true" enableUpdateByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+      <columnOverride column="CREATION_TIME" jdbcType="TIMESTAMP"/>
+    </table>
+  </context>
+</generatorConfiguration>
+
+2020-04-16 09:04:06 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:255) ]
+INFO:开始生成代码...
+2020-04-16 09:04:06 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Retrieving column information for table "AUTH.SYS_CON_HONEST"
+2020-04-16 09:04:06 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:258) ]
+INFO:生成代码结束.
+2020-04-16 09:24:10 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:246) ]
+INFO:开始检查配置数据...
+2020-04-16 09:24:10 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:248) ]
+INFO:开始组装数据...
+2020-04-16 09:24:10 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:251) ]
+INFO:开始生成配置信息
+2020-04-16 09:24:10 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:254) ]
+DEBUG:生成的配置信息：
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+  <context id="MysqlContext" targetRuntime="MyBatis3">
+    <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+    <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
+    <commentGenerator type="com.nantian.generator.ChineseCommentGenerator">
+      <property name="suppressAllComments" value="false"/>
+      <property name="suppressDate" value="false"/>
+    </commentGenerator>
+    <jdbcConnection driverClass="oracle.jdbc.driver.OracleDriver" connectionURL="jdbc:oracle:thin:@127.0.0.1:1521:ORCL" userId="gpp" password="gpp">
+      <property name="nullCatalogMeansCurrent" value="true"/>
+      <property name="remarksReporting" value="true"/>
+    </jdbcConnection>
+    <javaTypeResolver>
+      <property name="forceBigDecimals" value="false"/>
+    </javaTypeResolver>
+    <javaModelGenerator targetPackage="com.nantian.entity.sys" targetProject="./src/main/java">
+      <property name="enableSubPackages" value="false"/>
+      <property name="trimStrings" value="false"/>
+    </javaModelGenerator>
+    <sqlMapGenerator targetPackage="com.nantian.mapper.sys" targetProject="./src/main/java">
+      <property name="enableSubPackages" value="false"/>
+    </sqlMapGenerator>
+    <javaClientGenerator type="XMLMAPPER" targetPackage="com.nantian.mapper.sys" targetProject="./src/main/java">
+      <property name="enableSubPackages" value="false"/>
+    </javaClientGenerator>
+    <table schema="gpp" tableName="SYS_CON_HONEST" enableCountByExample="true" enableDeleteByExample="true" enableUpdateByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+      <columnOverride column="CREATION_TIME" jdbcType="TIMESTAMP"/>
+    </table>
+  </context>
+</generatorConfiguration>
+
+2020-04-16 09:24:10 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:255) ]
+INFO:开始生成代码...
+2020-04-16 09:24:10 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Retrieving column information for table "GPP.SYS_CON_HONEST"
+2020-04-16 09:24:10 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "ID", data type 3, in table "GPP.SYS_CON_HONEST"
+2020-04-16 09:24:10 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "CANDIDATE_NAME", data type 12, in table "GPP.SYS_CON_HONEST"
+2020-04-16 09:24:10 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "CONVERSATION_DATE", data type 91, in table "GPP.SYS_CON_HONEST"
+2020-04-16 09:24:10 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "CONVERSATION_PERSON", data type 12, in table "GPP.SYS_CON_HONEST"
+2020-04-16 09:24:10 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "CONVERSATION_DATA", data type 12, in table "GPP.SYS_CON_HONEST"
+2020-04-16 09:24:10 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "CREATION_TIME", data type 91, in table "GPP.SYS_CON_HONEST"
+2020-04-16 09:24:10 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "UPDATE_TIME", data type 91, in table "GPP.SYS_CON_HONEST"
+2020-04-16 09:24:10 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found override for column "CREATION_TIME" in table "GPP.SYS_CON_HONEST"
+2020-04-16 09:24:11 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:258) ]
+INFO:生成代码结束.
+2020-04-16 09:24:40 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:246) ]
+INFO:开始检查配置数据...
+2020-04-16 09:24:40 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:248) ]
+INFO:开始组装数据...
+2020-04-16 09:24:40 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:251) ]
+INFO:开始生成配置信息
+2020-04-16 09:24:40 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:254) ]
+DEBUG:生成的配置信息：
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+  <context id="MysqlContext" targetRuntime="MyBatis3">
+    <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+    <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
+    <commentGenerator type="com.nantian.generator.ChineseCommentGenerator">
+      <property name="suppressAllComments" value="false"/>
+      <property name="suppressDate" value="false"/>
+    </commentGenerator>
+    <jdbcConnection driverClass="oracle.jdbc.driver.OracleDriver" connectionURL="jdbc:oracle:thin:@127.0.0.1:1521:ORCL" userId="gpp" password="gpp">
+      <property name="nullCatalogMeansCurrent" value="true"/>
+      <property name="remarksReporting" value="true"/>
+    </jdbcConnection>
+    <javaTypeResolver>
+      <property name="forceBigDecimals" value="false"/>
+    </javaTypeResolver>
+    <javaModelGenerator targetPackage="com.nantian.entity.sys" targetProject="./src/main/java">
+      <property name="enableSubPackages" value="false"/>
+      <property name="trimStrings" value="false"/>
+    </javaModelGenerator>
+    <sqlMapGenerator targetPackage="com.nantian.mapper.sys" targetProject="./src/main/java">
+      <property name="enableSubPackages" value="false"/>
+    </sqlMapGenerator>
+    <javaClientGenerator type="XMLMAPPER" targetPackage="com.nantian.mapper.sys" targetProject="./src/main/java">
+      <property name="enableSubPackages" value="false"/>
+    </javaClientGenerator>
+    <table schema="gpp" tableName="SYS_FLOW" enableCountByExample="true" enableDeleteByExample="true" enableUpdateByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+      <columnOverride column="CREATION_TIME" jdbcType="TIMESTAMP"/>
+    </table>
+  </context>
+</generatorConfiguration>
+
+2020-04-16 09:24:40 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:255) ]
+INFO:开始生成代码...
+2020-04-16 09:24:41 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Retrieving column information for table "GPP.SYS_FLOW"
+2020-04-16 09:24:41 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "ID", data type 3, in table "GPP.SYS_FLOW"
+2020-04-16 09:24:41 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "USERID", data type 3, in table "GPP.SYS_FLOW"
+2020-04-16 09:24:41 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "USERNAME", data type 12, in table "GPP.SYS_FLOW"
+2020-04-16 09:24:41 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "ASPIRING_UNIT", data type 12, in table "GPP.SYS_FLOW"
+2020-04-16 09:24:41 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "ASPIRING_POSITION", data type 12, in table "GPP.SYS_FLOW"
+2020-04-16 09:24:41 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "STEP1", data type 12, in table "GPP.SYS_FLOW"
+2020-04-16 09:24:41 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "UNIT_RE_ID", data type 3, in table "GPP.SYS_FLOW"
+2020-04-16 09:24:41 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "UNIT_RE_RESULT", data type 12, in table "GPP.SYS_FLOW"
+2020-04-16 09:24:41 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "STEP2", data type 12, in table "GPP.SYS_FLOW"
+2020-04-16 09:24:41 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "FIRST_MOTION_ID", data type 3, in table "GPP.SYS_FLOW"
+2020-04-16 09:24:41 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "FIRST_MOTION_RESULT", data type 12, in table "GPP.SYS_FLOW"
+2020-04-16 09:24:41 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "STEP3", data type 12, in table "GPP.SYS_FLOW"
+2020-04-16 09:24:41 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "REPORT_BEFORE_IM_ID", data type 3, in table "GPP.SYS_FLOW"
+2020-04-16 09:24:41 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "REPORT_BEFORE_IM_RESULT", data type 12, in table "GPP.SYS_FLOW"
+2020-04-16 09:24:41 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "STEP4", data type 12, in table "GPP.SYS_FLOW"
+2020-04-16 09:24:41 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "DEMOCRACY_INS_RE_ID", data type 3, in table "GPP.SYS_FLOW"
+2020-04-16 09:24:41 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "DEMOCRACY_INS_RE_RESULT", data type 12, in table "GPP.SYS_FLOW"
+2020-04-16 09:24:41 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "STEP5", data type 12, in table "GPP.SYS_FLOW"
+2020-04-16 09:24:41 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "INSPECT_ARCHIVES_ID", data type 3, in table "GPP.SYS_FLOW"
+2020-04-16 09:24:41 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "INSPECT_ARCHIVES_RESULT", data type 12, in table "GPP.SYS_FLOW"
+2020-04-16 09:24:41 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "STEP6", data type 12, in table "GPP.SYS_FLOW"
+2020-04-16 09:24:41 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "COM_DIS_INS_RE_OP_ID", data type 3, in table "GPP.SYS_FLOW"
+2020-04-16 09:24:41 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "COM_DIS_INS_RE_OP_RESULT", data type 12, in table "GPP.SYS_FLOW"
+2020-04-16 09:24:41 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "STEP7", data type 12, in table "GPP.SYS_FLOW"
+2020-04-16 09:24:41 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "COMPLIANCE_DEP_OP_ID", data type 3, in table "GPP.SYS_FLOW"
+2020-04-16 09:24:41 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "COMPLIANCE_DEP_OP_RESULT", data type 12, in table "GPP.SYS_FLOW"
+2020-04-16 09:24:41 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "STEP8", data type 12, in table "GPP.SYS_FLOW"
+2020-04-16 09:24:41 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "SECOND_MOTION_ID", data type 3, in table "GPP.SYS_FLOW"
+2020-04-16 09:24:41 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "SECOND_MOTION_RESULT", data type 12, in table "GPP.SYS_FLOW"
+2020-04-16 09:24:41 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "STEP9", data type 12, in table "GPP.SYS_FLOW"
+2020-04-16 09:24:41 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "PUB_BEFORE_IN_OFFICE_ID", data type 3, in table "GPP.SYS_FLOW"
+2020-04-16 09:24:41 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "PUB_BEFORE_IN_OFFICE_RESULT", data type 12, in table "GPP.SYS_FLOW"
+2020-04-16 09:24:41 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "STEP10", data type 12, in table "GPP.SYS_FLOW"
+2020-04-16 09:24:41 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "THIRD_MOTION_ID", data type 3, in table "GPP.SYS_FLOW"
+2020-04-16 09:24:41 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "THIRD_MOTION_RESULT", data type 12, in table "GPP.SYS_FLOW"
+2020-04-16 09:24:41 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "STEP11", data type 12, in table "GPP.SYS_FLOW"
+2020-04-16 09:24:41 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "APP_BEFORE_IN_OFFICE_ID", data type 3, in table "GPP.SYS_FLOW"
+2020-04-16 09:24:41 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "APP_BEFORE_IN_OFFICE_RESULT", data type 12, in table "GPP.SYS_FLOW"
+2020-04-16 09:24:41 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "STEP12", data type 12, in table "GPP.SYS_FLOW"
+2020-04-16 09:24:41 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "OUTGOING_INSPECTION_ID", data type 3, in table "GPP.SYS_FLOW"
+2020-04-16 09:24:41 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "OUTGOING_INSPECTION_RESULT", data type 12, in table "GPP.SYS_FLOW"
+2020-04-16 09:24:41 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "STEP13", data type 12, in table "GPP.SYS_FLOW"
+2020-04-16 09:24:41 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "CON_IN_OFFICE_ID", data type 3, in table "GPP.SYS_FLOW"
+2020-04-16 09:24:41 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "CON_IN_OFFICE_RESULT", data type 12, in table "GPP.SYS_FLOW"
+2020-04-16 09:24:41 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "STEP14", data type 12, in table "GPP.SYS_FLOW"
+2020-04-16 09:24:41 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "CON_HONEST_ID", data type 3, in table "GPP.SYS_FLOW"
+2020-04-16 09:24:41 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "CON_HONEST_RESULT", data type 12, in table "GPP.SYS_FLOW"
+2020-04-16 09:24:41 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "STEP15", data type 12, in table "GPP.SYS_FLOW"
+2020-04-16 09:24:41 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "APP_BANKING_SUPERVISION_ID", data type 3, in table "GPP.SYS_FLOW"
+2020-04-16 09:24:41 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "APP_BANKING_SUPERVISION_RESULT", data type 12, in table "GPP.SYS_FLOW"
+2020-04-16 09:24:41 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "STEP16", data type 12, in table "GPP.SYS_FLOW"
+2020-04-16 09:24:41 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "ANNOUNCED_IN_OFFICE_ID", data type 3, in table "GPP.SYS_FLOW"
+2020-04-16 09:24:41 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "ANNOUNCED_IN_OFFICE_RESULT", data type 12, in table "GPP.SYS_FLOW"
+2020-04-16 09:24:41 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "STEP17", data type 12, in table "GPP.SYS_FLOW"
+2020-04-16 09:24:41 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "POST_APPOINT_ID", data type 3, in table "GPP.SYS_FLOW"
+2020-04-16 09:24:41 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "POST_APPOINT_RESULT", data type 12, in table "GPP.SYS_FLOW"
+2020-04-16 09:24:41 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "STEP18", data type 12, in table "GPP.SYS_FLOW"
+2020-04-16 09:24:41 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "CREATION_TIME", data type 91, in table "GPP.SYS_FLOW"
+2020-04-16 09:24:41 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "UPDATE_TIME", data type 91, in table "GPP.SYS_FLOW"
+2020-04-16 09:24:41 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found override for column "CREATION_TIME" in table "GPP.SYS_FLOW"
+2020-04-16 09:24:41 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:258) ]
+INFO:生成代码结束.
+2020-04-16 09:38:25 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:246) ]
+INFO:开始检查配置数据...
+2020-04-16 09:38:25 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:248) ]
+INFO:开始组装数据...
+2020-04-16 09:38:25 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:251) ]
+INFO:开始生成配置信息
+2020-04-16 09:38:25 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:254) ]
+DEBUG:生成的配置信息：
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+  <context id="MysqlContext" targetRuntime="MyBatis3">
+    <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+    <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
+    <commentGenerator type="com.nantian.generator.ChineseCommentGenerator">
+      <property name="suppressAllComments" value="false"/>
+      <property name="suppressDate" value="false"/>
+    </commentGenerator>
+    <jdbcConnection driverClass="oracle.jdbc.driver.OracleDriver" connectionURL="jdbc:oracle:thin:@127.0.0.1:1521:ORCL" userId="gpp" password="gpp">
+      <property name="nullCatalogMeansCurrent" value="true"/>
+      <property name="remarksReporting" value="true"/>
+    </jdbcConnection>
+    <javaTypeResolver>
+      <property name="forceBigDecimals" value="false"/>
+    </javaTypeResolver>
+    <javaModelGenerator targetPackage="com.nantian.entity.sys" targetProject="./src/main/java">
+      <property name="enableSubPackages" value="false"/>
+      <property name="trimStrings" value="false"/>
+    </javaModelGenerator>
+    <sqlMapGenerator targetPackage="com.nantian.mapper.sys" targetProject="./src/main/java">
+      <property name="enableSubPackages" value="false"/>
+    </sqlMapGenerator>
+    <javaClientGenerator type="XMLMAPPER" targetPackage="com.nantian.mapper.sys" targetProject="./src/main/java">
+      <property name="enableSubPackages" value="false"/>
+    </javaClientGenerator>
+    <table schema="gpp" tableName="SYS_CANDIDATE_INFO" enableCountByExample="true" enableDeleteByExample="true" enableUpdateByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+      <columnOverride column="CREATION_TIME" jdbcType="TIMESTAMP"/>
+      <columnOverride column="BIRTHDAY" jdbcType="TIMESTAMP"/>
+      <columnOverride column="MEETING_DATE" jdbcType="TIMESTAMP"/>
+      <columnOverride column="REPLY_DATE" jdbcType="TIMESTAMP"/>
+      <columnOverride column="WRITTEN_DATE" jdbcType="TIMESTAMP"/>
+      <columnOverride column="INTERVIEW_DATE" jdbcType="TIMESTAMP"/>
+      <columnOverride column="THESIS_DATE" jdbcType="TIMESTAMP"/>
+    </table>
+  </context>
+</generatorConfiguration>
+
+2020-04-16 09:38:25 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:255) ]
+INFO:开始生成代码...
+2020-04-16 09:38:25 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Retrieving column information for table "GPP.SYS_CANDIDATE_INFO"
+2020-04-16 09:38:25 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "ID", data type 3, in table "GPP.SYS_CANDIDATE_INFO"
+2020-04-16 09:38:25 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "CANDIDATE_NAME", data type 12, in table "GPP.SYS_CANDIDATE_INFO"
+2020-04-16 09:38:25 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "UNIT", data type 12, in table "GPP.SYS_CANDIDATE_INFO"
+2020-04-16 09:38:25 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "POSITION", data type 12, in table "GPP.SYS_CANDIDATE_INFO"
+2020-04-16 09:38:25 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "POSITION_LEVEL", data type 12, in table "GPP.SYS_CANDIDATE_INFO"
+2020-04-16 09:38:25 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "CANDIDATE_TYPE", data type 12, in table "GPP.SYS_CANDIDATE_INFO"
+2020-04-16 09:38:25 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "ADJUST_TYPE", data type 12, in table "GPP.SYS_CANDIDATE_INFO"
+2020-04-16 09:38:25 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "ASPIRING_UNIT", data type 12, in table "GPP.SYS_CANDIDATE_INFO"
+2020-04-16 09:38:25 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "ASPIRING_POSITION", data type 12, in table "GPP.SYS_CANDIDATE_INFO"
+2020-04-16 09:38:25 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "ASPIRING_POSITION_LEVEL", data type 12, in table "GPP.SYS_CANDIDATE_INFO"
+2020-04-16 09:38:25 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "SEX", data type 12, in table "GPP.SYS_CANDIDATE_INFO"
+2020-04-16 09:38:25 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "BIRTHDAY", data type 91, in table "GPP.SYS_CANDIDATE_INFO"
+2020-04-16 09:38:25 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "DEPARTMENT", data type 12, in table "GPP.SYS_CANDIDATE_INFO"
+2020-04-16 09:38:25 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "ORGANIZATION", data type 12, in table "GPP.SYS_CANDIDATE_INFO"
+2020-04-16 09:38:25 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "NOTE", data type 12, in table "GPP.SYS_CANDIDATE_INFO"
+2020-04-16 09:38:25 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "MEETING_DATE", data type 91, in table "GPP.SYS_CANDIDATE_INFO"
+2020-04-16 09:38:25 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "HOST", data type 12, in table "GPP.SYS_CANDIDATE_INFO"
+2020-04-16 09:38:25 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "DUE_NUMBER", data type 12, in table "GPP.SYS_CANDIDATE_INFO"
+2020-04-16 09:38:25 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "ACTUAL_NUMBER", data type 12, in table "GPP.SYS_CANDIDATE_INFO"
+2020-04-16 09:38:25 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "SUMMARY_NUMBER", data type 12, in table "GPP.SYS_CANDIDATE_INFO"
+2020-04-16 09:38:25 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "APPROVAL_TYPE", data type 12, in table "GPP.SYS_CANDIDATE_INFO"
+2020-04-16 09:38:25 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "REPLY_DATE", data type 91, in table "GPP.SYS_CANDIDATE_INFO"
+2020-04-16 09:38:25 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "CANDIDATE_NUMBER", data type 12, in table "GPP.SYS_CANDIDATE_INFO"
+2020-04-16 09:38:25 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "WRITTEN_DATE", data type 91, in table "GPP.SYS_CANDIDATE_INFO"
+2020-04-16 09:38:25 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "WRITTEN_RESULT", data type 12, in table "GPP.SYS_CANDIDATE_INFO"
+2020-04-16 09:38:25 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "WRITTEN_RANKING", data type 12, in table "GPP.SYS_CANDIDATE_INFO"
+2020-04-16 09:38:25 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "INTERVIEW_DATE", data type 91, in table "GPP.SYS_CANDIDATE_INFO"
+2020-04-16 09:38:25 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "INTERVIEW_RESULT", data type 12, in table "GPP.SYS_CANDIDATE_INFO"
+2020-04-16 09:38:25 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "INTERVIEW_RANKING", data type 12, in table "GPP.SYS_CANDIDATE_INFO"
+2020-04-16 09:38:25 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "THESIS_DATE", data type 91, in table "GPP.SYS_CANDIDATE_INFO"
+2020-04-16 09:38:25 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "THESIS_RESULT", data type 12, in table "GPP.SYS_CANDIDATE_INFO"
+2020-04-16 09:38:25 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "THESIS_RANKING", data type 12, in table "GPP.SYS_CANDIDATE_INFO"
+2020-04-16 09:38:25 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "SYNTHESIS_RESULT", data type 12, in table "GPP.SYS_CANDIDATE_INFO"
+2020-04-16 09:38:25 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "SYNTHESIS_RANKING", data type 12, in table "GPP.SYS_CANDIDATE_INFO"
+2020-04-16 09:38:25 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "CREATION_TIME", data type 91, in table "GPP.SYS_CANDIDATE_INFO"
+2020-04-16 09:38:25 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found column "UPDATE_TIME", data type 91, in table "GPP.SYS_CANDIDATE_INFO"
+2020-04-16 09:38:25 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found override for column "BIRTHDAY" in table "GPP.SYS_CANDIDATE_INFO"
+2020-04-16 09:38:25 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found override for column "MEETING_DATE" in table "GPP.SYS_CANDIDATE_INFO"
+2020-04-16 09:38:25 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found override for column "REPLY_DATE" in table "GPP.SYS_CANDIDATE_INFO"
+2020-04-16 09:38:25 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found override for column "WRITTEN_DATE" in table "GPP.SYS_CANDIDATE_INFO"
+2020-04-16 09:38:25 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found override for column "INTERVIEW_DATE" in table "GPP.SYS_CANDIDATE_INFO"
+2020-04-16 09:38:25 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found override for column "THESIS_DATE" in table "GPP.SYS_CANDIDATE_INFO"
+2020-04-16 09:38:25 上午 [Thread: main][ Class:org.mybatis.generator.internal.db.DatabaseIntrospector >> Method: org.mybatis.generator.logging.Log4jImpl.debug(Log4jImpl.java:46) ]
+DEBUG:Found override for column "CREATION_TIME" in table "GPP.SYS_CANDIDATE_INFO"
+2020-04-16 09:38:26 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:258) ]
+INFO:生成代码结束.

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../framework/layui/css/layui.css">
+    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="icon" href="/favicon.ico">
+    <title>民主推荐</title>
+</head>
+<body>
+<form class="layui-form" action="" lay-filter="user">
+    <div class="layui-form-item">
+        <div class="layui-input-block center">
+            <button type="submit" class="layui-btn" lay-submit="" lay-filter="query">添加</button>
+            <button type="reset" class="layui-btn layui-btn-primary">删除</button>
+        </div>
+    </div>
+
+</form>
+<table id="user-table" lay-filter="user-table"></table>
+<form class="layui-form" action="" lay-filter="user">
+    <div class="layui-form-item">
+        <div class="layui-input-block center">
+            <button type="submit" class="layui-btn" lay-submit="" lay-filter="query">保存</button>
+            <button type="reset" class="layui-btn layui-btn-primary">提交</button>
+        </div>
+    </div>
+
+</form>
+<script src="../framework/layui/layui.all.js"></script>
+<script src="../js/dictionary.js"></script>
+<script src="../js/http.js"></script>
+<script type="text/html" id="status">
+    {{diction(d.status)}}
+</script>
+<script type="text/html" id="sex">
+    {{dictionary('userSex',d.sex)}}
+</script>
+<script>
+    var element = layui.element;
+    var table = layui.table;
+    var form = layui.form;
+    var $ = layui.$;
+    var layer = layui.layer;
+    var http = layui.http;
+    var changed = false;
+
+    //展示已知数据
+    var tableInt = table.render({
+        elem: '#user-table'
+        , url: '../api/user/query'
+        , method: 'post'
+        , toolbar: true
+        , parseData: function (res) {    //res 即为原始返回的数据
+            return {
+                "code": res.errcode,  //解析接口状态
+                "msg": res.errmsg,    //解析提示文本
+                "count": res.data.count,   //解析数据长度
+                "data": res.data.rows //解析数据列表
+            };
+        }
+        , cols: [[ //标题栏
+            {type: 'radio'}
+            , {field: 'username', title: '姓名', align: 'center'}
+            , {field: 'name', title: '单位', align: 'center'}
+            , {field: 'sex', title: '职务', align: 'center', templet: '#sex'}
+            , {field: 'orgNo', title: '职等', align: 'center'}
+            , {field: 'phoneNo', title: '调整类型', align: 'center'}
+            , {field: 'landline', title: '拟任单位', align: 'center'}
+            , {field: 'email', title: '拟任职务', align: 'center'}
+            , {field: 'zipCode', title: '拟任职等', align: 'center'}
+            , {field: 'status', title: '备注', align: 'center', templet: '#status'}
+
+        ]]
+        , data: []
+        , even: true
+        , page: true //是否显示分页
+        , limits: [10, 15, 20]
+        , limit: 10 //每页默认显示的数量
+    });
+
+</script>
+
+    </body>
+</html>

@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>民主推荐和考察</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../framework/layui/css/layui.css">
+</head>
+<body>
+<style>
+    .layui-form-pane .layui-form-label {
+        width: 120px;
+        padding: 8px 0px;
+        height: 38px;
+        line-height: 20px;
+        border-width: 1px;
+        border-style: solid;
+        border-radius: 2px 0 0 2px;
+        text-align: center;
+        background-color: #FBFBFB;
+        overflow: hidden;
+        box-sizing: border-box;
+    }
+</style>
+
+
+    <div style="text-align: center;padding-top:10px;">
+        <button class="layui-btn ">民主推荐和考察</button>
+    </div>
+
+<!-- 界面 -->
+<form class="layui-form layui-form-pane" action="" id="dataForm" lay-filter="dataForm" style="padding:10px;">
+    <div class="layui-container">
+        <div class="layui-row layui-col-space1">
+            <div class="layui-col-md4">
+                <div class="layui-inline">
+                    <label class="layui-form-label">被考察人姓名</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="id" class="layui-input" style="display: none">
+                        <input type="text" name="candidateName" id="uname" class="layui-input" lay-verify="required" >
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-md4">
+                <div class="layui-inline">
+                    <label class="layui-form-label">考察时间</label>
+                    <div class="layui-input-inline">
+                        <input type="tel" name="inspectTime" class="layui-input" lay-verify="required" >
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-md4">
+                <div class="layui-inline">
+                    <label class="layui-form-label">考察组成员</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="inspectTeamMember"  class="layui-input" lay-verify="required" >
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-row layui-col-space1">
+            <div class="layui-col-md4">
+                <div class="layui-inline">
+                    <label class="layui-form-label">参会会议人员范围</label>
+                    <div class="layui-input-inline">
+                        <input type="tel" name="meetingScope" class="layui-input" lay-verify="required" >
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-md4">
+                <div class="layui-inline">
+                    <label class="layui-form-label">应参会人数</label>
+                    <div class="layui-input-inline">
+                        <input type="tel" name="dueNumber" class="layui-input" lay-verify="required" >
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-md4">
+                <div class="layui-inline">
+                    <label class="layui-form-label">实际参会人数</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="actualNumber"  class="layui-input" lay-verify="required" >
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-row layui-col-space1">
+            <div class="layui-col-md4">
+                <div class="layui-inline">
+                    <label class="layui-form-label">有效总票数</label>
+                    <div class="layui-input-inline">
+                        <input type="tel" name="totalValidVotes" class="layui-input" lay-verify="required" >
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-md4">
+                <div class="layui-inline">
+                    <label class="layui-form-label">得票数</label>
+                    <div class="layui-input-inline">
+                        <input type="tel" name="vote" class="layui-input" lay-verify="required" >
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-md4">
+                <div class="layui-inline">
+                    <label class="layui-form-label"></label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="status"  class="layui-input" style="display: none">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-row layui-col-space1">
+            <div class="layui-col-md4">
+                <div class="layui-inline">
+                    <label class="layui-form-label">参加谈话人数范围</label>
+                    <div class="layui-input-inline">
+                        <input type="tel" name="conScope" class="layui-input" lay-verify="required" >
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-md4">
+                <div class="layui-inline">
+                    <label class="layui-form-label">应谈话人数</label>
+                    <div class="layui-input-inline">
+                        <input type="tel" name="conDueNumber" class="layui-input" lay-verify="required" >
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-md4">
+                <div class="layui-inline">
+                    <label class="layui-form-label">实际谈话人数</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="conActualNumber"  class="layui-input" lay-verify="required" >
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-row layui-col-space1">
+            <div class="layui-col-md4">
+                <div class="layui-inline">
+                    <label class="layui-form-label">推荐人数</label>
+                    <div class="layui-input-inline">
+                        <input type="tel" name="recommendNumber" class="layui-input" lay-verify="required" >
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-md4">
+                <div class="layui-inline">
+                    <label class="layui-form-label">考察材料</label>
+                    <div class="layui-input-inline">
+                        <input id="inspectData" type="text" name="inspectData"  class="layui-input" style="display: none">
+                        <input class="layui-input" id="up_btn_1" value="上传材料">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-md4">
+                <div class="layui-inline">
+                    <label class="layui-form-label">延生考察情况</label>
+                    <div class="layui-input-inline">
+                        <!--                        <input class="layui-input" type="text" name="delay_inspect_data" class="layui-hide">-->
+                        <input class="layui-input" id="up_btn_2" value="上传材料">
+                        <input id="delayInspectData" type="text" name="delayInspectData"  class="layui-input" style="display: none">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="layui-form-item" style="text-align:center">
+            <div class="layui-input-block">
+                <button type="submit" class="layui-btn" lay-submit="" lay-filter="doSave">保存</button>
+<!--                <button lay-filter="choose" class="layui-btn" type="submit" lay-submit="" id="choose">提交</button>-->
+                <button type="submit" class="layui-btn" lay-submit="" lay-filter="submit">提交</button>
+
+            </div>
+        </div>
+    </div>
+</form>
+
+<script src="../framework/layui/layui.all.js"></script>
+<script src="../js/dictionary.js"></script>
+<script src="../js/http.js"></script>
+<script src="../js/jquery-1.8.0.min.js"></script>
+<script>
+
+    var table = layui.table;
+    var layer = layui.layer;
+    var form = layui.form;
+    var element = layui.element;
+    var $ = layui.jquery;
+    var http = layui.http;
+    var laydate = layui.laydate;
+    var upload =layui.upload;
+    var parent_json = parent.req_data;
+
+    // $("#uname").val(parent_json[0].username);
+
+    // alert(parent_json);
+    var id = parent_json[0].userid;
+
+
+    // alert("id:"+id);
+
+    var param={};
+    param.id = id;
+    // alert(JSON.stringify(param));
+    //根据ID先查询该记录是否已经保存在民主推荐表中
+    http.setHeader("Content-Type", "application/json; charset=utf-8");
+    // http.post('../api/democracyinsre/getDem', JSON.stringify(param), function (rep) {
+    http.post("../api/democracyinsre/queryByIds",JSON.stringify(param),function(data) {
+        alert("data:" + JSON.stringify(data.data));
+        var errcode = data.errcode;
+        if (errcode == '0') {
+            // layer.msg("保存成功", {icon: 1});
+            // alert(JSON.stringify(rep))
+
+            form.val('dataForm', data.data);
+            // $("#candidateName").val(data.candidateName);
+        }
+        //query();
+    });
+
+    upload.render({
+        elem:'#up_btn_1'
+        ,accept:'file'
+        ,url: '../api/fileUpload/upload' //改成您自己的上传接口
+        ,before: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+            obj.preview(function(index, file, result) {
+                console.log('上传前调');
+                console.log(index); //得到文件索引
+                console.log(file); //得到文件对象
+                console.log(result); //得到文件base64编码，比如图片
+                // alert(file.name);
+
+                //obj.resetFile(index, file, '123.jpg'); //重命名文件名，layui 2.3.0 开始新增
+
+                //这里还可以做一些 append 文件列表 DOM 的操作
+
+                //obj.upload(index, file); //对上传失败的单个文件重新上传，一般在某个事件中使用
+                //delete files[index]; //删除列表中对应的文件，一般在某个事件中使用
+            })
+        }
+        ,done: function(res, index, upload){
+            if(res.errcode == 0 ){
+                layer.msg("上传成功");
+            }
+            var diskFilePath = res.diskFilePath;
+           //table.cache[tableId][this.item.closest('tr').data('index')]["inspectData"] =diskFilePath;
+            $("#inspectData").val(diskFilePath)
+        }
+        ,error: function(index, upload){
+
+        }
+    });
+    upload.render({
+        elem:'#up_btn_2'
+        ,accept:'file'
+        ,url: '../api/fileUpload/upload'  //改成您自己的上传接口
+        ,before: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+            obj.preview(function(index, file, result) {
+                console.log('上传前调');
+                console.log(index); //得到文件索引
+                console.log(file); //得到文件对象
+                console.log(result); //得到文件base64编码，比如图片
+                // alert(file.name);
+                //obj.resetFile(index, file, '123.jpg'); //重命名文件名，layui 2.3.0 开始新增
+                //这里还可以做一些 append 文件列表 DOM 的操作
+                //obj.upload(index, file); //对上传失败的单个文件重新上传，一般在某个事件中使用
+                //delete files[index]; //删除列表中对应的文件，一般在某个事件中使用
+            })
+        }
+        ,done: function(res, index, upload){
+            if(res.errcode == 0 ){
+                layer.msg("上传成功");
+            }
+            var diskFilePath = res.diskFilePath;
+            $("#delayInspectData").val(diskFilePath)
+        }
+        ,error: function(index, upload){
+
+        }
+    });
+
+    form.on('submit(doSave)',function(data){
+        var param  = data.field;
+        param.flowid=id;
+        alert(JSON.stringify(param))
+        http.post("../api/democracyinsre/add",JSON.stringify(param), function (data) {
+            alert("保存成功")
+        })
+        return false;
+    });
+
+    form.on('submit(submit)',function(data){
+        var param  = data.field;
+        param.flowid=id;
+        alert(JSON.stringify(param))
+
+        if(data.field.totalValidVotes*0.5>=data.field.vote){
+            if(''==data.field.delayInspectData){
+                    layer.msg("请上传延生考察情况",function () {
+                    });
+                    alert("请上传延生考察情况");
+                    return ;
+                };
+        }
+
+        if(data.field.totalValidVotes*0.5>=data.field.recommendNumber){
+            if(''==data.field.delayInspectData){
+                // layer.msg("请上传延生考察情况",function () {
+                // });
+                alert("谈话推荐不过半，民主推荐无法通过");
+                // return ;
+            };
+        }
+        if(''==data.field.inspectData){
+            layer.msg("请上传考察材料",function () {
+            });
+            alert("请上传考察材料");
+            return ;
+        };
+
+        http.post("../api/democracyinsre/updateflow",JSON.stringify(param),function(){
+            alert("保存成功")
+        })
+        return false;
+    });
+
+
+    form.render();
+
+</script>
+</body>
+</html>

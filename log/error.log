@@ -1,0 +1,67 @@
+2020-04-16 08:49:43 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.generateCode(MybatisGenerator.java:565) ]
+ERROR:Io 异常: The Network Adapter could not establish the connection
+java.sql.SQLException: Io 异常: The Network Adapter could not establish the connection
+	at oracle.jdbc.driver.DatabaseError.throwSqlException(DatabaseError.java:112)
+	at oracle.jdbc.driver.DatabaseError.throwSqlException(DatabaseError.java:146)
+	at oracle.jdbc.driver.DatabaseError.throwSqlException(DatabaseError.java:255)
+	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:387)
+	at oracle.jdbc.driver.PhysicalConnection.<init>(PhysicalConnection.java:439)
+	at oracle.jdbc.driver.T4CConnection.<init>(T4CConnection.java:165)
+	at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:35)
+	at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:801)
+	at org.mybatis.generator.internal.JDBCConnectionFactory.getConnection(JDBCConnectionFactory.java:84)
+	at org.mybatis.generator.config.Context.getConnection(Context.java:753)
+	at org.mybatis.generator.config.Context.introspectTables(Context.java:631)
+	at org.mybatis.generator.api.MyBatisGenerator.generate(MyBatisGenerator.java:257)
+	at org.mybatis.generator.api.MyBatisGenerator.generate(MyBatisGenerator.java:139)
+	at com.nantian.generator.impl.MybatisGenerator.generateCode(MybatisGenerator.java:563)
+	at com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:257)
+	at com.nantian.Main.createTable(Main.java:118)
+	at com.nantian.Main.main(Main.java:40)
+2020-04-16 08:50:53 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.generateCode(MybatisGenerator.java:565) ]
+ERROR:Io 异常: The Network Adapter could not establish the connection
+java.sql.SQLException: Io 异常: The Network Adapter could not establish the connection
+	at oracle.jdbc.driver.DatabaseError.throwSqlException(DatabaseError.java:112)
+	at oracle.jdbc.driver.DatabaseError.throwSqlException(DatabaseError.java:146)
+	at oracle.jdbc.driver.DatabaseError.throwSqlException(DatabaseError.java:255)
+	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:387)
+	at oracle.jdbc.driver.PhysicalConnection.<init>(PhysicalConnection.java:439)
+	at oracle.jdbc.driver.T4CConnection.<init>(T4CConnection.java:165)
+	at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:35)
+	at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:801)
+	at org.mybatis.generator.internal.JDBCConnectionFactory.getConnection(JDBCConnectionFactory.java:84)
+	at org.mybatis.generator.config.Context.getConnection(Context.java:753)
+	at org.mybatis.generator.config.Context.introspectTables(Context.java:631)
+	at org.mybatis.generator.api.MyBatisGenerator.generate(MyBatisGenerator.java:257)
+	at org.mybatis.generator.api.MyBatisGenerator.generate(MyBatisGenerator.java:139)
+	at com.nantian.generator.impl.MybatisGenerator.generateCode(MybatisGenerator.java:563)
+	at com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:257)
+	at com.nantian.Main.createTable(Main.java:118)
+	at com.nantian.Main.main(Main.java:40)
+2020-04-16 08:54:00 上午 [Thread: main][ Class:com.nantian.generator.impl.MybatisGenerator >> Method: com.nantian.generator.impl.MybatisGenerator.generateCode(MybatisGenerator.java:565) ]
+ERROR:Listener refused the connection with the following error:
+ORA-12505, TNS:listener does not currently know of SID given in connect descriptor
+The Connection descriptor used by the client was:
+127.0.0.1:1521:GPP
+
+java.sql.SQLException: Listener refused the connection with the following error:
+ORA-12505, TNS:listener does not currently know of SID given in connect descriptor
+The Connection descriptor used by the client was:
+127.0.0.1:1521:GPP
+
+	at oracle.jdbc.driver.DatabaseError.throwSqlException(DatabaseError.java:112)
+	at oracle.jdbc.driver.DatabaseError.throwSqlException(DatabaseError.java:261)
+	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:387)
+	at oracle.jdbc.driver.PhysicalConnection.<init>(PhysicalConnection.java:439)
+	at oracle.jdbc.driver.T4CConnection.<init>(T4CConnection.java:165)
+	at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:35)
+	at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:801)
+	at org.mybatis.generator.internal.JDBCConnectionFactory.getConnection(JDBCConnectionFactory.java:84)
+	at org.mybatis.generator.config.Context.getConnection(Context.java:753)
+	at org.mybatis.generator.config.Context.introspectTables(Context.java:631)
+	at org.mybatis.generator.api.MyBatisGenerator.generate(MyBatisGenerator.java:257)
+	at org.mybatis.generator.api.MyBatisGenerator.generate(MyBatisGenerator.java:139)
+	at com.nantian.generator.impl.MybatisGenerator.generateCode(MybatisGenerator.java:563)
+	at com.nantian.generator.impl.MybatisGenerator.create(MybatisGenerator.java:257)
+	at com.nantian.Main.createTable(Main.java:118)
+	at com.nantian.Main.main(Main.java:40)

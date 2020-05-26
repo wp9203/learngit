@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="../framework/layui/css/layui.css">
+    <title></title>
+    <style>
+        body {
+            margin-top: 10px;
+            margin-right: 10px;
+        }
+        form {
+            margin-left: 40px;
+        }
+    </style>
+</head>
+<body layadmin-themealias="default" >
+
+<form class="layui-form" action="" id="role-form" lay-filter="role-form">
+</form>
+
+
+<script src="../framework/layui/layui.all.js"></script>
+<script src="../js/http.js"></script>
+<script>
+
+    var $ = layui.$,
+        layer = layui.layer,
+        http = layui.http,
+        form = layui.form;
+    var regular = layui.regular;
+    //要授权用户的id
+    var userId = null;
+
+    form.on('submit(grant-btn)', function(data){
+        var param = {};
+        var roleIds = new Array();
+        for (var key in data.field) {
+            roleIds.push(key);
+        }
+        param.userId = userId;
+        param.roleIds = roleIds;
+        http.setHeader("Content-Type", "application/json; charset=utf-8");
+        http.post("../api/user/grant", JSON.stringify(param), function (data) {
+            var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+            var errcode = data.errcode;
+            if ("0" == errcode) {
+                parent.changed = true;
+                layer.confirm('授权成功',{
+                    btn:['确定', '取消']
+                }, function(){
+                    layer.close(index);
+                    parent.layer.close(index);
+                });
+            }
+        });
+        return false;
+    });
+
+    /**
+     * 要授权的用户名
+     * @param username 要授权的用户名
+     * @param id 要授权的用户id
+     */
+    function grant(username, id) {
+        userId = id;
+        var param = {};
+        param.username = username;
+        http.post("../api/user/getUserRoles", param, function (data) {
+            var errcode = data.errcode;
+            if (errcode == '0') {
+                var roles = data.data.roles;
+                var ownRoles = data.data.ownRoles;
+                var html = "";
+                for (var i = 0; i < roles.length; i ++) {
+                    var role = roles[i];
+                    var own = isOwnRole(role, ownRoles);
+
+                    html = html + "<div class=\"layui-form-item\">\n" +
+                        "        <input type=\"checkbox\" name=\""+ role.id +"\" lay-skin=\"primary\" title=\""+ role.name +"\" ";
+                    if (own) {
+                        html += "checked=\"\">\n";
+                    }
+                    html +=  "</div>";
+                }
+                html += "<div class=\"layui-form-item\">\n" +
+                    "            <button type=\"submit\" id=\"add\" class=\"layui-btn\" lay-submit=\"\" lay-filter=\"grant-btn\">授权</button>\n" +
+                    "            <button type=\"reset\" class=\"layui-btn layui-btn-primary\">重置</button>\n" +
+                    "    </div>";
+                $("#role-form").html(html);
+                form.render(null, 'role-form');
+            }
+
+
+        });
+
+
+    }
+
+    /**
+     * 该角色是否自己拥有
+     * @param role 角色信息
+     * @param ownRoles 自己拥有的全部角色
+     * @returns {boolean} 是否拥有
+     */
+    function isOwnRole(role, ownRoles) {
+        if (ownRoles.length <= 0) {
+            return false;
+        }
+        var result = false;
+        var roleId = role.id;
+        for (var i = 0; i < ownRoles.length; i++) {
+            ownRole = ownRoles[i];
+            var ownId = ownRole.id;
+            if (ownId == roleId) {
+                result = true;
+                break;
+            }
+        }
+        return result;
+
+    }
+
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nantian.mapper.sys.SysUnitRecommendedMapper">
+  <resultMap id="BaseResultMap" type="com.nantian.entity.sys.SysUnitRecommended">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="CANDIDATE_NAME" jdbcType="VARCHAR" property="candidateName" />
+    <result column="CANDIDATE_UNIT" jdbcType="VARCHAR" property="candidateUnit" />
+    <result column="CANDIDATE_POSITION" jdbcType="VARCHAR" property="candidatePosition" />
+    <result column="UNIT_RECOMMENDED_MATERIAL" jdbcType="VARCHAR" property="unitRecommendedMaterial" />
+    <result column="CREATION_TIME" jdbcType="TIMESTAMP" property="creationTime" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="CANDIDATE_POSITION_LEVEL" jdbcType="VARCHAR" property="candidatePositionLevel" />
+    <result column="ISFINISH" jdbcType="VARCHAR" property="isfinish" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, CANDIDATE_NAME, CANDIDATE_UNIT, CANDIDATE_POSITION, UNIT_RECOMMENDED_MATERIAL, 
+    CREATION_TIME, UPDATE_TIME, CANDIDATE_POSITION_LEVEL, ISFINISH
+  </sql>
+  <select id="selectByExample" parameterType="com.nantian.entity.sys.SysUnitRecommendedExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from SYS_UNIT_RECOMMENDED
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_UNIT_RECOMMENDED
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from SYS_UNIT_RECOMMENDED
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.nantian.entity.sys.SysUnitRecommendedExample">
+    delete from SYS_UNIT_RECOMMENDED
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.nantian.entity.sys.SysUnitRecommended">
+    insert into SYS_UNIT_RECOMMENDED (ID, CANDIDATE_NAME, CANDIDATE_UNIT, 
+      CANDIDATE_POSITION, UNIT_RECOMMENDED_MATERIAL, 
+      CREATION_TIME, UPDATE_TIME, CANDIDATE_POSITION_LEVEL, 
+      ISFINISH)
+    values (#{id,jdbcType=DECIMAL}, #{candidateName,jdbcType=VARCHAR}, #{candidateUnit,jdbcType=VARCHAR}, 
+      #{candidatePosition,jdbcType=VARCHAR}, #{unitRecommendedMaterial,jdbcType=VARCHAR}, 
+      #{creationTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{candidatePositionLevel,jdbcType=VARCHAR}, 
+      #{isfinish,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.nantian.entity.sys.SysUnitRecommended">
+    insert into SYS_UNIT_RECOMMENDED
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="candidateName != null">
+        CANDIDATE_NAME,
+      </if>
+      <if test="candidateUnit != null">
+        CANDIDATE_UNIT,
+      </if>
+      <if test="candidatePosition != null">
+        CANDIDATE_POSITION,
+      </if>
+      <if test="unitRecommendedMaterial != null">
+        UNIT_RECOMMENDED_MATERIAL,
+      </if>
+      <if test="creationTime != null">
+        CREATION_TIME,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="candidatePositionLevel != null">
+        CANDIDATE_POSITION_LEVEL,
+      </if>
+      <if test="isfinish != null">
+        ISFINISH,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="candidateName != null">
+        #{candidateName,jdbcType=VARCHAR},
+      </if>
+      <if test="candidateUnit != null">
+        #{candidateUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="candidatePosition != null">
+        #{candidatePosition,jdbcType=VARCHAR},
+      </if>
+      <if test="unitRecommendedMaterial != null">
+        #{unitRecommendedMaterial,jdbcType=VARCHAR},
+      </if>
+      <if test="creationTime != null">
+        #{creationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="candidatePositionLevel != null">
+        #{candidatePositionLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="isfinish != null">
+        #{isfinish,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.nantian.entity.sys.SysUnitRecommendedExample" resultType="java.lang.Long">
+    select count(*) from SYS_UNIT_RECOMMENDED
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update SYS_UNIT_RECOMMENDED
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=DECIMAL},
+      </if>
+      <if test="record.candidateName != null">
+        CANDIDATE_NAME = #{record.candidateName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.candidateUnit != null">
+        CANDIDATE_UNIT = #{record.candidateUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.candidatePosition != null">
+        CANDIDATE_POSITION = #{record.candidatePosition,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unitRecommendedMaterial != null">
+        UNIT_RECOMMENDED_MATERIAL = #{record.unitRecommendedMaterial,jdbcType=VARCHAR},
+      </if>
+      <if test="record.creationTime != null">
+        CREATION_TIME = #{record.creationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.candidatePositionLevel != null">
+        CANDIDATE_POSITION_LEVEL = #{record.candidatePositionLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isfinish != null">
+        ISFINISH = #{record.isfinish,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update SYS_UNIT_RECOMMENDED
+    set ID = #{record.id,jdbcType=DECIMAL},
+      CANDIDATE_NAME = #{record.candidateName,jdbcType=VARCHAR},
+      CANDIDATE_UNIT = #{record.candidateUnit,jdbcType=VARCHAR},
+      CANDIDATE_POSITION = #{record.candidatePosition,jdbcType=VARCHAR},
+      UNIT_RECOMMENDED_MATERIAL = #{record.unitRecommendedMaterial,jdbcType=VARCHAR},
+      CREATION_TIME = #{record.creationTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      CANDIDATE_POSITION_LEVEL = #{record.candidatePositionLevel,jdbcType=VARCHAR},
+      ISFINISH = #{record.isfinish,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.nantian.entity.sys.SysUnitRecommended">
+    update SYS_UNIT_RECOMMENDED
+    <set>
+      <if test="candidateName != null">
+        CANDIDATE_NAME = #{candidateName,jdbcType=VARCHAR},
+      </if>
+      <if test="candidateUnit != null">
+        CANDIDATE_UNIT = #{candidateUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="candidatePosition != null">
+        CANDIDATE_POSITION = #{candidatePosition,jdbcType=VARCHAR},
+      </if>
+      <if test="unitRecommendedMaterial != null">
+        UNIT_RECOMMENDED_MATERIAL = #{unitRecommendedMaterial,jdbcType=VARCHAR},
+      </if>
+      <if test="creationTime != null">
+        CREATION_TIME = #{creationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="candidatePositionLevel != null">
+        CANDIDATE_POSITION_LEVEL = #{candidatePositionLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="isfinish != null">
+        ISFINISH = #{isfinish,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.nantian.entity.sys.SysUnitRecommended">
+    update SYS_UNIT_RECOMMENDED
+    set CANDIDATE_NAME = #{candidateName,jdbcType=VARCHAR},
+      CANDIDATE_UNIT = #{candidateUnit,jdbcType=VARCHAR},
+      CANDIDATE_POSITION = #{candidatePosition,jdbcType=VARCHAR},
+      UNIT_RECOMMENDED_MATERIAL = #{unitRecommendedMaterial,jdbcType=VARCHAR},
+      CREATION_TIME = #{creationTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      CANDIDATE_POSITION_LEVEL = #{candidatePositionLevel,jdbcType=VARCHAR},
+      ISFINISH = #{isfinish,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByUserId" parameterType="com.nantian.entity.sys.SysFlow">
+    update SYS_FLOW
+    SET STEP2 = #{step2,jdbcType=VARCHAR},
+      UNIT_RE_ID = #{unitReId,jdbcType=DECIMAL},
+      UNIT_RE_RESULT = #{unitReResult,jdbcType=VARCHAR}
+    WHERE USERID =  #{userid,jdbcType=DECIMAL}
+  </update>
+</mapper>
